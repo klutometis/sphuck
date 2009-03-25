@@ -34,7 +34,7 @@ class Lexer {
 atmosphere = /\s+/
 number = /([+-]?\d+(?:[.]\d*)?|[+-]?[.]\d+)/
 symbol = /[*!\$[:alpha:]\?<>=+:_\{\}\/-]([*!\$[:alpha:]\?<>=+:_\{\}\/-]|\d|[.])*/
-string = /\"[^\"\\]*(?:\\.[^\"\\]*)*\"/
+string = /\"([^\"\\]*(?:\\.[^\"\\]*)*)\"/
 open = /\(/
 close = /\)/
 dot = /[.]/
@@ -45,34 +45,36 @@ unquote = /\,/
 
 /*!lex2php
 atmosphere {
-return false;
+  return false;
 }
 number {
-$this->token = Lexer::NUMBER;
+  $this->token = Lexer::NUMBER;
 }
 symbol {
-$this->token = Lexer::SYMBOL;
+  $this->token = Lexer::SYMBOL;
 }
 open {
-$this->token = Lexer::OPEN;
+  $this->token = Lexer::OPEN;
 }
 close {
-$this->token = Lexer::CLOSE;
+  $this->token = Lexer::CLOSE;
 }
 string {
-$this->token = Lexer::STRING;
+  $this->token = Lexer::STRING;
+  $this->value = $yy_subpatterns[0];
+  $this->count += 2;
 }
 dot {
-$this->token = Lexer::DOT;
+  $this->token = Lexer::DOT;
 }
 quote {
-$this->token = Lexer::QUOTE;
+  $this->token = Lexer::QUOTE;
 }
 quasiquote {
-$this->token = Lexer::QUASIQUOTE;
+  $this->token = Lexer::QUASIQUOTE;
 }
 unquote {
-$this->token = Lexer::UNQUOTE;
+  $this->token = Lexer::UNQUOTE;
 }
 */
 }

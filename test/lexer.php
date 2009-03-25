@@ -1,7 +1,7 @@
 <?php
 
-require('simpletest/autorun.php');
-require('../sexp.php');
+require_once('simpletest/unit_tester.php');
+require_once(dirname(__FILE__) . '/../sexp.php');
 
 class LexerTestCase extends UnitTestCase {
   function testNumbers() {
@@ -16,16 +16,15 @@ class LexerTestCase extends UnitTestCase {
   }
 
   function testStringsAndSymbols() {
-    print_r(tokenize('(string-append "Hello " "\"" \'Dave "\"")'));
     $this->assertEqual(tokenize('(string-append "Hello " "\"" \'Dave "\"")'),
                        array(NULL,
                              array(Lexer::OPEN => '('),
                              array(Lexer::SYMBOL => 'string-append'),
-                             array(Lexer::STRING => '"Hello "'),
-                             array(Lexer::STRING => '"\""'),
+                             array(Lexer::STRING => 'Hello '),
+                             array(Lexer::STRING => '\"'),
                              array(Lexer::QUOTE => '\''),
                              array(Lexer::SYMBOL => 'Dave'),
-                             array(Lexer::STRING => '"\""'),
+                             array(Lexer::STRING => '\"'),
                              array(Lexer::CLOSE => ')')));
   }
 }
@@ -41,3 +40,6 @@ class LexerTestCase extends UnitTestCase {
 // var_dump(tokenize('"aa\n"'));
 // var_dump(tokenize('"\nbb"'));
 // var_dump(tokenize('"aa\nbb"'));
+
+$test = new LexerTestCase();
+exit ($test->run(new TextReporter()) ? 0 : 1);
