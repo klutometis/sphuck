@@ -90,20 +90,3 @@ function tokenize($data) {
   }
   return $lexemes;
   }
-
-// var_dump(tokenize('(());;harro(())'));
-// var_dump(tokenize('+ 5 4.3 2. .45 -6'));
-// var_dump(tokenize('(string-append "Hello " "\"" \'Dave "\"")'));
-// var_dump(tokenize('(string-append "Hello " "\"" Dave "\"")'));
-var_dump(tokenize('(string-append "Hello " "\""'));
-// var_dump(tokenize('a . b'));
-// var_dump(tokenize('""'));
-// var_dump(tokenize('("")'));
-// var_dump(tokenize('("") ("")'));
-// var_dump(tokenize('("") (" ")'));
-// var_dump(tokenize('("a") ("b")'));
-// var_dump(tokenize('"\""'));
-// var_dump(tokenize('"\n"'));
-// var_dump(tokenize('"aa\n"'));
-// var_dump(tokenize('"\nbb"'));
-// var_dump(tokenize('"aa\nbb"'));
