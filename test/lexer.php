@@ -114,5 +114,5 @@ class LexerTestCase extends UnitTestCase {
   }
 }
 
-$test = new LexerTestCase();
-exit ($test->run(new TextReporter()) ? 0 : 1);
+// $test = new LexerTestCase();
+// exit ($test->run(new TextReporter()) ? 0 : 1);
