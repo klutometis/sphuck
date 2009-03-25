@@ -113,6 +113,3 @@ class LexerTestCase extends UnitTestCase {
                              array(Lexer::STRING => 'aa\nbb\ncc\ndd\n')));
   }
 }
-
-// $test = new LexerTestCase();
-// exit ($test->run(new TextReporter()) ? 0 : 1);
