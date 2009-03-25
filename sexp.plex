@@ -1,0 +1,109 @@
+<?php
+
+class Lexer {
+  const OPEN = 1;
+  const CLOSE = 2;
+  const NUMBER = 3;
+  const SYMBOL = 4;
+  const STRING = 5;
+  const DOT = 6;
+  const QUOTE = 7;
+  const QUASIQUOTE = 8;
+  const UNQUOTE = 9;
+
+  public $data;
+  public $token;
+  public $value;
+  public $line;
+  public $count;
+
+  function __construct($data) {
+    $this->data = $data;
+    $this->count = 0;
+    $this->line = 1;
+  }
+
+// Don't forget ,@ (not in perl sexp?)
+
+/*!lex2php
+%input $this->data
+%counter $this->count
+%token $this->token
+%value $this->value
+%line $this->line
+atmosphere = /\s+/
+number = /([+-]?\d+(?:[.]\d*)?|[+-]?[.]\d+)/
+symbol = /[*!\$[:alpha:]\?<>=+:_\{\}\/-]([*!\$[:alpha:]\?<>=+:_\{\}\/-]|\d|[.])*/
+string = /\"[^\"\\]*(?:\\.[^\"\\]*)*\"/
+open = /\(/
+close = /\)/
+dot = /[.]/
+quote = /\'/
+quasiquote = /\`/
+unquote = /\,/
+*/
+
+/*!lex2php
+atmosphere {
+return false;
+}
+number {
+$this->token = Lexer::NUMBER;
+}
+symbol {
+$this->token = Lexer::SYMBOL;
+}
+open {
+$this->token = Lexer::OPEN;
+}
+close {
+$this->token = Lexer::CLOSE;
+}
+string {
+$this->token = Lexer::STRING;
+}
+dot {
+$this->token = Lexer::DOT;
+}
+quote {
+$this->token = Lexer::QUOTE;
+}
+quasiquote {
+$this->token = Lexer::QUASIQUOTE;
+}
+unquote {
+$this->token = Lexer::UNQUOTE;
+}
+*/
+}
+
+function tokenize($data) {
+  $lexemes[] = NULL;
+  $count = NULL;
+  $lexer = new Lexer($data);
+  while (true) {
+    $count = $lexer->count;
+    $lexer->yylex();
+    if ($count == $lexer->count)
+      break;
+    $lexemes[] = array($lexer->token => $lexer->value);
+  }
+  return $lexemes;
+  }
+
+// var_dump(tokenize('(());;harro(())'));
+// var_dump(tokenize('+ 5 4.3 2. .45 -6'));
+// var_dump(tokenize('(string-append "Hello " "\"" \'Dave "\"")'));
+// var_dump(tokenize('(string-append "Hello " "\"" Dave "\"")'));
+var_dump(tokenize('(string-append "Hello " "\""'));
+// var_dump(tokenize('a . b'));
+// var_dump(tokenize('""'));
+// var_dump(tokenize('("")'));
+// var_dump(tokenize('("") ("")'));
+// var_dump(tokenize('("") (" ")'));
+// var_dump(tokenize('("a") ("b")'));
+// var_dump(tokenize('"\""'));
+// var_dump(tokenize('"\n"'));
+// var_dump(tokenize('"aa\n"'));
+// var_dump(tokenize('"\nbb"'));
+// var_dump(tokenize('"aa\nbb"'));
