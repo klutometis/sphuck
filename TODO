@@ -1,1 +1,3 @@
 * test driver for multiple test cases
+
+* put tokenize() in the Lexer namespace

@@ -27,19 +27,92 @@ class LexerTestCase extends UnitTestCase {
                              array(Lexer::STRING => '\"'),
                              array(Lexer::CLOSE => ')')));
   }
-}
 
-// var_dump(tokenize('a . b'));
-// var_dump(tokenize('""'));
-// var_dump(tokenize('("")'));
-// var_dump(tokenize('("") ("")'));
-// var_dump(tokenize('("") (" ")'));
-// var_dump(tokenize('("a") ("b")'));
-// var_dump(tokenize('"\""'));
-// var_dump(tokenize('"\n"'));
-// var_dump(tokenize('"aa\n"'));
-// var_dump(tokenize('"\nbb"'));
-// var_dump(tokenize('"aa\nbb"'));
+  function testSymbolsAndDot() {
+    $this->assertEqual(tokenize('a . b'),
+                       array(NULL,
+                             array(Lexer::SYMBOL => 'a'),
+                             array(Lexer::DOT => '.'),
+                             array(Lexer::SYMBOL => 'b')));
+  }
+
+  function testBlankString() {
+    $this->assertEqual(tokenize('""'),
+                       array(NULL,
+                             array(Lexer::STRING => '')));
+  }
+
+  function testBlankStringInSexp() {
+    $this->assertEqual(tokenize('("")'),
+                       array(NULL,
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => ''),
+                             array(Lexer::CLOSE => ')')));
+  }
+
+  function testTwoBlankStringsInSexp() {
+    $this->assertEqual(tokenize('("") ("")'),
+                       array(NULL,
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => ''),
+                             array(Lexer::CLOSE => ')'),
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => ''),
+                             array(Lexer::CLOSE => ')')));
+  }
+
+  function testBlankStringAndSpaceInSexp() {
+    $this->assertEqual(tokenize('("") (" ")'),
+                       array(NULL,
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => ''),
+                             array(Lexer::CLOSE => ')'),
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => ' '),
+                             array(Lexer::CLOSE => ')')));
+  }
+
+  function testTwoStringsInSexp() {
+    $this->assertEqual(tokenize('("a") ("b")'),
+                       array(NULL,
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => 'a'),
+                             array(Lexer::CLOSE => ')'),
+                             array(Lexer::OPEN => '('),
+                             array(Lexer::STRING => 'b'),
+                             array(Lexer::CLOSE => ')')));
+  }
+
+  function testNewline() {
+    $this->assertEqual(tokenize('"\n"'),
+                       array(NULL,
+                             array(Lexer::STRING => '\n')));
+  }
+
+  function testPostNewline() {
+    $this->assertEqual(tokenize('"aa\n"'),
+                       array(NULL,
+                             array(Lexer::STRING => 'aa\n')));
+  }
+
+  function testPreNewline() {
+    $this->assertEqual(tokenize('"\nbb"'),
+                       array(NULL,
+                             array(Lexer::STRING => '\nbb')));
+  }
+
+  function testMedialNewline() {
+    $this->assertEqual(tokenize('"aa\nbb"'),
+                       array(NULL,
+                             array(Lexer::STRING => 'aa\nbb')));
+  }
+
+  function testMedialAndPostNewline() {
+    $this->assertEqual(tokenize('"aa\nbb\ncc\ndd\n"'),
+                       array(NULL,
+                             array(Lexer::STRING => 'aa\nbb\ncc\ndd\n')));
+  }
+}
 
 $test = new LexerTestCase();
 exit ($test->run(new TextReporter()) ? 0 : 1);
