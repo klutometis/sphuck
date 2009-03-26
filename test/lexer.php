@@ -6,8 +6,7 @@ require_once(dirname(__FILE__) . '/../lexer.php');
 class LexerTestCase extends UnitTestCase {
   function testNumbers() {
     $this->assertEqual(token_array(new Lexer('+ 5 4.3 2. .45 -6')),
-                       array(array(NULL),
-                             array(Lexer::SYMBOL => '+'),
+                       array(array(Lexer::SYMBOL => '+'),
                              array(Lexer::NUMBER => '5'),
                              array(Lexer::NUMBER => '4.3'),
                              array(Lexer::NUMBER => '2.'),
@@ -17,8 +16,7 @@ class LexerTestCase extends UnitTestCase {
 
   function testStringsAndSymbols() {
     $this->assertEqual(token_array(new Lexer('(string-append "Hello " "\"" \'Dave "\"")')),
-                       array(array(NULL),
-                             array(Lexer::OPEN => '('),
+                       array(array(Lexer::OPEN => '('),
                              array(Lexer::SYMBOL => 'string-append'),
                              array(Lexer::STRING => 'Hello '),
                              array(Lexer::STRING => '\"'),
@@ -30,30 +28,26 @@ class LexerTestCase extends UnitTestCase {
 
   function testSymbolsAndDot() {
     $this->assertEqual(token_array(new Lexer('a . b')),
-                       array(array(NULL),
-                             array(Lexer::SYMBOL => 'a'),
+                       array(array(Lexer::SYMBOL => 'a'),
                              array(Lexer::DOT => '.'),
                              array(Lexer::SYMBOL => 'b')));
   }
 
   function testBlankString() {
     $this->assertEqual(token_array(new Lexer('""')),
-                       array(array(NULL),
-                             array(Lexer::STRING => '')));
+                       array(array(Lexer::STRING => '')));
   }
 
   function testBlankStringInSexp() {
     $this->assertEqual(token_array(new Lexer('("")')),
-                       array(array(NULL),
-                             array(Lexer::OPEN => '('),
+                       array(array(Lexer::OPEN => '('),
                              array(Lexer::STRING => ''),
                              array(Lexer::CLOSE => ')')));
   }
 
   function testTwoBlankStringsInSexp() {
     $this->assertEqual(token_array(new Lexer('("") ("")')),
-                       array(array(NULL),
-                             array(Lexer::OPEN => '('),
+                       array(array(Lexer::OPEN => '('),
                              array(Lexer::STRING => ''),
                              array(Lexer::CLOSE => ')'),
                              array(Lexer::OPEN => '('),
@@ -63,8 +57,7 @@ class LexerTestCase extends UnitTestCase {
 
   function testBlankStringAndSpaceInSexp() {
     $this->assertEqual(token_array(new Lexer('("") (" ")')),
-                       array(array(NULL),
-                             array(Lexer::OPEN => '('),
+                       array(array(Lexer::OPEN => '('),
                              array(Lexer::STRING => ''),
                              array(Lexer::CLOSE => ')'),
                              array(Lexer::OPEN => '('),
@@ -74,8 +67,7 @@ class LexerTestCase extends UnitTestCase {
 
   function testTwoStringsInSexp() {
     $this->assertEqual(token_array(new Lexer('("a") ("b")')),
-                       array(array(NULL),
-                             array(Lexer::OPEN => '('),
+                       array(array(Lexer::OPEN => '('),
                              array(Lexer::STRING => 'a'),
                              array(Lexer::CLOSE => ')'),
                              array(Lexer::OPEN => '('),
@@ -85,31 +77,26 @@ class LexerTestCase extends UnitTestCase {
 
   function testNewline() {
     $this->assertEqual(token_array(new Lexer('"\n"')),
-                       array(array(NULL),
-                             array(Lexer::STRING => '\n')));
+                       array(array(Lexer::STRING => '\n')));
   }
 
   function testPostNewline() {
     $this->assertEqual(token_array(new Lexer('"aa\n"')),
-                       array(array(NULL),
-                             array(Lexer::STRING => 'aa\n')));
+                       array(array(Lexer::STRING => 'aa\n')));
   }
 
   function testPreNewline() {
     $this->assertEqual(token_array(new Lexer('"\nbb"')),
-                       array(array(NULL),
-                             array(Lexer::STRING => '\nbb')));
+                       array(array(Lexer::STRING => '\nbb')));
   }
 
   function testMedialNewline() {
     $this->assertEqual(token_array(new Lexer('"aa\nbb"')),
-                       array(array(NULL),
-                             array(Lexer::STRING => 'aa\nbb')));
+                       array(array(Lexer::STRING => 'aa\nbb')));
   }
 
   function testMedialAndPostNewline() {
     $this->assertEqual(token_array(new Lexer('"aa\nbb\ncc\ndd\n"')),
-                       array(array(NULL),
-                             array(Lexer::STRING => 'aa\nbb\ncc\ndd\n')));
+                       array(array(Lexer::STRING => 'aa\nbb\ncc\ndd\n')));
   }
 }

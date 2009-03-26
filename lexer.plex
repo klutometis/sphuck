@@ -28,6 +28,7 @@ class Lexer implements Iterator {
 
   function rewind() {
     self::__construct($this->data);
+    self::next();
   }
 
   function current() {

@@ -3,5 +3,5 @@
 lexer.php: lexer.plex
 	plex lexer.plex
 
-test:
+test: lexer.php
 	php test/all.php
