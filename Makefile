@@ -1,5 +1,5 @@
-sexp.php: sexp.plex
-	plex sexp.plex
+lexer.php: lexer.plex
+	plex lexer.plex
 
-test: sexp.php
+test: lexer.php
 	php test/all.php
