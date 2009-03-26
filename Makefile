@@ -1,7 +1,14 @@
-.PHONY: test
+OBJ := lexer.php parser.php
 
-lexer.php: lexer.plex
+.PHONY: all test
+
+all: $(OBJ)
+
+lexer.php: parser.php lexer.plex
 	plex lexer.plex
 
-test: lexer.php
+parser.php: parser.y
+	phplemon parser.y
+
+test: all
 	php test/all.php

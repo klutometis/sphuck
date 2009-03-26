@@ -2,4 +2,4 @@
 
 * parse into some php intermediary before interpreting
 
-* sphuck namespace
+* sphuck namespace for lexer/parser

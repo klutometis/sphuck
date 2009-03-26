@@ -1,17 +1,6 @@
 <?php
 
 class Lexer implements Iterator {
-  const OPEN = 1;
-  const CLOSE = 2;
-  const NUMBER = 3;
-  const SYMBOL = 4;
-  const STRING = 5;
-  const DOT = 6;
-  const QUOTE = 7;
-  const QUASIQUOTE = 8;
-  const UNQUOTE = 9;
-  const UNQUOTE_SPLICING = 10;
-
   public $data;
   public $token;
   public $value;
@@ -75,36 +64,36 @@ atmosphere {
   return false;
 }
 number {
-  $this->token = Lexer::NUMBER;
+  $this->token = Parser::NUMBER;
 }
 symbol {
-  $this->token = Lexer::SYMBOL;
+  $this->token = Parser::SYMBOL;
 }
 open {
-  $this->token = Lexer::OPEN;
+  $this->token = Parser::OPEN;
 }
 close {
-  $this->token = Lexer::CLOSE;
+  $this->token = Parser::CLOSE;
 }
 string {
-  $this->token = Lexer::STRING;
+  $this->token = Parser::STRING;
   $this->value = $yy_subpatterns[0];
   $this->count += 2;
 }
 dot {
-  $this->token = Lexer::DOT;
+  $this->token = Parser::DOT;
 }
 quote {
-  $this->token = Lexer::QUOTE;
+  $this->token = Parser::QUOTE;
 }
 quasiquote {
-  $this->token = Lexer::QUASIQUOTE;
+  $this->token = Parser::QUASIQUOTE;
 }
 unquote {
-  $this->token = Lexer::UNQUOTE;
+  $this->token = Parser::UNQUOTE;
 }
 unquote_splicing {
-  $this->token = Lexer::UNQUOTE_SPLICING;
+  $this->token = Parser::UNQUOTE_SPLICING;
 }
 */
 }
