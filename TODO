@@ -1,3 +1,5 @@
+* use r5rs 7.1 to inform the lexer/parser
+
 * README
 
 * parse into some php intermediary before interpreting
