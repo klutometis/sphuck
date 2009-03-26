@@ -1,6 +1,6 @@
 <?php
 
-class Lexer {
+class Lexer implements Iterator {
   const OPEN = 1;
   const CLOSE = 2;
   const NUMBER = 3;
@@ -10,17 +10,42 @@ class Lexer {
   const QUOTE = 7;
   const QUASIQUOTE = 8;
   const UNQUOTE = 9;
+  const UNQUOTE_SPLICING = 10;
 
   public $data;
   public $token;
   public $value;
   public $line;
+  public $old_count;
   public $count;
 
   function __construct($data) {
     $this->data = $data;
+    $this->old_count = -1;
     $this->count = 0;
     $this->line = 1;
+  }
+
+  function rewind() {
+    self::__construct($this->data);
+  }
+
+  function current() {
+    return $this->value;
+  }
+
+  function key() {
+    return $this->token;
+  }
+
+  function next() {
+    $this->old_count = $this->count;
+    $this->yylex();
+    return $this->value;
+  }
+
+  function valid() {
+    return $this->old_count != $this->count;
   }
 
 // Don't forget ,@ (not in perl sexp?)
@@ -41,6 +66,7 @@ dot = /[.]/
 quote = /\'/
 quasiquote = /\`/
 unquote = /\,/
+unquote_splicing = /\,\@/
 */
 
 /*!lex2php
@@ -76,19 +102,15 @@ quasiquote {
 unquote {
   $this->token = Lexer::UNQUOTE;
 }
+unquote_splicing {
+  $this->token = Lexer::UNQUOTE_SPLICING;
+}
 */
 }
 
-function tokenize($data) {
-  $lexemes[] = NULL;
-  $count = NULL;
-  $lexer = new Lexer($data);
-  while (true) {
-    $count = $lexer->count;
-    $lexer->yylex();
-    if ($count == $lexer->count)
-      break;
-    $lexemes[] = array($lexer->token => $lexer->value);
-  }
-  return $lexemes;
-  }
+function token_array($lexer) {
+  $tokens = NULL;
+  foreach ($lexer as $token => $value)
+    $tokens[] = array($token => $value);
+  return $tokens;
+}

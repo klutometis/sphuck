@@ -1,5 +1,7 @@
+.PHONY: test
+
 lexer.php: lexer.plex
 	plex lexer.plex
 
-test: lexer.php
+test:
 	php test/all.php
