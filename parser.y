@@ -20,78 +20,76 @@
  }
 
 sexpression ::= expressions. {
-  printf("sexpression: expression\n");
 }
 
-expressions ::= expressions expression.
+expressions ::= expressions expression. {
+}
 
-expressions ::= .
+expressions ::= . {
+}
 
 expression ::= NUMBER(N). {
-  printf("expression: number: %s\n", N);
   $this->values->push(new Number(intval(N)));
 }
 
 expression ::= STRING(S). {
-  printf("expression: string: %s\n", S);
   $this->values->push(new String(S));
 }
 
 expression ::= SYMBOL(S). {
-  printf("expression: symbol: %s\n", S);
   $this->values->push(new Symbol(S));
-  /* var_dump($this->yystack); */
 }
 
 expression ::= list. {
-  printf("expression: list\n");
   $this->values->push($this->expression);
 }
 
-expression ::= quoted.
-expression ::= quasiquoted.
-expression ::= unquoted.
-expression ::= unquote_spliced.
-
-/* we'll see this before the expression list */
-list ::= OPEN list_interior CLOSE. {
-  printf("list: open interior close\n");
-}
-
-list_interior ::= expression DOT expression. {
-  printf("interior: expression . expression\n");
-}
-
-/* an internal member of this tree node */
-list_interior ::= expression list_interior. {
-  printf("interior: expression interior\n");
-  $this->expression = cons($this->values->pop(),
-                           $this->expression);
-}
-
-/* last member of this tree node; we'll see this first */
-list_interior ::= expression. {
-  printf("interior: expression\n");
-  $this->expression = new Pair($this->values->pop());
-}
-
-quoted ::= QUOTE expression. {
-  printf("quoted: quoted expression\n");
+expression ::= quoted. {
   $this->values->push(cons(new Symbol('quote'),
                            new Pair($this->values->pop())));
 }
 
-quasiquoted ::= QUASIQUOTE expression. {
+expression ::= quasiquoted. {
   $this->values->push(cons(new Symbol('quasiquote'),
                            new Pair($this->values->pop())));
 }
-    
-unquoted ::= UNQUOTE expression. {
+
+expression ::= unquoted. {
   $this->values->push(cons(new Symbol('unquote'),
                            new Pair($this->values->pop())));
 }
 
-unquote_spliced ::= UNQUOTE_SPLICING expression. {
+expression ::= unquote_spliced. {
   $this->values->push(cons(new Symbol('unquote-splicing'),
                            new Pair($this->values->pop())));
+}
+
+list ::= OPEN list_interior CLOSE. {
+}
+
+list_interior ::= expression DOT expression. {
+  $cdr = $this->values->pop();
+  $car = $this->values->pop();
+  $this->expression = new Pair($car, $cdr);
+}
+
+list_interior ::= expression list_interior. {
+  $this->expression = cons($this->values->pop(),
+                           $this->expression);
+}
+
+list_interior ::= expression. {
+  $this->expression = new Pair($this->values->pop());
+}
+
+quoted ::= QUOTE expression. {
+}
+
+quasiquoted ::= QUASIQUOTE expression. {
+}
+    
+unquoted ::= UNQUOTE expression. {
+}
+
+unquote_spliced ::= UNQUOTE_SPLICING expression. {
 }
