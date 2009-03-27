@@ -1,8 +1,11 @@
+* environments with non-destructive merging
+
 * type stack with numbers (imaginary component; how to distinguish
   between exact (rational: num/denom) and inexact (float): subclasses
   of number? does each (exact, inexact) have imaginary components?)
 
-* use r5rs 7.1 to inform the lexer/parser
+* use r5rs 7.1 to inform the lexer/parser; we're lacking booleans,
+  vectors, etc.
 
 * README
 
