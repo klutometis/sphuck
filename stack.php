@@ -18,4 +18,8 @@ class Stack {
   function is_empty() {
     return count($this->data) == 0;
   }
+
+  function __toString() {
+    return implode("\n", array_map('strval', $this->data));
+  }
   }

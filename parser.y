@@ -3,6 +3,9 @@
 %include {
   require_once('stack.php');
   require_once('pair.php');
+  require_once('symbol.php');
+  require_once('string.php');
+  require_once('number.php');
  }
 
 %include_class {
@@ -26,17 +29,17 @@ expressions ::= .
 
 expression ::= NUMBER(N). {
   printf("expression: number: %s\n", N);
-  $this->values->push(intval(N));
+  $this->values->push(new Number(intval(N)));
 }
 
 expression ::= STRING(S). {
   printf("expression: string: %s\n", S);
-  $this->values->push(S);
+  $this->values->push(new String(S));
 }
 
 expression ::= SYMBOL(S). {
   printf("expression: symbol: %s\n", S);
-  $this->values->push('s: ' . S);
+  $this->values->push(new Symbol(S));
   /* var_dump($this->yystack); */
 }
 

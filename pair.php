@@ -1,14 +1,16 @@
 <?php
 
 class Pair {
-  public $car = NULL;
-  public $cdr = NULL;
+  public $car;
+  public $cdr;
   function __construct($car, $cdr=NULL) {
     $this->car = $car;
     $this->cdr = $cdr;
   }
   function __toString() {
-    
+    return sprintf('(%s . %s)',
+                   $this->car,
+                   nullp($this->cdr) ? 'nil' : $this->cdr);
   }
   }
 
@@ -28,8 +30,7 @@ function fold_right($cons, $nil, $pair) {
 }
 
 function nullp($pair) {
-  // ambiguity?
-  return is_null($pair) || is_null($pair->car);
+  return is_null($pair);
 }
 
 function car($pair) {
