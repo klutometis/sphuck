@@ -75,7 +75,23 @@ list_interior ::= expression. {
   $this->expression = new Pair($this->values->pop());
 }
 
-quoted ::= QUOTE expression.
-quasiquoted ::= QUASIQUOTE expression.
-unquoted ::= UNQUOTE expression.
-unquote_spliced ::= UNQUOTE_SPLICING expression.
+quoted ::= QUOTE expression. {
+  printf("quoted: quoted expression\n");
+  $this->values->push(cons(new Symbol('quote'),
+                           new Pair($this->values->pop())));
+}
+
+quasiquoted ::= QUASIQUOTE expression. {
+  $this->values->push(cons(new Symbol('quasiquote'),
+                           new Pair($this->values->pop())));
+}
+    
+unquoted ::= UNQUOTE expression. {
+  $this->values->push(cons(new Symbol('unquote'),
+                           new Pair($this->values->pop())));
+}
+
+unquote_spliced ::= UNQUOTE_SPLICING expression. {
+  $this->values->push(cons(new Symbol('unquote-splicing'),
+                           new Pair($this->values->pop())));
+}
