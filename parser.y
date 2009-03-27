@@ -1,21 +1,28 @@
 %declare_class { class Parser }
+
 %include {
   require_once('stack.php');
-  require_once('list.php');
+  require_once('pair.php');
  }
+
 %include_class {
   public $values;
   public $expression;
 
   function __construct() {
-    $this->expression = new Lst();
+    $this->expression = NULL;
+    /* (VALUES ...) */
     $this->values = new Stack();
   }
  }
 
-sexpression ::= expression. {
+sexpression ::= expressions. {
   printf("sexpression: expression\n");
 }
+
+expressions ::= expressions expression.
+
+expressions ::= .
 
 expression ::= NUMBER(N). {
   printf("expression: number: %s\n", N);
@@ -36,7 +43,6 @@ expression ::= SYMBOL(S). {
 expression ::= list. {
   printf("expression: list\n");
   $this->values->push($this->expression);
-  /* var_dump($this->yystack); */
 }
 
 expression ::= quoted.
@@ -56,13 +62,14 @@ list_interior ::= expression DOT expression. {
 /* an internal member of this tree node */
 list_interior ::= expression list_interior. {
   printf("interior: expression interior\n");
-  $this->expression->cons(array_pop($this->values));
+  $this->expression = cons($this->values->pop(),
+                           $this->expression);
 }
 
 /* last member of this tree node; we'll see this first */
 list_interior ::= expression. {
   printf("interior: expression\n");
-  $this->expression = new Lst(array_pop($this->values));
+  $this->expression = new Pair($this->values->pop());
 }
 
 quoted ::= QUOTE expression.
