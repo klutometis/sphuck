@@ -29,3 +29,25 @@ function eval($expression, $environment) {
   else
     error("Unknown expression type -- EVAL", $expression);
   }
+
+function apply($procedure, $arguments) {
+  if (is_primitive_procedure($procedure))
+    apply_primitive_procedure($procedure);
+  elseif (is_compound_procedure($procedure))
+    eval_sequence(procedure_body($procedure),
+                  extend_environment(procedure_parameters($procedure),
+                                     $arguments,
+                                     procedure_environment($procedure)));
+  else
+    error("Unknown procedure type -- APPLY", $procedure);
+}
+
+function list_of_values($expressions, $environment) {
+  if (are_no_operands($expressions))
+    return NULL;
+  else
+    return cons(eval(first_operand($expressions),
+                     $environment),
+                list_of_values(rest_operands($expressions),
+                               $environment));
+}

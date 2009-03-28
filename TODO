@@ -1,3 +1,7 @@
+* write a quasi-scheme in PHP, such that the metacirc runs almost
+  unaltered; may be slower than some PHP-centric strategy, but sphuck
+  it!
+
 * environments with non-destructive merging
 
 * type stack with numbers (imaginary component; how to distinguish
