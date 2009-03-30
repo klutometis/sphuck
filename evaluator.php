@@ -51,3 +51,19 @@ function list_of_values($expressions, $environment) {
                 list_of_values(rest_operands($expressions),
                                $environment));
 }
+
+function eval_if($expression, $environment) {
+  if (eval(if_predicate($expression), $environment))
+    return eval(if_consequent($expression), $environment);
+  else
+    return eval(if_alternative($expression), $environment);
+}
+
+function eval_sequence($expressions, $environment) {
+  if (is_last_expression($expressions))
+    return eval(first_expression($expressions));
+  else {
+    eval(first_expression($expressions));
+    return eval_sequence(rest_expressions($expressions),
+                         $environment);
+}
