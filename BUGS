@@ -1,0 +1,3 @@
+* does the machine of chapter 5 give sufficient control for
+  implementing things like continuations/macros, whereas the evaluator
+  of chapter 4 does not?

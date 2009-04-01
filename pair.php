@@ -40,6 +40,7 @@ function car($pair) {
     return $pair->car;
 }
 
+// will return NULL in the case of Pair(x, NULL)
 function cdr($pair) {
   if (nullp($pair))
     throw new Exception('CDRed a null list');

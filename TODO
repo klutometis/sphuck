@@ -1,3 +1,18 @@
+* might need an actual Nil type so we can do things like is_eq(Nil,
+  Nil) by dispatching on class.
+
+* distinguish between constants created with QUOTE and constructed
+  values?
+
+* why make an exception for the schemish COND and IF, if includeth
+  CONS, etc.? control structures are superfluous?
+
+* quote mechanism is mysterious: quote(<string>) -> symbol;
+  quote(<number>) -> number; quote(<list>) -> list; quote(<vector>) ->
+  vector? problem is: quote(<string>) -> string; no way to distinguish
+  between symbols and strings in php except with recourse to their
+  quasi-scheme types.
+
 * write a quasi-scheme in PHP, such that the metacirc runs almost
   unaltered; may be slower than some PHP-centric strategy, but sphuck
   it!
