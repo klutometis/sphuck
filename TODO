@@ -1,3 +1,10 @@
+* symbol() function that memoizes symbols?
+
+* TRUE and FALSE singletons?
+
+* some things made more elegant: dispatch on type, etc.; inner
+  functions.
+
 * might need an actual Nil type so we can do things like is_eq(Nil,
   Nil) by dispatching on class.
 

@@ -228,3 +228,154 @@ function sequence_to_expression($sequence) {
 function make_begin($sequence) {
   return cons(new Symbol('begin'), $sequence);
 }
+
+function is_application($expression) {
+  return is_pair($expression);
+}
+
+function operator($expression) {
+  return car($expression);
+}
+
+function operands($expression) {
+  return cdr($expression);
+}
+
+function are_no_operands($operands) {
+  return is_null($operands);
+}
+
+function first_operand($operands) {
+  return car($operands);
+}
+
+function rest_operands($operands) {
+  return cdr($operands);
+}
+
+function is_cond($expression) {
+  return is_tagged_list($expression, new Symbol('cond'));
+}
+
+function cond_clauses($expression) {
+  return cdr($expression);
+}
+
+function is_cond_else_clause($clause) {
+  return is_eq(cond_predicate($clause),
+               new Symbol('else'));
+}
+
+function cond_predicate($clause) {
+  return car($clause);
+}
+
+function cond_actions($clause) {
+  return cdr($clause);
+}
+
+function cond_to_if($expression) {
+  return expand_clauses(cond_clauses($expression));
+}
+
+// need error()
+function expand_clauses($clauses) {
+  if (is_null($clauses))
+    return new Boolean(false);
+  else {
+    $first = car($clauses);
+    $rest = cdr($clauses);
+    if (cond_else_clause($first)) {
+      if (is_null($rest))
+        return sequence_to_expression(cond_actions(first));
+      else
+        error('ELSE clause isn\'t last -- COND->IF', $clauses);
+    } else {
+      return make_if(cond_predicate($first),
+                     sequence_to_expression(cond_actions($first)),
+                     // suffers in absence of tail recursion! argument
+                     // for machine? or rewrite recursion with a
+                     // trampoline:
+                     // http://loveandtheft.org/2009/01/20/tail-call-recursion-optimization-in-php/
+                     expand_clauses($rest));
+    }
+  }
+}
+
+function is_true($expression) {
+  return !is_false($expression);
+}
+
+// FALSE singleton?
+function is_false($expression) {
+  return is_eq($expression, new Boolean(false));
+}
+
+// need list()
+function make_procedure($parameters, $body, $environment) {
+  return list(new Symbol('procedure'),
+              $parameters,
+              $body,
+              $environment);
+}
+
+// symbol() function that memoizes symbols?
+function is_compound_procedure($procedure) {
+  return is_tagged_list($procedure, new Symbol('procedure'));
+}
+
+function procedure_parameters($procedure) {
+  return cadr($procedure);
+}
+
+function procedure_body($procedure) {
+  return caddr($procedure);
+}
+
+function procedure_environment($procedure) {
+  return cadddr($procedure);
+}
+
+function enclosing_environment($environment) {
+  return cdr($environment);
+}
+
+function first_frame($environment) {
+  return car($environment);
+}
+
+$the_empty_environment = NULL;
+
+function make_frame($variables, $values) {
+  return cons($variables, $values);
+}
+
+function frame_variables($frame) {
+  return car($frame);
+}
+
+function frame_values($frame) {
+  return cdr($frame);
+}
+
+// need set_car(), set_cdr(); also: could do better with a hash table?
+function add_binding_to_frame($variable, $value, $frame) {
+  set_car($frame, cons($variable, car($frame)));
+  set_cdr($frame, cons($value, cdr($frame)));
+}
+
+// need length()
+function extend_environment($variables, $values, $base_environment) {
+  if (length($variables) == length($values))
+    return cons(make_frame($variables, $values), $base_environment);
+  else {
+    if (length($variables) < length($values))
+      error('Too many arguments supplied', $variables, $values);
+    else
+      error('Too few arguments supplied', $variables, $values);
+  }
+}
+
+function lookup_variable_value($variable, $environment) {
+  
+}
