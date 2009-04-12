@@ -121,7 +121,7 @@ function is_tagged_list($expression, $tag) {
     return false;
 }
 
-function is_assignment($expression, $tag) {
+function is_assignment($expression) {
   return is_tagged_list($expression, symbol('set!'));
 }
 
@@ -529,7 +529,8 @@ function driver_loop() {
     $output_prompt,
     $the_global_environment;
   prompt_for_input($input_prompt);
-  $input = fgets($stdin);
+  $parser = new Parser();
+  $input = $parser->parse(fgets($stdin));
   $output = scheval($input, $the_global_environment);
   announce_output($output_prompt);
   user_print($output);
@@ -556,3 +557,11 @@ function user_print($object) {
 
 $the_global_environment = setup_environment();
 
+
+function error() {
+  $objects = func_get_args();
+  $message = implode(array_map(function($object) {
+        return (string) $object;
+      }, $objects));
+  throw new Exception($message);
+}

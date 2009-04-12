@@ -6,6 +6,7 @@
   require_once('symbol.php');
   require_once('string.php');
   require_once('number.php');
+  require_once('lexer.php');
  }
 
 %include_class {
@@ -18,7 +19,7 @@
     $this->values = new Stack();
   }
 
-  function heynow($data) {
+  function parse($data) {
     foreach (new Lexer($data) as $token => $value) {
       $this->doParse($token, $value);
     }

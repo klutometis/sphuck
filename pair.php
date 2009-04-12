@@ -23,7 +23,7 @@ function map($f, $pair) {
 }
 
 // reserved for memoization
-function pair($car, $cdr) {
+function pair($car, $cdr=NULL) {
   return new Pair($car, $cdr);
 }
 
