@@ -562,6 +562,6 @@ function error() {
   $objects = func_get_args();
   $message = implode(array_map(function($object) {
         return (string) $object;
-      }, $objects));
+      }, $objects), ' ');
   throw new Exception($message);
 }
