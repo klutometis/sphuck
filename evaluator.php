@@ -550,13 +550,23 @@ function apply_primitive_procedure($procedure, $arguments) {
 
 $input_prompt = string(';;; M-Eval input:');
 $output_prompt = string(';;; M-Eval value:');
-$stdin = fopen('php://stdin', 'r');
+$current_input_port = new Port(fopen('php://stdin', 'r'));
 
-function read() {
-  global $stdin;
-  // parser persistance?
-  $parser = new Parser();
-  return array_car($parser->parse(fgets($stdin))->data);
+// really a readline (fgets); need a read() that stops after one
+// expression.
+function read($port=NULL) {
+  global $current_input_port, $eof;
+  // NULL/false ambiguity
+  if (!$port)
+    $port = $current_input_port;
+  $handle = $port->handle;
+  if (feof($handle))
+    return $eof;
+  else {
+    // parser persistance?
+    $parser = new Parser();
+    return array_car($parser->parse(fgets($handle))->data);
+  }
 }
 
 function driver_loop() {
@@ -565,6 +575,8 @@ function driver_loop() {
     $the_global_environment;
   prompt_for_input($input_prompt);
   $input = read();
+  if (is_eof_object($input))
+    exit(0);
   $output = scheval($input, $the_global_environment);
   announce_output($output_prompt);
   user_print($output);

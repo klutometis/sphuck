@@ -1,28 +1,51 @@
+# -*- mode: org;-*-
+* TODO a read that stops after one expression
+* TODO name-munging and resort to primitive procedures without needing
+  to register them in $primitive_procedures?
+* TODO some mechanism for translating scheme values to php
 * TODO parser persistance with read()?
 * TODO general scheme file for things like type predicates, map,
   equality, etc.?
-* TODO [#A] symbol() function that memoizes symbols?
-** TODO each type to have memoizing constructor: Boolean -> boolean(),
+* DONE [#A] symbol() function that memoizes symbols?
+  CLOSED: [2009-04-12 Sun 13:42]
+  - CLOSING NOTE [2009-04-12 Sun 13:42]
+** DONE each type to have memoizing constructor: Boolean -> boolean(),
+   CLOSED: [2009-04-12 Sun 13:41]
+   - CLOSING NOTE [2009-04-12 Sun 13:42] \\
+     not yet char, vector, pair; but lst
    String -> string(), Number -> number(), Char -> char(), Vector ->
    vector(), ...? What about Pair -> pair(): immutable pairs?
 * TODO implement the solved exercises as opposed to feral book.
-* TODO TRUE and FALSE singletons?
+* DONE TRUE and FALSE singletons?
+  CLOSED: [2009-04-12 Sun 13:42]
+  - CLOSING NOTE [2009-04-12 Sun 13:42] \\
+    global $true/$false, as well as boolean() memoization
 * TODO some things made more elegant: dispatch on type, etc.; inner
   functions.
 * TODO might need an actual Nil type so we can do things like
   is_eq(Nil, Nil) by dispatching on class.
-* TODO distinguish between constants created with QUOTE and constructed values?
-* TODO why make an exception for the schemish COND and IF, if includeth
+* TODO distinguish between constants created with QUOTE and constructed
+  values?
+* CANCELED why make an exception for the schemish COND and IF, if includeth
+  CLOSED: [2009-04-12 Sun 13:43]
+  - CLOSING NOTE [2009-04-12 Sun 13:43] \\
+    distinguish between working with quasi-scheme in php and scheme
   CONS, etc.? control structures are superfluous?
 * TODO quote mechanism is mysterious: quote(<string>) -> symbol;
   quote(<number>) -> number; quote(<list>) -> list; quote(<vector>) ->
   vector? problem is: quote(<string>) -> string; no way to distinguish
   between symbols and strings in php except with recourse to their
   quasi-scheme types.
-* TODO write a quasi-scheme in PHP, such that the metacirc runs almost
+* DONE write a quasi-scheme in PHP, such that the metacirc runs almost
   unaltered; may be slower than some PHP-centric strategy, but sphuck
   it!
-* TODO environments with non-destructive merging
+  CLOSED: [2009-04-12 Sun 13:43]
+  - CLOSING NOTE [2009-04-12 Sun 13:44] \\
+    did indeed that; may opt for machine later a la ch. 5?
+* DONE environments with non-destructive merging
+  CLOSED: [2009-04-12 Sun 13:44]
+  - CLOSING NOTE [2009-04-12 Sun 13:44] \\
+    for free with metacirc
 * TODO type stack with numbers (imaginary component; how to distinguish
   between exact (rational: num/denom) and inexact (float): subclasses
   of number? does each (exact, inexact) have imaginary components?)
