@@ -17,3 +17,12 @@ class Number {
                    $this->imaginary);
   }
   }
+
+// reserved for memoization?
+function number($real, $imaginary=0) {
+  return new Number($real, $imaginary);
+}
+
+function is_number($object) {
+  return $object instanceof Number;
+}

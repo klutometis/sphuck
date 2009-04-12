@@ -11,3 +11,8 @@ class String {
     return sprintf('"%s"', $this->string);
   }
   }
+
+// memoization?
+function string($string='') {
+  return new String($string);
+}

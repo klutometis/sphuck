@@ -2,7 +2,7 @@
 
 // the currency of all this shit are types in quasi-scheme; thus cdr,
 // etc. work
-function eval($expression, $environment) {
+function scheval($expression, $environment) {
   if (is_self_evaluating($expression))
     return $expression;
   elseif (is_variable($expression))
@@ -23,10 +23,10 @@ function eval($expression, $environment) {
     return eval_sequence(begin_actions($expression),
                          $environment);
   elseif (is_cond($expression))
-    return eval(cond_to_if($expression),
-                $environment);
+    return scheval(cond_to_if($expression),
+                   $environment);
   elseif (is_application($expression))
-    return apply(eval(operator($expression), $environment),
+    return apply(scheval(operator($expression), $environment),
                  list_of_values(operands($expression), $environment));
   else
     error("Unknown expression type -- EVAL", $expression);
@@ -48,24 +48,24 @@ function list_of_values($expressions, $environment) {
   if (are_no_operands($expressions))
     return NULL;
   else
-    return cons(eval(first_operand($expressions),
+    return cons(scheval(first_operand($expressions),
                      $environment),
                 list_of_values(rest_operands($expressions),
                                $environment));
 }
 
 function eval_if($expression, $environment) {
-  if (eval(if_predicate($expression), $environment))
-    return eval(if_consequent($expression), $environment);
+  if (scheval(if_predicate($expression), $environment))
+    return scheval(if_consequent($expression), $environment);
   else
-    return eval(if_alternative($expression), $environment);
+    return scheval(if_alternative($expression), $environment);
 }
 
 function eval_sequence($expressions, $environment) {
   if (is_last_expression($expressions))
-    return eval(first_expression($expressions));
+    return scheval(first_expression($expressions));
   else {
-    eval(first_expression($expressions));
+    scheval(first_expression($expressions));
     return eval_sequence(rest_expressions($expressions),
                          $environment);
   }
@@ -73,14 +73,14 @@ function eval_sequence($expressions, $environment) {
 
 function eval_assignment($expression, $environment) {
   set_variable_value(assignment_variable($expression),
-                     eval(assignment_value($expression),
+                     scheval(assignment_value($expression),
                           $environment),
                      $environment);
 }
 
 function eval_definition($expression, $environment) {
   define_variable(definition_variable($expression),
-                  eval(definition_value($expression),
+                  scheval(definition_value($expression),
                        $environment),
                   $environment);
 }
@@ -100,7 +100,7 @@ function is_variable($expression) {
 }
 
 function is_quoted($expression) {
-  return is_tagged_list($expression, new Symbol('quote'));
+  return is_tagged_list($expression, symbol('quote'));
 }
 
 // can cadr Pairs; what about composition of car and cdr?
@@ -122,7 +122,7 @@ function is_tagged_list($expression, $tag) {
 }
 
 function is_assignment($expression, $tag) {
-  return is_tagged_list($expression, new Symbol('set!'));
+  return is_tagged_list($expression, symbol('set!'));
 }
 
 function assignment_variable($expression) {
@@ -134,7 +134,7 @@ function assignment_value($expression) {
 }
 
 function is_definition($expression) {
-  return is_tagged_list($expression, new Symbol('define'));
+  return is_tagged_list($expression, symbol('define'));
 }
 
 function definition_variable($expression) {
@@ -153,7 +153,7 @@ function definition_value($expression) {
 }
 
 function is_lambda($expression) {
-  return is_tagged_list($expression, new Symbol('lambda'));
+  return is_tagged_list($expression, symbol('lambda'));
 }
 
 function lambda_parameters($expression) {
@@ -165,12 +165,12 @@ function lambda_body($expression) {
 }
 
 function make_lambda($parameters, $body) {
-  return cons(new Symbol('lambda'),
+  return cons(symbol('lambda'),
               cons($parameters, $body));
 }
 
 function is_if($expression) {
-  return is_tagged_list($expression, new Symbol('if'));
+  return is_tagged_list($expression, symbol('if'));
 }
 
 function if_predicate($expression) {
@@ -183,21 +183,21 @@ function if_consequent($expression) {
 
 function if_alternative($expression) {
   if (is_null(cdddr($expression)))
-    return new Boolean(false);
+    return $false;
   else
     return cadddr($expression);
 }
 
 // need list()
 function make_if($predicate, $consequent, $alternative) {
-  return list(new Symbol('if'),
-              $predicate,
-              $consequent,
-              $alternative);
+  return lst(symbol('if'),
+             $predicate,
+             $consequent,
+             $alternative);
 }
 
 function is_begin($expression) {
-  return is_tagged_list($expression, new Symbol('begin'));
+  return is_tagged_list($expression, symbol('begin'));
 }
 
 function begin_actions($expression) {
@@ -226,7 +226,7 @@ function sequence_to_expression($sequence) {
 }
 
 function make_begin($sequence) {
-  return cons(new Symbol('begin'), $sequence);
+  return cons(symbol('begin'), $sequence);
 }
 
 function is_application($expression) {
@@ -254,7 +254,7 @@ function rest_operands($operands) {
 }
 
 function is_cond($expression) {
-  return is_tagged_list($expression, new Symbol('cond'));
+  return is_tagged_list($expression, symbol('cond'));
 }
 
 function cond_clauses($expression) {
@@ -263,7 +263,7 @@ function cond_clauses($expression) {
 
 function is_cond_else_clause($clause) {
   return is_eq(cond_predicate($clause),
-               new Symbol('else'));
+               symbol('else'));
 }
 
 function cond_predicate($clause) {
@@ -281,7 +281,7 @@ function cond_to_if($expression) {
 // need error()
 function expand_clauses($clauses) {
   if (is_null($clauses))
-    return new Boolean(false);
+    return $false;
   else {
     $first = car($clauses);
     $rest = cdr($clauses);
@@ -308,20 +308,20 @@ function is_true($expression) {
 
 // FALSE singleton?
 function is_false($expression) {
-  return is_eq($expression, new Boolean(false));
+  return is_eq($expression, $false);
 }
 
 // need list()
 function make_procedure($parameters, $body, $environment) {
-  return list(new Symbol('procedure'),
-              $parameters,
-              $body,
-              $environment);
+  return lst(symbol('procedure'),
+             $parameters,
+             $body,
+             $environment);
 }
 
 // symbol() function that memoizes symbols?
 function is_compound_procedure($procedure) {
-  return is_tagged_list($procedure, new Symbol('procedure'));
+  return is_tagged_list($procedure, symbol('procedure'));
 }
 
 function procedure_parameters($procedure) {
@@ -376,6 +376,183 @@ function extend_environment($variables, $values, $base_environment) {
   }
 }
 
+// namespace candidates? trampoline candidates?
 function lookup_variable_value($variable, $environment) {
-  
+  return lookup_variable_value_env_loop($environment);
 }
+
+function lookup_variable_value_env_loop($variable, $environment) {
+  if (is_eq($environment, $the_empty_environment))
+    error('Unbound variable', $variable);
+  else {
+    $frame = first_frame($environment);
+    return lookup_variable_value_env_loop_scan($variable,
+                                               $environment,
+                                               frame_variables($frame),
+                                               frame_values($frame));
+  }
+}
+
+function lookup_variable_value_env_loop_scan($variable,
+                                             $environment,
+                                             $variables,
+                                             $values) {
+  if (is_null($variables))
+    return lookup_variable_value_env_loop($variable,
+                                          enclosing_environment($environment));
+  elseif (is_eq($variable, car($variables)))
+    return car($values);
+  else
+    return lookup_variable_value_env_loop_scan($variable,
+                                               $environment,
+                                               cdr($variables),
+                                               cdr($values));
+}
+
+function set_variable_value($variable, $value, $environment) {
+  return set_variable_value_loop($variable, $value, $environment);
+}
+
+function set_variable_value_env_loop($variable, $value, $enviroment) {
+  if (is_eq($environment, $the_empty_environment))
+    error('Unbound variable', $variable);
+  else {
+    $frame = first_frame($environment);
+    set_variable_value_env_loop_scan($variable,
+                                     $value,
+                                     $environment,
+                                     frame_variables($frame),
+                                     frame_values($frame));
+  }
+}
+
+function set_variable_value_env_loop_scan($variable,
+                                          $value,
+                                          $enviroment,
+                                          $variables,
+                                          $values) {
+  if (is_null($variables))
+    return set_variable_value_env_loop($variable,
+                                       $value,
+                                       enclosing_environment($environment));
+  elseif (is_eq($variable, car($variables)))
+    return set_car($values, $value);
+  else
+    return set_variable_value_env_loop_scan($variable,
+                                            $value,
+                                            $environment,
+                                            cdr($variables),
+                                            cdr($values));
+}
+
+function define_variable($variable,
+                         $value,
+                         $environment) {
+  $frame = first_frame($environment);
+  define_variable_scan($variable,
+                       $value,
+                       $environment,
+                       $frame,
+                       frame_variables($frame),
+                       frame_values($frame));
+}
+
+function define_variable_scan($variable,
+                              $value,
+                              $frame,
+                              $environment,
+                              $variables,
+                              $values) {
+  if (is_null($variables))
+    return add_binding_to_frame($variable, $value, $frame);
+  elseif (is_eq($variable, car($variables)))
+    return set_car($values, $value);
+  else
+    return define_variable_scan($variable,
+                                $value,
+                                $frame,
+                                $environment,
+                                cdr($variables),
+                                cdr($values));
+}
+
+function setup_environment() {
+  global $the_empty_environment, $true, $false;
+  $initial_environment = extend_environment(primitive_procedure_names(),
+                                            primitive_procedure_objects(),
+                                            $the_empty_environment);
+  define_variable(symbol('true'), $true, $initial_environment);
+  define_variable(symbol('false'), $false, $initial_environment);
+  return $initial_environment;
+}
+
+$the_global_environment = setup_environment();
+
+function is_primitive_procedure($procedure) {
+  return is_tagged_list($procedure, symbol('primitive'));
+}
+
+function primitive_implementation($procedure) {
+  return cadr($procedure);
+}
+
+$primitive_procedures = lst(lst(symbol('car'), 'car'),
+                            lst(symbol('cdr'), 'cdr'),
+                            lst(symbol('cons'), 'cons'),
+                            lst(symbol('null?'), 'is_null')
+                            );
+
+function primitive_procedure_names() {
+  global $primitive_procedures;
+  return map('car', $primitive_procedures);
+}
+
+function primitive_procedure_objects() {
+  global $primitive_procedures;
+  return map(function($procedure) { return lst(symbol('primitive'),
+                                               cadr($procedure)); },
+    $primitive_procedures);
+}
+
+function apply_primitive_procedure($procedure, $arguments) {
+  return apply_in_underlying_chandala(primitive_implementation($procedure),
+                                      $arguments);
+}
+
+$input_prompt = string(';;; M-Eval input:');
+$output_prompt = string(';;; M-Eval value:');
+$stdin = fopen('php://stdin', 'r');
+
+function driver_loop() {
+  global $stdin,
+    $input_prompt,
+    $output_prompt,
+    $the_global_environment;
+  prompt_for_input($input_prompt);
+  $input = fgets($stdin);
+  $output = scheval($input, $the_global_environment);
+  announce_output($output_prompt);
+  user_print($output);
+  driver_loop();
+}
+
+function prompt_for_input($string) {
+  print "\n\n$string\n";
+}
+
+function announce_output($string) {
+  printf("\n%s\n", $string);
+}
+
+function user_print($object) {
+  if (is_compound_procedure($object))
+    print lst(symbol('compound-procedure'),
+              procedure_parameters($object),
+              procedure_body($object),
+              symbol('<procedure-body>'));
+  else
+    print $object;
+}
+
+$the_global_environment = setup_environment();
+

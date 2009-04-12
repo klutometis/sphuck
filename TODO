@@ -1,38 +1,31 @@
-* symbol() function that memoizes symbols?
-
-* TRUE and FALSE singletons?
-
-* some things made more elegant: dispatch on type, etc.; inner
+* TODO general scheme file for things like type predicates, map,
+  equality, etc.?
+* TODO [#A] symbol() function that memoizes symbols?
+** TODO each type to have memoizing constructor: Boolean -> boolean(),
+   String -> string(), Number -> number(), Char -> char(), Vector ->
+   vector(), ...? What about Pair -> pair(): immutable pairs?
+* TODO implement the solved exercises as opposed to feral book.
+* TODO TRUE and FALSE singletons?
+* TODO some things made more elegant: dispatch on type, etc.; inner
   functions.
-
-* might need an actual Nil type so we can do things like is_eq(Nil,
-  Nil) by dispatching on class.
-
-* distinguish between constants created with QUOTE and constructed
-  values?
-
-* why make an exception for the schemish COND and IF, if includeth
+* TODO might need an actual Nil type so we can do things like
+  is_eq(Nil, Nil) by dispatching on class.
+* TODO distinguish between constants created with QUOTE and constructed values?
+* TODO why make an exception for the schemish COND and IF, if includeth
   CONS, etc.? control structures are superfluous?
-
-* quote mechanism is mysterious: quote(<string>) -> symbol;
+* TODO quote mechanism is mysterious: quote(<string>) -> symbol;
   quote(<number>) -> number; quote(<list>) -> list; quote(<vector>) ->
   vector? problem is: quote(<string>) -> string; no way to distinguish
   between symbols and strings in php except with recourse to their
   quasi-scheme types.
-
-* write a quasi-scheme in PHP, such that the metacirc runs almost
+* TODO write a quasi-scheme in PHP, such that the metacirc runs almost
   unaltered; may be slower than some PHP-centric strategy, but sphuck
   it!
-
-* environments with non-destructive merging
-
-* type stack with numbers (imaginary component; how to distinguish
+* TODO environments with non-destructive merging
+* TODO type stack with numbers (imaginary component; how to distinguish
   between exact (rational: num/denom) and inexact (float): subclasses
   of number? does each (exact, inexact) have imaginary components?)
-
-* use r5rs 7.1 to inform the lexer/parser; we're lacking booleans,
+* TODO use r5rs 7.1 to inform the lexer/parser; we're lacking booleans,
   vectors, etc.
-
-* README
-
-* sphuck namespace for lexer/parser
+* TODO README
+* TODO sphuck namespace for lexer/parser

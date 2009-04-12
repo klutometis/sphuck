@@ -17,6 +17,14 @@
     /* (VALUES ...) */
     $this->values = new Stack();
   }
+
+  function heynow($data) {
+    foreach (new Lexer($data) as $token => $value) {
+      $this->doParse($token, $value);
+    }
+    $this->doParse(0, 0);
+    return $this->values;
+  }
  }
 
 sexpression ::= expressions. {
@@ -29,15 +37,15 @@ expressions ::= . {
 }
 
 expression ::= NUMBER(N). {
-  $this->values->push(new Number(intval(N)));
+  $this->values->push(number(intval(N)));
 }
 
 expression ::= STRING(S). {
-  $this->values->push(new String(S));
+  $this->values->push(string(S));
 }
 
 expression ::= SYMBOL(S). {
-  $this->values->push(new Symbol(S));
+  $this->values->push(string(S));
 }
 
 expression ::= list. {
@@ -45,23 +53,23 @@ expression ::= list. {
 }
 
 expression ::= quoted. {
-  $this->values->push(cons(new Symbol('quote'),
-                           new Pair($this->values->pop())));
+  $this->values->push(cons(symbol('quote'),
+                           pair($this->values->pop())));
 }
 
 expression ::= quasiquoted. {
-  $this->values->push(cons(new Symbol('quasiquote'),
-                           new Pair($this->values->pop())));
+  $this->values->push(cons(symbol('quasiquote'),
+                           pair($this->values->pop())));
 }
 
 expression ::= unquoted. {
-  $this->values->push(cons(new Symbol('unquote'),
-                           new Pair($this->values->pop())));
+  $this->values->push(cons(symbol('unquote'),
+                           pair($this->values->pop())));
 }
 
 expression ::= unquote_spliced. {
-  $this->values->push(cons(new Symbol('unquote-splicing'),
-                           new Pair($this->values->pop())));
+  $this->values->push(cons(symbol('unquote-splicing'),
+                           pair($this->values->pop())));
 }
 
 list ::= OPEN list_interior CLOSE. {
@@ -70,7 +78,7 @@ list ::= OPEN list_interior CLOSE. {
 list_interior ::= expression DOT expression. {
   $cdr = $this->values->pop();
   $car = $this->values->pop();
-  $this->expression = new Pair($car, $cdr);
+  $this->expression = pair($car, $cdr);
 }
 
 list_interior ::= expression list_interior. {
@@ -79,7 +87,7 @@ list_interior ::= expression list_interior. {
 }
 
 list_interior ::= expression. {
-  $this->expression = new Pair($this->values->pop());
+  $this->expression = pair($this->values->pop());
 }
 
 quoted ::= QUOTE expression. {
