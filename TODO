@@ -1,3 +1,4 @@
+* TODO parser persistance with read()?
 * TODO general scheme file for things like type predicates, map,
   equality, etc.?
 * TODO [#A] symbol() function that memoizes symbols?

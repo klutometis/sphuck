@@ -6,7 +6,6 @@
   require_once('symbol.php');
   require_once('string.php');
   require_once('number.php');
-  require_once('lexer.php');
  }
 
 %include_class {
@@ -24,7 +23,9 @@
       $this->doParse($token, $value);
     }
     $this->doParse(0, 0);
-    return $this->values;
+    $values = $this->values;
+    $this->__construct();
+    return $values;
   }
  }
 
@@ -46,7 +47,7 @@ expression ::= STRING(S). {
 }
 
 expression ::= SYMBOL(S). {
-  $this->values->push(string(S));
+  $this->values->push(symbol(S));
 }
 
 expression ::= list. {

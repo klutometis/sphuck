@@ -6,6 +6,13 @@ class Boolean {
   function __construct($value) {
     $this->value = $value;
   }
+
+  function __toString() {
+    if ($this->value)
+      return '#t';
+    else
+      return '#f';
+  }
   }
 
 $true = new Boolean(true);

@@ -39,16 +39,20 @@ function nullp($pair) {
 }
 
 function car($pair) {
-  if (nullp($pair))
-    throw new Exception('CARed a null list');
+  if (!is_pair($pair))
+    error('Can\'t CAR a non-pair -- CAR');
+  elseif (nullp($pair))
+    error('CARed a null list -- CAR');
   else
     return $pair->car;
 }
 
 // will return NULL in the case of Pair(x, NULL)
 function cdr($pair) {
-  if (nullp($pair))
-    throw new Exception('CDRed a null list');
+  if (!is_pair($pair))
+    error('Can\'t CDR a non-pair -- CDR');
+  elseif (nullp($pair))
+    error('CDRed a null list -- CDR');
   else
     return $pair->cdr;
 }
@@ -105,7 +109,7 @@ function is_eq($a, $b) {
 
 // have to discover function composition
 function cadr($pair) {
-  car(cdr($pair));
+  return car(cdr($pair));
 }
 
 function is_pair($object) {

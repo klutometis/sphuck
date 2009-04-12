@@ -34,12 +34,12 @@ function scheval($expression, $environment) {
 
 function apply($procedure, $arguments) {
   if (is_primitive_procedure($procedure))
-    apply_primitive_procedure($procedure);
+    return apply_primitive_procedure($procedure, $arguments);
   elseif (is_compound_procedure($procedure))
-    eval_sequence(procedure_body($procedure),
-                  extend_environment(procedure_parameters($procedure),
-                                     $arguments,
-                                     procedure_environment($procedure)));
+    return eval_sequence(procedure_body($procedure),
+                         extend_environment(procedure_parameters($procedure),
+                                            $arguments,
+                                            procedure_environment($procedure)));
   else
     error("Unknown procedure type -- APPLY", $procedure);
 }
@@ -85,10 +85,13 @@ function eval_definition($expression, $environment) {
                   $environment);
 }
 
+// had to add an is_null because NULL doesn't evaluate as list
 function is_self_evaluating($expression) {
   if (is_number($expression))
     return true;
   elseif(is_string($expression))
+    return true;
+  elseif(is_null($expression))
     return true;
   else
     return false;
@@ -378,10 +381,11 @@ function extend_environment($variables, $values, $base_environment) {
 
 // namespace candidates? trampoline candidates?
 function lookup_variable_value($variable, $environment) {
-  return lookup_variable_value_env_loop($environment);
+  return lookup_variable_value_env_loop($variable, $environment);
 }
 
 function lookup_variable_value_env_loop($variable, $environment) {
+  global $the_empty_environment;
   if (is_eq($environment, $the_empty_environment))
     error('Unbound variable', $variable);
   else {
@@ -397,6 +401,7 @@ function lookup_variable_value_env_loop_scan($variable,
                                              $environment,
                                              $variables,
                                              $values) {
+  // var_dump($variables);
   if (is_null($variables))
     return lookup_variable_value_env_loop($variable,
                                           enclosing_environment($environment));
@@ -414,6 +419,7 @@ function set_variable_value($variable, $value, $environment) {
 }
 
 function set_variable_value_env_loop($variable, $value, $enviroment) {
+  global $the_empty_environment;
   if (is_eq($environment, $the_empty_environment))
     error('Unbound variable', $variable);
   else {
@@ -459,21 +465,21 @@ function define_variable($variable,
 
 function define_variable_scan($variable,
                               $value,
-                              $frame,
                               $environment,
+                              $frame,
                               $variables,
                               $values) {
   if (is_null($variables))
-    return add_binding_to_frame($variable, $value, $frame);
+    add_binding_to_frame($variable, $value, $frame);
   elseif (is_eq($variable, car($variables)))
-    return set_car($values, $value);
+    set_car($values, $value);
   else
-    return define_variable_scan($variable,
-                                $value,
-                                $frame,
-                                $environment,
-                                cdr($variables),
-                                cdr($values));
+    define_variable_scan($variable,
+                         $value,
+                         $environment,
+                         $frame,
+                         cdr($variables),
+                         cdr($values));
 }
 
 function setup_environment() {
@@ -499,19 +505,42 @@ function primitive_implementation($procedure) {
 $primitive_procedures = lst(lst(symbol('car'), 'car'),
                             lst(symbol('cdr'), 'cdr'),
                             lst(symbol('cons'), 'cons'),
-                            lst(symbol('null?'), 'is_null')
+                            lst(symbol('null?'), 'is_null'),
+                            lst(symbol('+'), 'add')
                             );
 
+// getting some bizarre indeterminacy here, where
+// $primitive_procedures evals to NULL; brought it temporarily inside,
+// therefore.
 function primitive_procedure_names() {
   global $primitive_procedures;
+  $primitive_procedures = lst(lst(symbol('car'), 'car'),
+                              lst(symbol('cdr'), 'cdr'),
+                              lst(symbol('cons'), 'cons'),
+                              lst(symbol('null?'), 'is_null'),
+                              lst(symbol('+'), 'add')
+                              );
   return map('car', $primitive_procedures);
 }
 
+// getting some bizarre indeterminacy here, where
+// $primitive_procedures evals to NULL; brought it temporarily inside,
+// therefore.
 function primitive_procedure_objects() {
   global $primitive_procedures;
+  $primitive_procedures = lst(lst(symbol('car'), 'car'),
+                              lst(symbol('cdr'), 'cdr'),
+                              lst(symbol('cons'), 'cons'),
+                              lst(symbol('null?'), 'is_null'),
+                              lst(symbol('+'), 'add')
+                              );
   return map(function($procedure) { return lst(symbol('primitive'),
                                                cadr($procedure)); },
     $primitive_procedures);
+}
+
+function apply_in_underlying_chandala($procedure, $arguments) {
+  return call_user_func($procedure, $arguments);
 }
 
 function apply_primitive_procedure($procedure, $arguments) {
@@ -523,14 +552,19 @@ $input_prompt = string(';;; M-Eval input:');
 $output_prompt = string(';;; M-Eval value:');
 $stdin = fopen('php://stdin', 'r');
 
+function read() {
+  global $stdin;
+  // parser persistance?
+  $parser = new Parser();
+  return array_car($parser->parse(fgets($stdin))->data);
+}
+
 function driver_loop() {
-  global $stdin,
-    $input_prompt,
+  global $input_prompt,
     $output_prompt,
     $the_global_environment;
   prompt_for_input($input_prompt);
-  $parser = new Parser();
-  $input = $parser->parse(fgets($stdin));
+  $input = read();
   $output = scheval($input, $the_global_environment);
   announce_output($output_prompt);
   user_print($output);
@@ -554,9 +588,6 @@ function user_print($object) {
   else
     print $object;
 }
-
-$the_global_environment = setup_environment();
-
 
 function error() {
   $objects = func_get_args();
