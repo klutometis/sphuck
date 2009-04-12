@@ -565,7 +565,12 @@ function read($port=NULL) {
   else {
     // parser persistance?
     $parser = new Parser();
-    return array_car($parser->parse(fgets($handle))->data);
+    $parsed = $parser->parse(fgets($handle));
+    // legitimate?
+    if ($parsed->is_empty())
+      return $eof;
+    // begging the question of VALUES here
+    else return array_car($parsed->data);
   }
 }
 
