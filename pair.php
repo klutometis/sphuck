@@ -117,7 +117,7 @@ function caar($pair) {
 }
 
 function cddr($pair) {
-  return car(cdr($pair));
+  return cdr(cdr($pair));
 }
 
 function caadr($pair) {

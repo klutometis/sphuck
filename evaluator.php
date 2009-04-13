@@ -507,8 +507,10 @@ function primitive_procedure_names() {
 
 function primitive_procedure_objects() {
   global $primitive_procedures;
-  return map(function($procedure) { return lst(symbol('primitive'),
-                                               cadr($procedure)); },
+  return map(function($procedure) {
+      return lst(symbol('primitive'),
+                 cadr($procedure));
+    },
     $primitive_procedures);
 }
 
@@ -542,7 +544,8 @@ function read($port=NULL) {
     // legitimate?
     if ($parsed->is_empty())
       return $eof;
-    // begging the question of VALUES here
+    // begging the question of VALUES here, unless we can wrap in
+    // (values ...)
     else return array_car($parsed->data);
   }
 }
