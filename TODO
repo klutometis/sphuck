@@ -1,4 +1,9 @@
 # -*- mode: org;-*-
+* DONE recursive closures
+  CLOSED: [2009-04-13 Mon 01:18]
+  - CLOSING NOTE [2009-04-13 Mon 01:20] \\
+    thanks, Justin Martin; http://marc.info/?l=php-internals&m=123960965909314&w=2
+* TODO some sort of evaluator instantiation a la class?
 * TODO error() should catch the errors from within scheme; to allow for
   error catching, etc.; but also: no reason to bail out on the
   interpreter on account of a php error.
@@ -45,11 +50,15 @@
   - CLOSING NOTE [2009-04-12 Sun 13:43] \\
     distinguish between working with quasi-scheme in php and scheme
   CONS, etc.? control structures are superfluous?
-* TODO quote mechanism is mysterious: quote(<string>) -> symbol;
+* DONE quote mechanism is mysterious: quote(<string>) -> symbol;
   quote(<number>) -> number; quote(<list>) -> list; quote(<vector>) ->
   vector? problem is: quote(<string>) -> string; no way to distinguish
   between symbols and strings in php except with recourse to their
   quasi-scheme types.
+  CLOSED: [2009-04-13 Mon 01:08]
+  - CLOSING NOTE [2009-04-13 Mon 01:18] \\ quote can be implemented in
+    scheme (as a macro?) or an interpreter extension to avoid the
+    string/symbol ambiguity
 * DONE write a quasi-scheme in PHP, such that the metacirc runs almost
   unaltered; may be slower than some PHP-centric strategy, but sphuck
   it!

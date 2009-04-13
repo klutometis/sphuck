@@ -3,5 +3,8 @@
   implementing things like continuations/macros, whereas the evaluator
   of chapter 4 does not?
 
-* TODO compound-procedure application doesn't work, though definition
+* DONE compound-procedure application doesn't work, though definition
   seems to.
+  CLOSED: [2009-04-13 Mon 00:39]
+  - CLOSING NOTE [2009-04-13 Mon 00:40] \\
+    cddr was defective
