@@ -1,4 +1,18 @@
 # -*- mode: org;-*-
+* TODO error() should catch the errors from within scheme; to allow for
+  error catching, etc.; but also: no reason to bail out on the
+  interpreter on account of a php error.
+* DONE either find a way to apply values from scheme, or have a set of
+  primitive procedures (primitive_car, primitive_add, ...) that take a
+  scheme-list of values. alternatively, scheme_value_to_array and
+  call_user_func_array. on the other hand: breaks the immediate
+  scheme->php function-name mapping (important?).
+  CLOSED: [2009-04-12 Sun 22:06]
+  - CLOSING NOTE [2009-04-12 Sun 22:06] \\ decided on orthogonal
+    primitive_* functions for now; benchmark with value->array
+    application?
+* TODO scheval handles as special cases things that could be macroized:
+  quote, unquote, if, cond, etc.
 * TODO a read that stops after one expression
 * TODO name-munging and resort to primitive procedures without needing
   to register them in $primitive_procedures?

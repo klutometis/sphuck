@@ -112,6 +112,34 @@ function cadr($pair) {
   return car(cdr($pair));
 }
 
+function caar($pair) {
+  return car(car($pair));
+}
+
+function cddr($pair) {
+  return car(cdr($pair));
+}
+
+function caadr($pair) {
+  return car(car(cdr($pair)));
+}
+
+function caddr($pair) {
+  return car(cdr(cdr($pair)));
+}
+
+function cdddr($pair) {
+  return cdr(cdr(cdr($pair)));
+}
+
+function cadddr($pair) {
+  return car(cdr(cdr(cdr($pair))));
+}
+
+function cdadr($pair) {
+  return cdr(car(cdr($pair)));
+}
+
 function is_pair($object) {
   return $object instanceof Pair;
 }

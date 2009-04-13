@@ -55,23 +55,23 @@ expression ::= list. {
 }
 
 expression ::= quoted. {
-  $this->values->push(cons(symbol('quote'),
-                           pair($this->values->pop())));
+  $this->values->push(lst(symbol('quote'),
+                          $this->values->pop()));
 }
 
 expression ::= quasiquoted. {
-  $this->values->push(cons(symbol('quasiquote'),
-                           pair($this->values->pop())));
+  $this->values->push(lst(symbol('quasiquote'),
+                          $this->values->pop()));
 }
 
 expression ::= unquoted. {
-  $this->values->push(cons(symbol('unquote'),
-                           pair($this->values->pop())));
+  $this->values->push(lst(symbol('unquote'),
+                          $this->values->pop()));
 }
 
 expression ::= unquote_spliced. {
-  $this->values->push(cons(symbol('unquote-splicing'),
-                           pair($this->values->pop())));
+  $this->values->push(lst(symbol('unquote-splicing'),
+                          $this->values->pop()));
 }
 
 list ::= OPEN list_interior CLOSE. {

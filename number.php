@@ -26,12 +26,3 @@ function number($real, $imaginary=0) {
 function is_number($object) {
   return $object instanceof Number;
 }
-
-function add($numbers) {
-  return fold_right(function($a, $b) {
-      return number($a->real + $b->real,
-                    $a->imaginary + $b->imaginary);
-    },
-    number(0),
-    $numbers);
-}

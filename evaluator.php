@@ -55,17 +55,20 @@ function list_of_values($expressions, $environment) {
 }
 
 function eval_if($expression, $environment) {
-  if (scheval(if_predicate($expression), $environment))
-    return scheval(if_consequent($expression), $environment);
-  else
+  global $false;
+  if (scheval(if_predicate($expression), $environment) == $false)
     return scheval(if_alternative($expression), $environment);
+  else
+    return scheval(if_consequent($expression), $environment);
 }
 
 function eval_sequence($expressions, $environment) {
   if (is_last_expression($expressions))
-    return scheval(first_expression($expressions));
+    return scheval(first_expression($expressions),
+                   $environment);
   else {
-    scheval(first_expression($expressions));
+    scheval(first_expression($expressions),
+            $environment);
     return eval_sequence(rest_expressions($expressions),
                          $environment);
   }
@@ -76,6 +79,7 @@ function eval_assignment($expression, $environment) {
                      scheval(assignment_value($expression),
                           $environment),
                      $environment);
+  return symbol('ok');
 }
 
 function eval_definition($expression, $environment) {
@@ -83,6 +87,7 @@ function eval_definition($expression, $environment) {
                   scheval(definition_value($expression),
                        $environment),
                   $environment);
+  return symbol('ok');
 }
 
 // had to add an is_null because NULL doesn't evaluate as list
@@ -97,7 +102,6 @@ function is_self_evaluating($expression) {
     return false;
 }
 
-// is_symbol needs work (have symbol type)
 function is_variable($expression) {
   return is_symbol($expression);
 }
@@ -106,17 +110,11 @@ function is_quoted($expression) {
   return is_tagged_list($expression, symbol('quote'));
 }
 
-// can cadr Pairs; what about composition of car and cdr?
 function text_of_quotation($expression) {
+  // why the extra car?
   return cadr($expression);
 }
 
-// need is_pair; need is_eq; in fact: just implement the disjoint type
-// predicates; how much of r5rs implement in PHP: whatever is needed
-// for the non-metacircular evaluator; the rest in scheme, where
-// possible? why not all in php, export to interpreter? cadr, caddr,
-// caadr. should new Symbol('x') be replaced with a generic quote
-// mechanism? whereby quote(string) -> symbol; quote(pair) -> pair?
 function is_tagged_list($expression, $tag) {
   if (is_pair($expression))
     return is_eq(car($expression), $tag);
@@ -502,38 +500,13 @@ function primitive_implementation($procedure) {
   return cadr($procedure);
 }
 
-$primitive_procedures = lst(lst(symbol('car'), 'car'),
-                            lst(symbol('cdr'), 'cdr'),
-                            lst(symbol('cons'), 'cons'),
-                            lst(symbol('null?'), 'is_null'),
-                            lst(symbol('+'), 'add')
-                            );
-
-// getting some bizarre indeterminacy here, where
-// $primitive_procedures evals to NULL; brought it temporarily inside,
-// therefore.
 function primitive_procedure_names() {
   global $primitive_procedures;
-  $primitive_procedures = lst(lst(symbol('car'), 'car'),
-                              lst(symbol('cdr'), 'cdr'),
-                              lst(symbol('cons'), 'cons'),
-                              lst(symbol('null?'), 'is_null'),
-                              lst(symbol('+'), 'add')
-                              );
   return map('car', $primitive_procedures);
 }
 
-// getting some bizarre indeterminacy here, where
-// $primitive_procedures evals to NULL; brought it temporarily inside,
-// therefore.
 function primitive_procedure_objects() {
   global $primitive_procedures;
-  $primitive_procedures = lst(lst(symbol('car'), 'car'),
-                              lst(symbol('cdr'), 'cdr'),
-                              lst(symbol('cons'), 'cons'),
-                              lst(symbol('null?'), 'is_null'),
-                              lst(symbol('+'), 'add')
-                              );
   return map(function($procedure) { return lst(symbol('primitive'),
                                                cadr($procedure)); },
     $primitive_procedures);
