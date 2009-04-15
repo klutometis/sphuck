@@ -74,12 +74,21 @@ class Lexer implements Iterator {
 // instead of sed on the resultant php, allow modifiers through:
 // imsxUX: /.../[imsxUX]
 
+// letter = /[a-zA-Z]/
+// letter {
+//   $this->token = Parser::LETTER;
+// }
+
 /*
 octothorpe = /\#/
 octothorpe {
   $this->token = Parser::OCTOTHORPE;
 }
 */
+// find expressions for {{+,-},ureal} in the various bases; digest
+// complex into eight parts per base plus +i -i for all bases
+// (positive_imaginary, negative_imaginary)
+
 /*!lex2php
 %input $this->data
 %counter $this->count
@@ -95,29 +104,28 @@ unquote = /\,/
 unquote_splicing = /\,\@/
 whitespace = /( |\n)/
 comment = /;.*/
-letter = /[a-zA-Z]/
-special_initial = /(\!|\$|\%|\&|\*|\/|\:|\<|\=|\>|\?|\^|\_|\~)/
-digit = /[0-9]/
+slash = /\//
+special_initial = /(\!|\$|\%|\&|\*|\:|\<|\=|\>|\?|\^|\_|\~)/
+digit = /[0-9]eouhtneoutnh/
 positive = /\+/
 negative = /\-/
 dot = /\./
 ellipsis = /\.\.\./
 asperand = /\@/
-double_quote = /\"/
 semicolon = /\;/
 syntactic_keyword = /(else|\=\>|define|unquote|unquote-splicing)/
 expression_keyword = /(quote|lambda|if|set\!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote)/
 true = /\#t/
 false = /\#f/
 character = /(\#\\.|\#\\(space|newline))/
-string_element = /([^\"\\]|\\\"|\\\\)/
+string = /\"([^\"\\]|\\\"|\\\\)*\"/
 inexact = /\#i/
 exact = /\#e/
 binary = /\#b/
 octal = /\#o/
 decimal = /\#d/
 hexidecimal = /\#x/
-a = /[aA]/
+a = /[bB]/
 b = /[bB]/
 c = /[cC]/
 d = /[dD]/
@@ -143,6 +151,7 @@ w = /[wW]/
 x = /[xX]/
 y = /[yY]/
 z = /[zZ]/
+decimal_ten = /([0-9]+\#*([esdl][\+\-]?[0-9]+)?|\.[0-9]+\#*([esdl][\+\-]?[0-9]+)?)/
 */
 
 /*!lex2php
@@ -173,14 +182,12 @@ whitespace {
 comment {
   $this->token = Parser::COMMENT;
 }
-letter {
-  $this->token = Parser::LETTER;
-}
 special_initial {
   $this->token = Parser::SPECIAL_INITIAL;
 }
 digit {
-  $this->token = Parser::DIGIT;
+  // $this->token = Parser::DIGIT;
+  $this->token = 'shit';
 }
 positive {
   $this->token = Parser::POSITIVE;
@@ -197,9 +204,6 @@ ellipsis {
 asperand {
   $this->token = Parser::ASPERAND;
 }
-double_quote {
-  $this->token = Parser::DOUBLE_QUOTE;
-}
 syntactic_keyword {
   $this->token = Parser::SYNTACTIC_KEYWORD;
 }
@@ -215,8 +219,8 @@ false {
 character {
   $this->token = Parser::CHARACTER;
 }
-string_element {
-  $this->token = Parser::STRING_ELEMENT;
+string {
+  $this->token = Parser::STRING;
 }
 inexact {
   $this->token = Parser::INEXACT;
@@ -313,6 +317,9 @@ y {
 }
 z {
   $this->token = Parser::Z;
+}
+decimal_ten {
+  $this->token = Parser::COMPLEX_DECIMAL;
 }
 */
 }

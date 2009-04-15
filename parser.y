@@ -41,11 +41,31 @@ syntactic_keyword ::= EXPRESSION_KEYWORD.
 
 syntactic_keyword ::= SYNTACTIC_KEYWORD.
 
-string ::= DOUBLE_QUOTE string_element DOUBLE_QUOTE.
+letter ::= O.
 
-string_element ::= .
+letter ::= P.
 
-string_element ::= string_element STRING_ELEMENT.
+letter ::= Q.
+
+letter ::= R.
+
+letter ::= S.
+
+letter ::= T.
+
+letter ::= U.
+
+letter ::= V.
+
+letter ::= W.
+
+letter ::= X.
+
+letter ::= Y.
+
+letter ::= Z.
+
+subsequent ::= DIGIT.
 
 */
 
@@ -74,11 +94,13 @@ string_element ::= string_element STRING_ELEMENT.
 
 token ::= identifier.
 
-token ::= TRUE. 
+token ::= boolean.
 
-token ::= FALSE.
+token ::= number.
 
 token ::= CHARACTER.
+
+token ::= STRING.
 
 token ::= OPEN.
 
@@ -144,33 +166,7 @@ letter ::= M.
 
 letter ::= N.
 
-letter ::= O.
-
-letter ::= P.
-
-letter ::= Q.
-
-letter ::= R.
-
-letter ::= S.
-
-letter ::= T.
-
-letter ::= U.
-
-letter ::= V.
-
-letter ::= W.
-
-letter ::= X.
-
-letter ::= Y.
-
-letter ::= Z.
-
 subsequent ::= initial.
-
-subsequent ::= DIGIT.
 
 subsequent ::= special_subsequent.
 
@@ -181,3 +177,9 @@ special_subsequent ::= NEGATIVE.
 special_subsequent ::= DOT.
 
 special_subsequent ::= ASPERAND.
+
+boolean ::= TRUE.
+
+boolean ::= FALSE.
+
+number ::= COMPLEX_DECIMAL.

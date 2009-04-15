@@ -1,4 +1,15 @@
 # -*- mode: org;-*-
+* TODO my main problem has to do with the contextual parsing of overlapping
+  atoms; i is a letter in one context, but signifies imaginary in
+  another; set up states?
+
+  even if i have sloppy grouping (complex R, for instance), and have
+  to do another round of parsing to extract its...
+
+  fuck it; we're going back to: lexer: terminals; parser:
+  non-terminals, no matter how painful the non-terminals are in BNF.
+* TODO (parser) taking care of most of the complexity via regexps in the lexer
+  is probably quicker, even though it's less readable.
 * TODO worry about number precision via GMP? http://us3.php.net/gmp
 * TODO unified function that parses and evaluates; fuck the class: sphuck()
 ** TODO one for files, too: load() or fsphuck() or something
@@ -19,6 +30,9 @@
   - CLOSING NOTE [2009-04-12 Sun 22:06] \\ decided on orthogonal
     primitive_* functions for now; benchmark with value->array
     application?
+** TODO nope: every time we get a value, it's wrapped in a list; simple
+   list->array should suffice for value unpacking, regardless of
+   contained types.
 * TODO scheval handles as special cases things that could be macroized:
   quote, unquote, if, cond, etc.
 * TODO a read that stops after one expression
