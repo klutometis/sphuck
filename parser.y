@@ -6,6 +6,49 @@
   require_once('symbol.php');
   require_once('string.php');
   require_once('number.php');
+  /*variable ::= identifier {
+    // going to have to handle this in a special way; must do it in the
+    // parser?
+  }
+
+token ::= character.
+
+character ::= CHARACTER.
+
+delimiter ::= whitespace.
+
+delimiter ::= OPEN.
+
+delimiter ::= CLOSE.
+
+delimiter ::= DOUBLE_QUOTE.
+
+delimiter ::= SEMICOLON.
+
+whitespace ::= SPACE.
+
+whitespace ::= NEWLINE.
+
+atmosphere ::= whitespace.
+
+atmosphere ::= COMMENT.
+
+intertoken_space ::= .
+
+intertoken_space ::= intertoken_space atmosphere.
+
+syntactic_keyword ::= EXPRESSION_KEYWORD.
+
+syntactic_keyword ::= SYNTACTIC_KEYWORD.
+
+string ::= DOUBLE_QUOTE string_element DOUBLE_QUOTE.
+
+string_element ::= .
+
+string_element ::= string_element STRING_ELEMENT.
+
+*/
+
  }
 
 %include_class {
@@ -29,77 +72,112 @@
   }
  }
 
-sexpression ::= expressions. {
-}
+token ::= identifier.
 
-expressions ::= expressions expression. {
-}
+token ::= TRUE. 
 
-expressions ::= . {
-}
+token ::= FALSE.
 
-expression ::= NUMBER(N). {
-  $this->values->push(number(intval(N)));
-}
+token ::= CHARACTER.
 
-expression ::= STRING(S). {
-  $this->values->push(string(S));
-}
+token ::= OPEN.
 
-expression ::= SYMBOL(S). {
-  $this->values->push(symbol(S));
-}
+token ::= CLOSE.
 
-expression ::= list. {
-  $this->values->push($this->expression);
-}
+token ::= OPEN_VECTOR.
 
-expression ::= quoted. {
-  $this->values->push(lst(symbol('quote'),
-                          $this->values->pop()));
-}
+token ::= QUOTE.
 
-expression ::= quasiquoted. {
-  $this->values->push(lst(symbol('quasiquote'),
-                          $this->values->pop()));
-}
+token ::= QUASIQUOTE.
 
-expression ::= unquoted. {
-  $this->values->push(lst(symbol('unquote'),
-                          $this->values->pop()));
-}
+token ::= UNQUOTE.
 
-expression ::= unquote_spliced. {
-  $this->values->push(lst(symbol('unquote-splicing'),
-                          $this->values->pop()));
-}
+token ::= UNQUOTE_SPLICING.
 
-list ::= OPEN list_interior CLOSE. {
-}
+identifier ::= identifier_initial.
 
-list_interior ::= expression DOT expression. {
-  $cdr = $this->values->pop();
-  $car = $this->values->pop();
-  $this->expression = pair($car, $cdr);
-}
+identifier ::= identifier_peculiar.
 
-list_interior ::= expression list_interior. {
-  $this->expression = cons($this->values->pop(),
-                           $this->expression);
-}
+identifier_initial ::= initial identifier_initial_subseqeunt.
 
-list_interior ::= expression. {
-  $this->expression = pair($this->values->pop());
-}
+identifier_initial_subseqeunt ::= .
 
-quoted ::= QUOTE expression. {
-}
+identifier_initial_subseqeunt ::= identifier_initial_subseqeunt subsequent.
 
-quasiquoted ::= QUASIQUOTE expression. {
-}
-    
-unquoted ::= UNQUOTE expression. {
-}
+identifier_peculiar ::= peculiar_identifier.
 
-unquote_spliced ::= UNQUOTE_SPLICING expression. {
-}
+peculiar_identifier ::= POSITIVE.
+
+peculiar_identifier ::= NEGATIVE.
+
+peculiar_identifier ::= ELLIPSIS.
+
+initial ::= letter.
+
+initial ::= SPECIAL_INITIAL.
+
+letter ::= A.
+
+letter ::= B.
+
+letter ::= C.
+
+letter ::= D.
+
+letter ::= E.
+
+letter ::= F.
+
+letter ::= G.
+
+letter ::= H.
+
+letter ::= I.
+
+letter ::= J.
+
+letter ::= K.
+
+letter ::= L.
+
+letter ::= M.
+
+letter ::= N.
+
+letter ::= O.
+
+letter ::= P.
+
+letter ::= Q.
+
+letter ::= R.
+
+letter ::= S.
+
+letter ::= T.
+
+letter ::= U.
+
+letter ::= V.
+
+letter ::= W.
+
+letter ::= X.
+
+letter ::= Y.
+
+letter ::= Z.
+
+subsequent ::= initial.
+
+subsequent ::= DIGIT.
+
+subsequent ::= special_subsequent.
+
+special_subsequent ::= POSITIVE.
+
+special_subsequent ::= NEGATIVE.
+
+special_subsequent ::= DOT.
+
+special_subsequent ::= ASPERAND.

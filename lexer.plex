@@ -38,50 +38,122 @@ class Lexer implements Iterator {
     return $this->old_count != $this->count;
   }
 
-// Don't forget ,@ (not in perl sexp?)
+// matching \n probably won't work; might need some lookahead in cases
+// where or mixes tokens of multiple lengths (string, character); have
+// to handle interpretation of escape chars in the parser?
 
+// need terminals here in the narrow sense; otherwise, delimiter/token
+// will conflict over ( and ). that's the parser's job.
+
+// lexer can process non-terminal one level deep? we could do
+// <atmosphere> -> <whitespace> | <comment> here, for instance
+
+// how do we deal with the fact that e, s, f, d, l and both exponent
+// markers and letters; they'll lex as an arbitrary rule; or can we
+// combine rules? hmm: letter takes precedence over exponent_marker,
+// whether first or last.
+
+// make the suffix rule a complex reg that only matches the
+// combination of terminals
+
+// shit: how to modify the regexps to be non-case sensitive; all the
+// fucking identifiers are going to be case-sensitive: /.../i doesn't
+// work; /(?i).../ doesn't work. not really pregs, then. fuck: it's
+// doing it's own regex parsing; bastard.
+
+// going to have to capture the lexemes with complex regexps; keywords
+// will still be case sensitive, though
+
+// or maybe a reasonable granularity are the tokens
+
+// ignore case sensitivity for now; assume we have to modify lexer to
+// account for it
+
+// use lexer as a strict terminal -> token mechanism
+
+// instead of sed on the resultant php, allow modifiers through:
+// imsxUX: /.../[imsxUX]
+
+/*
+octothorpe = /\#/
+octothorpe {
+  $this->token = Parser::OCTOTHORPE;
+}
+*/
 /*!lex2php
 %input $this->data
 %counter $this->count
 %token $this->token
 %value $this->value
 %line $this->line
-atmosphere = /\s+/
-number = /([+-]?\d+(?:[.]\d*)?|[+-]?[.]\d+)/
-symbol = /[*!\$[:alpha:]\?<>=+:_\{\}\/-]([*!\$[:alpha:]\?<>=+:_\{\}\/-]|\d|[.])*/
-string = /\"([^\"\\]*(?:\\.[^\"\\]*)*)\"/
 open = /\(/
 close = /\)/
-dot = /[.]/
+open_vector = /\#\(/
 quote = /\'/
 quasiquote = /\`/
 unquote = /\,/
 unquote_splicing = /\,\@/
+whitespace = /( |\n)/
+comment = /;.*/
+letter = /[a-zA-Z]/
+special_initial = /(\!|\$|\%|\&|\*|\/|\:|\<|\=|\>|\?|\^|\_|\~)/
+digit = /[0-9]/
+positive = /\+/
+negative = /\-/
+dot = /\./
+ellipsis = /\.\.\./
+asperand = /\@/
+double_quote = /\"/
+semicolon = /\;/
+syntactic_keyword = /(else|\=\>|define|unquote|unquote-splicing)/
+expression_keyword = /(quote|lambda|if|set\!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote)/
+true = /\#t/
+false = /\#f/
+character = /(\#\\.|\#\\(space|newline))/
+string_element = /([^\"\\]|\\\"|\\\\)/
+inexact = /\#i/
+exact = /\#e/
+binary = /\#b/
+octal = /\#o/
+decimal = /\#d/
+hexidecimal = /\#x/
+a = /[aA]/
+b = /[bB]/
+c = /[cC]/
+d = /[dD]/
+e = /[eE]/
+f = /[fF]/
+g = /[gG]/
+h = /[hH]/
+i = /[iI]/
+j = /[jJ]/
+k = /[kK]/
+l = /[lL]/
+m = /[mM]/
+n = /[nN]/
+o = /[oO]/
+p = /[pP]/
+q = /[qQ]/
+r = /[rR]/
+s = /[sS]/
+t = /[tT]/
+u = /[uU]/
+v = /[vV]/
+w = /[wW]/
+x = /[xX]/
+y = /[yY]/
+z = /[zZ]/
 */
 
 /*!lex2php
-atmosphere {
-  return false;
-}
-number {
-  $this->token = Parser::NUMBER;
-}
-symbol {
-  $this->token = Parser::SYMBOL;
-}
 open {
   $this->token = Parser::OPEN;
 }
 close {
   $this->token = Parser::CLOSE;
 }
-string {
-  $this->token = Parser::STRING;
-  $this->value = $yy_subpatterns[0];
-  $this->count += 2;
-}
-dot {
-  $this->token = Parser::DOT;
+open_vector {
+  $this->token = Parser::OPEN_VECTOR;
 }
 quote {
   $this->token = Parser::QUOTE;
@@ -94,6 +166,153 @@ unquote {
 }
 unquote_splicing {
   $this->token = Parser::UNQUOTE_SPLICING;
+}
+whitespace {
+  $this->token = Parser::WHITESPACE;
+}
+comment {
+  $this->token = Parser::COMMENT;
+}
+letter {
+  $this->token = Parser::LETTER;
+}
+special_initial {
+  $this->token = Parser::SPECIAL_INITIAL;
+}
+digit {
+  $this->token = Parser::DIGIT;
+}
+positive {
+  $this->token = Parser::POSITIVE;
+}
+negative {
+  $this->token = Parser::NEGATIVE;
+}
+dot {
+  $this->token = Parser::DOT;
+}
+ellipsis {
+  $this->token = Parser::ELLIPSIS;
+}
+asperand {
+  $this->token = Parser::ASPERAND;
+}
+double_quote {
+  $this->token = Parser::DOUBLE_QUOTE;
+}
+syntactic_keyword {
+  $this->token = Parser::SYNTACTIC_KEYWORD;
+}
+expression_keyword {
+  $this->token = Parser::EXPRESSION_KEYWORD;
+}
+true {
+  $this->token = Parser::TRUE;
+}
+false {
+  $this->token = Parser::FALSE;
+}
+character {
+  $this->token = Parser::CHARACTER;
+}
+string_element {
+  $this->token = Parser::STRING_ELEMENT;
+}
+inexact {
+  $this->token = Parser::INEXACT;
+}
+exact {
+  $this->token = Parser::EXACT;
+}
+binary {
+  $this->token = Parser::BINARY;
+}
+octal {
+  $this->token = Parser::OCTAL;
+}
+decimal {
+  $this->token = Parser::DECIMAL;
+}
+hexidecimal {
+  $this->token = Parser::HEXIDECIMAL;
+}
+a {
+  $this->token = Parser::A;
+}
+b {
+  $this->token = Parser::B;
+}
+c {
+  $this->token = Parser::C;
+}
+d {
+  $this->token = Parser::D;
+}
+e {
+  $this->token = Parser::E;
+}
+f {
+  $this->token = Parser::F;
+}
+g {
+  $this->token = Parser::G;
+}
+h {
+  $this->token = Parser::H;
+}
+i {
+  $this->token = Parser::I;
+}
+j {
+  $this->token = Parser::J;
+}
+k {
+  $this->token = Parser::K;
+}
+l {
+  $this->token = Parser::L;
+}
+m {
+  $this->token = Parser::M;
+}
+n {
+  $this->token = Parser::N;
+}
+o {
+  $this->token = Parser::O;
+}
+p {
+  $this->token = Parser::P;
+}
+q {
+  $this->token = Parser::Q;
+}
+r {
+  $this->token = Parser::R;
+}
+s {
+  $this->token = Parser::S;
+}
+t {
+  $this->token = Parser::T;
+}
+u {
+  $this->token = Parser::U;
+}
+v {
+  $this->token = Parser::V;
+}
+w {
+  $this->token = Parser::W;
+}
+x {
+  $this->token = Parser::X;
+}
+y {
+  $this->token = Parser::Y;
+}
+z {
+  $this->token = Parser::Z;
 }
 */
 }

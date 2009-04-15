@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO worry about number precision via GMP? http://us3.php.net/gmp
 * TODO unified function that parses and evaluates; fuck the class: sphuck()
 ** TODO one for files, too: load() or fsphuck() or something
 * DONE recursive closures
@@ -21,6 +22,7 @@
 * TODO scheval handles as special cases things that could be macroized:
   quote, unquote, if, cond, etc.
 * TODO a read that stops after one expression
+** TODO may be able to modify parse() to stop after encountering a <datum>
 * TODO name-munging and resort to primitive procedures without needing
   to register them in $primitive_procedures?
 * TODO some mechanism for translating scheme values to php

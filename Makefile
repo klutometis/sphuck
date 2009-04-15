@@ -1,6 +1,6 @@
 OBJ := lexer.php parser.php
 
-.PHONY: all test
+.PHONY: all test clean
 
 all: $(OBJ)
 
@@ -12,3 +12,6 @@ parser.php: parser.y
 
 test: all
 	php test/all.php
+
+clean:
+	rm -vf $(OBJ)
