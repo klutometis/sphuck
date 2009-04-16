@@ -29,93 +29,11 @@
   }
  }
 
-token ::= identifier.
-
-token ::= boolean.
-
 token ::= number.
-
-token ::= CHARACTER.
-
-token ::= STRING.
-
-token ::= OPEN.
-
-token ::= CLOSE.
-
-token ::= OPEN_VECTOR.
-
-token ::= QUOTE.
-
-token ::= QUASIQUOTE.
-
-token ::= UNQUOTE.
-
-token ::= UNQUOTE_SPLICING.
-
-identifier ::= identifier_initial.
-
-identifier ::= identifier_peculiar.
-
-identifier_initial ::= initial identifier_initial_subsequent.
-
-identifier_initial_subsequent ::= .
-
-identifier_initial_subsequent ::= identifier_initial_subsequent subsequent.
-
-identifier_peculiar ::= peculiar_identifier.
-
-peculiar_identifier ::= POSITIVE.
-
-peculiar_identifier ::= NEGATIVE.
-
-peculiar_identifier ::= ELLIPSIS.
-
-initial ::= letter.
-
-initial ::= SPECIAL_INITIAL.
-
-letter ::= LETTER.
-
-letter ::= A.
-
-letter ::= B.
-
-letter ::= C.
-
-letter ::= D.
-
-letter ::= E.
-
-letter ::= F.
-
-letter ::= I.
-
-letter ::= L.
-
-letter ::= S.
-
-subsequent ::= initial.
-
-subsequent ::= digit.
-
-subsequent ::= special_subsequent.
-
-special_subsequent ::= POSITIVE.
-
-special_subsequent ::= NEGATIVE.
-
-special_subsequent ::= DOT.
-
-special_subsequent ::= ASPERAND.
-
-boolean ::= TRUE.
-
-boolean ::= FALSE.
 
 number ::= uintegers.
 
-uintegers ::= digit uinteger.
+uintegers ::= digit uinteger suffix.
 
 uinteger ::= .
 
@@ -140,3 +58,23 @@ digit ::= SEVEN.
 digit ::= EIGHT.
 
 digit ::= NINE.
+
+suffix ::= exponent_marker sign digit suffix_digits.
+
+suffix_digits ::= .
+
+suffix_digits ::= suffix_digits digit.
+
+exponent_marker ::= E.
+
+exponent_marker ::= S.
+
+exponent_marker ::= F.
+
+exponent_marker ::= D.
+
+exponent_marker ::= L.
+
+sign ::= PLUS.
+
+sign ::= MINUS.

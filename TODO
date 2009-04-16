@@ -12,6 +12,9 @@
 ** TODO can overload tokens, too: DIGIT token whose value can be: 0, 1, ...;
    nope: have to distinguish between 1: binary, octal, decimal, hex;
    7: octal, decimal, ...
+** TODO getting indeterminacy; can do arbitrarily complex regexps
+   for the first pass, and employ secondary parsers to deal with, say,
+   numbers.
 * TODO (parser) taking care of most of the complexity via regexps in the lexer
   is probably quicker, even though it's less readable.
 * TODO worry about number precision via GMP? http://us3.php.net/gmp
