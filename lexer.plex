@@ -79,12 +79,6 @@ class Lexer implements Iterator {
 //   $this->token = Parser::LETTER;
 // }
 
-/*
-octothorpe = /\#/
-octothorpe {
-  $this->token = Parser::OCTOTHORPE;
-}
-*/
 // find expressions for {{+,-},ureal} in the various bases; digest
 // complex into eight parts per base plus +i -i for all bases
 // (positive_imaginary, negative_imaginary)
@@ -95,15 +89,205 @@ octothorpe {
 %token $this->token
 %value $this->value
 %line $this->line
+open = /\(/
+close = /\)/
+open_vector = /\#\(/
+quote = /\'/
+quasiquote = /\`/
+unquote = /\,/
+unquote_splicing = /\,\@/
+whitespace = /( |\n)/
+comment = /;.*/
+slash = /\//
+special_initial = /(\!|\$|\%|\&|\*|\:|\<|\=|\>|\?|\^|\_|\~)/
+digit = /[0-9]eouhtneoutnh/
+positive = /\+/
+negative = /\-/
+dot = /\./
+ellipsis = /\.\.\./
+asperand = /\@/
+semicolon = /\;/
+syntactic_keyword = /(else|\=\>|define|unquote|unquote-splicing)/
+expression_keyword = /(quote|lambda|if|set\!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote)/
+true = /\#t/
+false = /\#f/
+character = /(\#\\.|\#\\(space|newline))/
+string = /\"([^\"\\]|\\\"|\\\\)*\"/
+inexact = /\#i/
+exact = /\#e/
+binary = /\#b/
+octal = /\#o/
+decimal = /\#d/
+hexidecimal = /\#x/
+letter = /[ghjkm-rt-z]/
+a = /a/
+b = /b/
+c = /c/
+d = /d/
+e = /e/
+f = /f/
+i = /i/
+l = /l/
+s = /s/
 zero = /0/
+one = /1/
+two = /2/
+three = /3/
+four = /4/
+five = /5/
+six = /6/
+seven = /7/
+eight = /8/
+nine = /9/
 */
-
+ 
 /*!lex2php
-zero {
+open {
+  $this->token = SPHUCK_OPEN;
+}
+close {
+  $this->token = SPHUCK_CLOSE;
+}
+open_vector {
+  $this->token = SPHUCK_OPEN_VECTOR;
+}
+quote {
+  $this->token = SPHUCK_QUOTE;
+}
+quasiquote {
+  $this->token = SPHUCK_QUASIQUOTE;
+}
+unquote {
+  $this->token = SPHUCK_UNQUOTE;
+}
+unquote_splicing {
+  $this->token = SPHUCK_UNQUOTE_SPLICING;
+}
+whitespace {
+  $this->token = SPHUCK_WHITESPACE;
+}
+comment {
+  $this->token = SPHUCK_COMMENT;
+}
+special_initial {
+  $this->token = SPHUCK_SPECIAL_INITIAL;
+}
+digit {
+  $this->token = SPHUCK_DIGIT;
+}
+positive {
+  $this->token = SPHUCK_POSITIVE;
+}
+negative {
+  $this->token = SPHUCK_NEGATIVE;
+}
+dot {
+  $this->token = SPHUCK_DOT;
+}
+ellipsis {
+  $this->token = SPHUCK_ELLIPSIS;
+}
+asperand {
+  $this->token = SPHUCK_ASPERAND;
+}
+syntactic_keyword {
+  $this->token = SPHUCK_SYNTACTIC_KEYWORD;
+}
+expression_keyword {
+  $this->token = SPHUCK_EXPRESSION_KEYWORD;
+}
+true {
+  $this->token = SPHUCK_TRUE;
+}
+false {
+  $this->token = SPHUCK_FALSE;
+}
+character {
+  $this->token = SPHUCK_CHARACTER;
+}
+string {
+  $this->token = SPHUCK_STRING;
+}
+inexact {
+  $this->token = SPHUCK_INEXACT;
+}
+exact {
+  $this->token = SPHUCK_EXACT;
+}
+binary {
+  $this->token = SPHUCK_BINARY;
+}
+octal {
+  $this->token = SPHUCK_OCTAL;
+}
+decimal {
+  $this->token = SPHUCK_DECIMAL;
+}
+hexidecimal {
+  $this->token = SPHUCK_HEXIDECIMAL;
+}
+a {
+  $this->token = SPHUCK_A;
+}
+b {
+  $this->token = SPHUCK_B;
+}
+c {
+  $this->token = SPHUCK_C;
+}
+d {
+  $this->token = SPHUCK_D;
+}
+e {
+  $this->token = SPHUCK_E;
+}
+f {
+  $this->token = SPHUCK_F;
+}
+i {
+  $this->token = SPHUCK_I;
+}
+l {
+  $this->token = SPHUCK_L;
+}
+s {
+  $this->token = SPHUCK_S;
+}
+letter {
+  $this->token = SPHUCK_LETTER;
+}
+ zero {
   $this->token = SPHUCK_ZERO;
 }
-*/
+one {
+  $this->token = SPHUCK_ONE;
 }
+two {
+  $this->token = SPHUCK_TWO;
+}
+three {
+  $this->token = SPHUCK_THREE;
+}
+four {
+  $this->token = SPHUCK_FOUR;
+}
+five {
+  $this->token = SPHUCK_FIVE;
+}
+six {
+  $this->token = SPHUCK_SIX;
+}
+seven {
+  $this->token = SPHUCK_SEVEN;
+}
+eight {
+  $this->token = SPHUCK_EIGHT;
+}
+nine {
+  $this->token = SPHUCK_ZERO;
+ }
+      */
+      }
 
 function token_array($lexer) {
   $tokens = NULL;

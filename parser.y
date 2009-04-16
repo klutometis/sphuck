@@ -1,4 +1,4 @@
-%name parser
+%name Sphuck
 %token_prefix SPHUCK_
 
 decimal ::= uinteger suffix.
@@ -6,6 +6,8 @@ decimal ::= uinteger suffix.
 uinteger ::= digit.
 
 uinteger ::= uinteger digit.
+
+uinteger ::= uinteger digit OCTOTHORPE.
 
 suffix ::= .
 
@@ -20,4 +22,3 @@ sign ::= PLUS.
 sign ::= MINUS.
 
 sign ::= .
-

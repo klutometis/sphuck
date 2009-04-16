@@ -1,11 +1,11 @@
-OBJ := lexer.php parser.php
+OBJ := lexer.lex.php parser.php
 
 .PHONY: all test clean
 
 all: $(OBJ)
 
-lexer.php: parser.php lexer.plex
-	plex lexer.plex
+lexer.php: parser.php lexer.lex
+	java -cp JLexPHP.jar JLexPHP.Main lexer.lex
 
 parser.php: parser.y
 	./lemon -lPHP parser.y

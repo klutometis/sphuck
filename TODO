@@ -1,4 +1,22 @@
 # -*- mode: org;-*-
+* TODO some things like . <digit 10>+ #* <suffix> trivial with regular
+  expressions; not so much with formal grammars; make exceptions for
+  complex expressions in the lexer, decompose in the parser?
+* TODO parser only really cares about identifier, boolean, number,
+  character, string from lexical analysis (some delimiters here and
+  there). Really, only cares about tokens. Can do all the token work
+  in the lexer; percolate up tokens to the parser?
+* TODO looks like we could also leave the parser bare, and do all the object
+  generation in the lexer; that way, we can propagate abstracta to the
+  parser.
+
+  as long as i have macros, can do some abstraction in the lexer; use
+  parser for verification?
+* TODO actually: since we're merely generating php, we can do the lexing
+  and parsing in any fucking language we want: haskell, scheme, etc.;
+  add a php driver.
+
+  oh, fuck; it's nice to have good tools. thanks, wez furlong.
 * TODO my main problem has to do with the contextual parsing of overlapping
   atoms; i is a letter in one context, but signifies imaginary in
   another; set up states?
