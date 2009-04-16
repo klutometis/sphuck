@@ -8,6 +8,10 @@
 
   fuck it; we're going back to: lexer: terminals; parser:
   non-terminals, no matter how painful the non-terminals are in BNF.
+** TODO one rule to seed each recursion; another to recurse.
+** TODO can overload tokens, too: DIGIT token whose value can be: 0, 1, ...;
+   nope: have to distinguish between 1: binary, octal, decimal, hex;
+   7: octal, decimal, ...
 * TODO (parser) taking care of most of the complexity via regexps in the lexer
   is probably quicker, even though it's less readable.
 * TODO worry about number precision via GMP? http://us3.php.net/gmp

@@ -125,33 +125,26 @@ binary = /\#b/
 octal = /\#o/
 decimal = /\#d/
 hexidecimal = /\#x/
-a = /[bB]/
-b = /[bB]/
-c = /[cC]/
-d = /[dD]/
-e = /[eE]/
-f = /[fF]/
-g = /[gG]/
-h = /[hH]/
-i = /[iI]/
-j = /[jJ]/
-k = /[kK]/
-l = /[lL]/
-m = /[mM]/
-n = /[nN]/
-o = /[oO]/
-p = /[pP]/
-q = /[qQ]/
-r = /[rR]/
-s = /[sS]/
-t = /[tT]/
-u = /[uU]/
-v = /[vV]/
-w = /[wW]/
-x = /[xX]/
-y = /[yY]/
-z = /[zZ]/
-decimal_ten = /([0-9]+\#*([esdl][\+\-]?[0-9]+)?|\.[0-9]+\#*([esdl][\+\-]?[0-9]+)?)/
+letter = /[ghjkm-rt-z]/
+a = /a/
+b = /b/
+c = /c/
+d = /d/
+e = /e/
+f = /f/
+i = /i/
+l = /l/
+s = /s/
+zero = /0/
+one = /1/
+two = /2/
+three = /3/
+four = /4/
+five = /5/
+six = /6/
+seven = /7/
+eight = /8/
+nine = /9/
 */
 
 /*!lex2php
@@ -258,68 +251,47 @@ e {
 f {
   $this->token = Parser::F;
 }
-g {
-  $this->token = Parser::G;
-}
-h {
-  $this->token = Parser::H;
-}
 i {
   $this->token = Parser::I;
-}
-j {
-  $this->token = Parser::J;
-}
-k {
-  $this->token = Parser::K;
 }
 l {
   $this->token = Parser::L;
 }
-m {
-  $this->token = Parser::M;
-}
-n {
-  $this->token = Parser::N;
-}
-o {
-  $this->token = Parser::O;
-}
-p {
-  $this->token = Parser::P;
-}
-q {
-  $this->token = Parser::Q;
-}
-r {
-  $this->token = Parser::R;
-}
 s {
   $this->token = Parser::S;
 }
-t {
-  $this->token = Parser::T;
+letter {
+  $this->token = Parser::LETTER;
 }
-u {
-  $this->token = Parser::U;
+zero {
+  $this->token = Parser::ZERO;
 }
-v {
-  $this->token = Parser::V;
+one {
+  $this->token = Parser::ONE;
 }
-w {
-  $this->token = Parser::W;
+two {
+  $this->token = Parser::TWO;
 }
-x {
-  $this->token = Parser::X;
+three {
+  $this->token = Parser::THREE;
 }
-y {
-  $this->token = Parser::Y;
+four {
+  $this->token = Parser::FOUR;
 }
-z {
-  $this->token = Parser::Z;
+five {
+  $this->token = Parser::FIVE;
 }
-decimal_ten {
-  $this->token = Parser::COMPLEX_DECIMAL;
+six {
+  $this->token = Parser::SIX;
+}
+seven {
+  $this->token = Parser::SEVEN;
+}
+eight {
+  $this->token = Parser::EIGHT;
+}
+nine {
+  $this->token = Parser::NINE;
 }
 */
 }

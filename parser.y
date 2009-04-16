@@ -6,69 +6,6 @@
   require_once('symbol.php');
   require_once('string.php');
   require_once('number.php');
-  /*variable ::= identifier {
-    // going to have to handle this in a special way; must do it in the
-    // parser?
-  }
-
-token ::= character.
-
-character ::= CHARACTER.
-
-delimiter ::= whitespace.
-
-delimiter ::= OPEN.
-
-delimiter ::= CLOSE.
-
-delimiter ::= DOUBLE_QUOTE.
-
-delimiter ::= SEMICOLON.
-
-whitespace ::= SPACE.
-
-whitespace ::= NEWLINE.
-
-atmosphere ::= whitespace.
-
-atmosphere ::= COMMENT.
-
-intertoken_space ::= .
-
-intertoken_space ::= intertoken_space atmosphere.
-
-syntactic_keyword ::= EXPRESSION_KEYWORD.
-
-syntactic_keyword ::= SYNTACTIC_KEYWORD.
-
-letter ::= O.
-
-letter ::= P.
-
-letter ::= Q.
-
-letter ::= R.
-
-letter ::= S.
-
-letter ::= T.
-
-letter ::= U.
-
-letter ::= V.
-
-letter ::= W.
-
-letter ::= X.
-
-letter ::= Y.
-
-letter ::= Z.
-
-subsequent ::= DIGIT.
-
-*/
-
  }
 
 %include_class {
@@ -120,11 +57,11 @@ identifier ::= identifier_initial.
 
 identifier ::= identifier_peculiar.
 
-identifier_initial ::= initial identifier_initial_subseqeunt.
+identifier_initial ::= initial identifier_initial_subsequent.
 
-identifier_initial_subseqeunt ::= .
+identifier_initial_subsequent ::= .
 
-identifier_initial_subseqeunt ::= identifier_initial_subseqeunt subsequent.
+identifier_initial_subsequent ::= identifier_initial_subsequent subsequent.
 
 identifier_peculiar ::= peculiar_identifier.
 
@@ -138,6 +75,8 @@ initial ::= letter.
 
 initial ::= SPECIAL_INITIAL.
 
+letter ::= LETTER.
+
 letter ::= A.
 
 letter ::= B.
@@ -150,23 +89,15 @@ letter ::= E.
 
 letter ::= F.
 
-letter ::= G.
-
-letter ::= H.
-
 letter ::= I.
-
-letter ::= J.
-
-letter ::= K.
 
 letter ::= L.
 
-letter ::= M.
-
-letter ::= N.
+letter ::= S.
 
 subsequent ::= initial.
+
+subsequent ::= digit.
 
 subsequent ::= special_subsequent.
 
@@ -182,4 +113,30 @@ boolean ::= TRUE.
 
 boolean ::= FALSE.
 
-number ::= COMPLEX_DECIMAL.
+number ::= uintegers.
+
+uintegers ::= digit uinteger.
+
+uinteger ::= .
+
+uinteger ::= uinteger digit.
+
+digit ::= ZERO.
+
+digit ::= ONE.
+
+digit ::= TWO.
+
+digit ::= THREE.
+
+digit ::= FOUR.
+
+digit ::= FIVE.
+
+digit ::= SIX.
+
+digit ::= SEVEN.
+
+digit ::= EIGHT.
+
+digit ::= NINE.
