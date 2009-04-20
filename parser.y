@@ -3,7 +3,7 @@
 
 decimal ::= uinteger suffix. { print "decimal\n"; }
 
-decimal ::= DOT digit digits octothorpes suffix.
+decimal ::= DOT uinteger suffix.
 
 decimal ::= digit digits DOT digits octothorpes suffix.
 
@@ -23,7 +23,25 @@ suffix ::= .
 
 suffix ::= exponent sign digit digits.
 
-digit ::= ZERO(A). { var_dump(A); }
+digit ::= ZERO.
+
+digit ::= ONE.
+
+digit ::= TWO.
+
+digit ::= THREE.
+
+digit ::= FOUR.
+
+digit ::= FIVE.
+
+digit ::= SIX.
+
+digit ::= SEVEN.
+
+digit ::= EIGHT.
+
+digit ::= NINE.
 
 exponent ::= E.
 
