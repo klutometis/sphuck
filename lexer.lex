@@ -46,4 +46,5 @@ require('jlex.php');
 "#o" { return $this->createToken(SphuckParser::SPHUCK_RADIX_OCTAL); }
 "#d" { return $this->createToken(SphuckParser::SPHUCK_RADIX_DECIMAL); }
 "#x" { return $this->createToken(SphuckParser::SPHUCK_RADIX_HEXADECIMAL); }
+"." { return $this->createToken(SphuckParser::SPHUCK_DOT); }
 [\n] {}
