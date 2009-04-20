@@ -1,9 +1,15 @@
 %name Sphuck
 %token_prefix SPHUCK_
 
-decimal ::= uinteger suffix.
+decimal ::= uinteger suffix. { print "decimal\n"; }
 
-uinteger ::= digit digits octothorpes.
+decimal ::= DOT digit digits octothorpes suffix.
+
+decimal ::= digit digits DOT digits octothorpes suffix.
+
+decimal ::= digit digits OCTOTHORPE octothorpes DOT octothorpes suffix.
+
+uinteger ::= digit digits octothorpes. { print "uinteger\n"; }
 
 digits ::= .
 
@@ -11,17 +17,13 @@ digits ::= digits digit.
 
 octothorpes ::= .
 
-octothorpes ::= octothorpes OCTOTHORPE.
+octothorpes ::= octothorpes OCTOTHORPE(A).  { var_dump(A); }
 
 suffix ::= .
 
-suffix ::= exponent sign suffix_digits.
+suffix ::= exponent sign digit digits.
 
-suffix_digits ::= digit.
-
-suffix_digits ::= suffix_digits digit.
-
-digit ::= ZERO.
+digit ::= ZERO(A). { var_dump(A); }
 
 exponent ::= E.
 

@@ -1,4 +1,15 @@
 # -*- mode: org;-*-
+* TODO do we need the level of indirection of JLexToken, or how else
+  gather type + value?
+* TODO things tokenized have to been resynthesized in the parser;
+  non-terminal, specifically, should gather preceding terminals?
+  Otherwise, decimal, for instance, would have aware of exponents,
+  signs, etc.
+
+  Don't really gain any advantage over complex regular expressions in
+  the parser which have to be unsynthesized post-hoc: still have to
+  assemble the digit/octothorpe soup in the stack, for instance, and
+  segregate.
 * TODO some things like . <digit 10>+ #* <suffix> trivial with regular
   expressions; not so much with formal grammars; make exceptions for
   complex expressions in the lexer, decompose in the parser?
