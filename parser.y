@@ -3,19 +3,35 @@
 
 decimal ::= uinteger suffix.
 
-uinteger ::= digit.
+uinteger ::= digit digits octothorpes.
 
-uinteger ::= uinteger digit.
+digits ::= .
 
-uinteger ::= uinteger digit OCTOTHORPE.
+digits ::= digits digit.
+
+octothorpes ::= .
+
+octothorpes ::= octothorpes OCTOTHORPE.
 
 suffix ::= .
 
-suffix ::= exponent sign digit.
+suffix ::= exponent sign suffix_digits.
+
+suffix_digits ::= digit.
+
+suffix_digits ::= suffix_digits digit.
 
 digit ::= ZERO.
 
 exponent ::= E.
+
+exponent ::= S.
+
+exponent ::= F.
+
+exponent ::= D.
+
+exponent ::= L.
 
 sign ::= PLUS.
 

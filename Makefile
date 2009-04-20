@@ -4,7 +4,7 @@ OBJ := lexer.lex.php parser.php
 
 all: $(OBJ)
 
-lexer.php: parser.php lexer.lex
+lexer.lex.php: parser.php lexer.lex
 	java -cp JLexPHP.jar JLexPHP.Main lexer.lex
 
 parser.php: parser.y

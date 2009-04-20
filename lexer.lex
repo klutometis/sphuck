@@ -4,7 +4,7 @@ require('jlex.php');
 %%
 
 %{
-  function token_array($lexer) {
+  function token_array() {
     $tokens = NULL;
     foreach ($lexer as $token => $value)
       $tokens[] = array($token => $value);
@@ -17,6 +17,7 @@ require('jlex.php');
 %line
 %char
 %class SphuckLexer
+%function next_token
 
 %%
 
@@ -45,3 +46,4 @@ require('jlex.php');
 "#o" { return $this->createToken(SphuckParser::SPHUCK_RADIX_OCTAL); }
 "#d" { return $this->createToken(SphuckParser::SPHUCK_RADIX_DECIMAL); }
 "#x" { return $this->createToken(SphuckParser::SPHUCK_RADIX_HEXADECIMAL); }
+[\n] {}
