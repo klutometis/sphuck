@@ -5,10 +5,12 @@ OBJ := lexer.lex.php parser.php
 all: $(OBJ)
 
 lexer.lex.php: parser.php lexer.lex
-	java -cp JLexPHP.jar JLexPHP.Main lexer.lex
+	cd lib/JLexPHP-151 && \
+	java -cp JLexPHP.jar JLexPHP.Main ../../lexer.lex
 
 parser.php: parser.y
-	./lemon -lPHP parser.y
+	cd lib/lemon-php-151a && \
+	./lemon -lPHP ../../parser.y
 
 test: all
 	php test/all.php

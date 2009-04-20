@@ -39,7 +39,15 @@ class ParseParser {
 
   var $yyTraceFILE = null;
   var $yyTracePrompt = null;
+  const YYWILDCARD = 1;
+  public $values;
+  public $expression;
 
+  function __construct() {
+    $this->expression = NULL;
+    /* (VALUES ...) */
+    $this->values = new Stack();
+  }
 
 
 /* Next is all token values, in a form suitable for use by makeheaders.
@@ -241,10 +249,10 @@ private function yy_pop_parser_stack() {
       $this->yyTracePrompt,
       self::$yyTokenName[$yytos->major]);
   }
-  $this->yy_destructor( $yytos->yymajor, $yytos->minor);
+  $this->yy_destructor( $yytos->major, $yytos->minor);
   unset($this->yystack[$this->yyidx]);
   $this->yyidx--;
-  return $yymajor;
+  return $yytos->major;
 }
 
 /* 
@@ -470,7 +478,7 @@ private function yy_accept(
   if( $this->yyTraceFILE ){
     fprintf($this->yyTraceFILE,"%sAccept!\n",$this->yyTracePrompt);
   }
-  while( $this->yypParser->yyidx>=0 ) $this->yy_pop_parser_stack();
+  while( $this->yyidx>=0 ) $this->yy_pop_parser_stack();
   /* Here code is inserted which will be executed whenever the
   ** parser accepts */
 %%
@@ -588,7 +596,7 @@ if (self::YYERRORSYMBOL) {
           $this->yy_shift($yyact,self::YYERRORSYMBOL,0);
         }
       }
-      $yypParser->yyerrcnt = 3;
+      $this->yyerrcnt = 3;
       $yyerrorhit = 1;
 } else {  /* YYERRORSYMBOL is not defined */
       /* This is what we do if the grammar does not define ERROR:
