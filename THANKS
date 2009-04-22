@@ -1,0 +1,51 @@
+23:49 < klutometis> offby1: if, by refactor, you mean: "invest with an exchequer of roflcopters"
+23:50 < klutometis> incubot: what do you want to bet that "exchequer of roflcopters" is hapax legomenon?
+23:50 < incubot> i, too, noticed clojure's exchequer of reddit-buzz
+23:50 < klutometis> fuck that
+23:56 < klutometis> #scheme, i'm suffering from a deep malaise; can anyone regale me with tales of olympic hackerdom?
+23:58 < klutometis> (it's probably related to my difficulty in coming up with a good lexer/parser combo for r5rs; abstracting over subtokens is elusive)
+23:58 < klutometis> and lemon complains about shift/reduce errors when i parse-by-the-book for r5rs
+23:58 -!- meanburrito920_ [n=John@76-217-6-100.lightspeed.irvnca.sbcglobal.net] has quit ["has been attacked by a grue"]
+--- Day changed Wed Apr 22 2009
+00:00 -!- arcfide [n=arcfide@99.186.237.111] has quit ["Leaving"]
+00:00 < klutometis> for instance, isn't it bizarre that the following rules are unreducible?
+00:00 -!- lowlycoder [n=x@unaffiliated/lowlycoder] has quit ["leaving"]
+00:00 < klutometis> decimal ::= uinteger suffix.
+00:00 < klutometis> decimal ::= digit digits OCTOTHORPE octothorpes DOT octothorpes suffix.
+00:01 < klutometis> where:
+00:01 < klutometis> uinteger ::= digit digits octothorpes.
+00:02 -!- athos [n=philipp@92.250.250.68] has joined #scheme
+00:02 < klutometis> oh, well; i guess i'll resort to lexing with complex regexps which have to be metabolized later
+00:02 < zbigniew> cky: replace FOLD with REDUCE in your code
+00:03 < cky> zbigniew: Thanks, I shall. (It'll strip out one values call in the final result, I believe; am I right?)
+00:03 < zbigniew> yes
+00:03 < cky> Cool beans. :-)
+00:03 < zbigniew> (compose) => values; (compose g) => g
+00:07 < cky> Great, I've added your suggestion to the post.
+00:15 -!- mokogobo [n=mokogobo@pcp075595pcs.unl.edu] has joined #scheme
+02:05 < leppie> klutometis: you win yet?
+02:07 < leppie> what about? decimal ::= uinteger OCTOTHORPE DOT octothorpes suffix.  (I assume octothorpes is simply a 0 or more set of OCTOTHORPE)
+02:11 -!- ct2rips [n=ct2rips@blfd-4db1cbe9.pool.einsundeins.de] has joined #scheme
+02:13 -!- xwl_ [n=user@147.243.236.60] has quit [Remote closed the connection]
+02:17 -!- jberg [n=johan@62.80-202-161.nextgentel.com] has quit [Read error: 110 (Connection timed out)]
+02:17 -!- xwl_ [n=user@147.243.236.60] has joined #scheme
+02:19 -!- mmt [n=mmt@TEP.MIT.EDU] has quit ["leaving"]
+02:23 -!- raikov [n=igr@60.32.127.43] has quit [Read error: 110 (Connection timed out)]
+02:23 -!- Mr-Cat [n=Miranda@hermes.lanit.ru] has joined #scheme
+02:27 -!- errordeveloper [n=errordev@78-86-1-110.zone2.bethere.co.uk] has quit [Read error: 54 (Connection reset by peer)]
+02:29 -!- SugarGlider [n=stevie@dyn-203-143-164-139.qrl.nicta.com.au] has left #scheme []
+02:34 -!- gioz [n=gio@88.244.10.83] has joined #scheme
+02:34 -!- annodomini [n=lambda@wikipedia/lambda] has quit []
+02:36 -!- errordeveloper [n=errordev@78-86-1-110.zone2.bethere.co.uk] has joined #scheme
+02:38 -!- raikov [n=igr@60.32.127.43] has joined #scheme
+02:38 -!- attila_lendvai [n=ati@89.132.189.132] has joined #scheme
+02:38 -!- annodomini [n=lambda@c-75-69-96-104.hsd1.nh.comcast.net] has joined #scheme
+02:41 -!- error_developer_ [n=errordev@78-86-1-110.zone2.bethere.co.uk] has joined #scheme
+02:41 < klutometis> leppie: holy shit; that works
+02:42 < leppie> :)
+02:42 < klutometis> for some reason, octothorpes OCTOTHORPE doesn't cause a shift/reduce conflict
+02:42 < klutometis> thanks; i don't know why it works; but i'll take it ;)
+02:43 -!- elfor [n=johanfre@85.8.2.11.static.se.wasadata.net] has joined #scheme
+02:43 < leppie> it cant determine the path at the end when it is halfway thru the other
+02:44 < klutometis> ah, indeed; that deserves an entry in the THANKS file
+02:44 -!- underspecified_ [n=eric@naist-wavenet126-150.naist.jp] has quit [Read error: 60 (Operation timed out)]
