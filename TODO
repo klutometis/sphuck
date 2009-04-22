@@ -1,6 +1,9 @@
 # -*- mode: org;-*-
 * TODO is there a systematic way to delegate lexer/parser
   responsibilities?
+
+  i could at least enlist regular expressions to take care of + and *,
+  couldn't I? otherwise, the gathering is laborious.
 * TODO do we need the level of indirection of JLexToken, or how else
   gather type + value?
 * TODO things tokenized have to been resynthesized in the parser;

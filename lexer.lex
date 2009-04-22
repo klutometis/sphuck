@@ -19,13 +19,6 @@ require('jlex.php');
 %class SphuckLexer
 %function next_token
 
-digit10 = [0-9]
-exponent = (e|s|f|d|l)
-sign = [+-]?  
-suffix = ({exponent}{sign}{digit10}+)?
-uinteger10 = {digit10}+\#*
-decimal10 = {uinteger10}{suffix}
-
 %%
 
 "0" { return $this->createToken(SphuckParser::SPHUCK_ZERO); }
@@ -54,3 +47,4 @@ decimal10 = {uinteger10}{suffix}
 "#d" { return $this->createToken(SphuckParser::SPHUCK_RADIX_DECIMAL); }
 "#x" { return $this->createToken(SphuckParser::SPHUCK_RADIX_HEXADECIMAL); }
 "." { return $this->createToken(SphuckParser::SPHUCK_DOT); }
+[\n] {}

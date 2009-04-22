@@ -7,7 +7,7 @@ decimal ::= digit digits DOT digits octothorpes suffix.
 
 decimal ::= DOT uinteger suffix.
 
-decimal ::= digit digits OCTOTHORPE octothorpes DOT octothorpes suffix.
+decimal ::= digit digits octothorpes OCTOTHORPE DOT octothorpes suffix.
 
 uinteger ::= digit digits octothorpes.
 
