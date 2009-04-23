@@ -5,8 +5,6 @@
 /* First off, code is included which follows the "include" declaration
 ** in the input file. */
 
-%%
-
 /* The following structure represents a single element of the
 ** parser's stack.  Information stored includes:
 **
@@ -40,15 +38,8 @@ class ParseParser {
   var $yyTraceFILE = null;
   var $yyTracePrompt = null;
   const YYWILDCARD = 1;
-  public $values;
-  public $expression;
 
-  function __construct() {
-    $this->expression = NULL;
-    /* (VALUES ...) */
-    $this->values = new Stack();
-  }
-
+%%
 
 /* Next is all token values, in a form suitable for use by makeheaders.
 ** This section will be null unless lemon is run with the -m switch.

@@ -1,4 +1,14 @@
 # -*- mode: org;-*-
+* TODO generate the fucking parse tree; not this worthless embedded
+  stack shit.
+* TODO sig figs may be worthless; but what about an uncertainty
+  parameter?
+* TODO do math with gmp ints and exponents? but why not then just
+  implement the damn float libs?
+* TODO either create containers for digits/octothorpes or sentinels
+  to mark having seen a digits{0}.
+* TODO can possibly call a yy_*() function after parsing a <datum>?
+* TODO how do we want to represent numbers: 1 <= x < 2 plus exponent?
 * TODO there seem to be rigorous boundaries to groups delineated
   by digits{0}, octothorpes{0}, etc. Hmm; digit never seems to get
   matched with recursive rules around. (Because digit is decomposed
@@ -56,6 +66,7 @@
 * TODO (parser) taking care of most of the complexity via regexps in the lexer
   is probably quicker, even though it's less readable.
 * TODO worry about number precision via GMP? http://us3.php.net/gmp
+** php's GMP doesn't do floats
 * TODO unified function that parses and evaluates; fuck the class: sphuck()
 ** TODO one for files, too: load() or fsphuck() or something
 * DONE recursive closures
