@@ -1,4 +1,8 @@
 # -*- mode: org;-*-
+* TODO there seem to be rigorous boundaries to groups delineated
+  by digits{0}, octothorpes{0}, etc. Hmm; digit never seems to get
+  matched with recursive rules around. (Because digit is decomposed
+  into terminals.)
 * TODO is there a systematic way to delegate lexer/parser
   responsibilities?
 

@@ -1,29 +1,48 @@
 %name Sphuck
 %token_prefix SPHUCK_
 
-decimal ::= uinteger suffix.
+decimal ::= uinteger suffix. {
+  print '**************';
+}
 
-decimal ::= digit digits DOT digits octothorpes suffix.
+decimal ::= digit digits DOT(A) digits octothorpes suffix. {
+  print 'dot';
+  $this->values->push(A);
+}
 
-decimal ::= DOT uinteger suffix.
+decimal ::= DOT uinteger suffix. {
+}
 
-decimal ::= digit digits octothorpes OCTOTHORPE DOT octothorpes suffix.
+decimal ::= digit digits octothorpes OCTOTHORPE DOT octothorpes suffix. {
+}
 
-uinteger ::= digit digits octothorpes.
+uinteger ::= digit digits octothorpes. {
+}
 
-digits ::= .
+digits ::= . {
+  print 'digits{0}';
+}
 
-digits ::= digits digit.
+digits ::= digits digit. {
+  print 'digits+';
+}
 
-octothorpes ::= .
+octothorpes ::= . {
+  print 'octothorpes{0}';
+}
 
-octothorpes ::= octothorpes OCTOTHORPE.
+octothorpes ::= octothorpes OCTOTHORPE(A). {
+  print 'octothorpes+';
+  $this->values->push(A);
+}  
 
 suffix ::= .
 
 suffix ::= exponent sign digit digits.
 
-digit ::= ZERO.
+digit ::= ZERO(A). {
+  $this->values->push(A);
+}
 
 digit ::= ONE.
 

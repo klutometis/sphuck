@@ -6,9 +6,9 @@ require('jlex.php');
 %{
   function token_array() {
     $tokens = NULL;
-    foreach ($lexer as $token => $value)
-      $tokens[] = array($token => $value);
-    return $tokens;
+    while ($token = $lexer->next_token()) {
+      $tokens[] = $token;
+    }
   }
 %}
 
