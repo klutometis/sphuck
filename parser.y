@@ -15,7 +15,7 @@
 
   /* nonterminals to have a label? */
   function nonterminal($nonterminal) {
-    $nonterminal = new Stack();
+    $nonterminal = new Stack(array(), $nonterminal);
     $this->datum->push($nonterminal);
     $this->current = $nonterminal;
   }

@@ -3,8 +3,9 @@
 class Stack {
   public $data;
 
-  function __construct($data=array()) {
+  function __construct($data=array(), $label='') {
     $this->data = $data;
+    $this->label = $label;
   }
 
   function push($datum) {
@@ -27,11 +28,13 @@ class Stack {
 
   function __toString() {
     // return implode("\n", array_map('strval', $this->data));
-    return sprintf("(%s)", array_reduce($this->data,
-                                        function ($x, $y) {
-                                          return $x . $y;
-                                        },
-                                        ""));
+    return sprintf("(%s%s)",
+                   ($this->label ? "{$this->label}:" : ''),
+                   array_reduce($this->data,
+                                function ($x, $y) {
+                                  return $x . $y;
+                                },
+                                ""));
   }
   }
 
