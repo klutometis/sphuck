@@ -1,38 +1,22 @@
 %name Sphuck
 %token_prefix SPHUCK_
 %include {
-  public $root = NULL;
-  public $current = NULL;
+  public $root;
+  public $current;
 
-  /* function __construct() { */
-  /*   $this->root = new Node(); */
-  /*   $this->current = $this->root; */
-  /* } */
-
-  function beroot($root) {
-    $this->current = $this->root = $root;
+  function __construct() {
+    $this->root = new Node('root');
+    $this->current = $this->root;
   }
 
   function leaf($value) {
-    $value = new Node($value);
-    if ($this->root && $this->current)
-      $this->current->add($value);
-    else
-      $this->beroot($value);
+    $this->current->add(new Node($value));
   }
 
   function nonterminal($nonterminal) {
     $nonterminal = new Node($nonterminal);
-    if ($this->root && $this->current)
-      if ($this->current->parent) {
-        $this->current->parent->add($nonterminal);
-        $this->current = $nonterminal;
-      } else {
-        $nonterminal->add($this->current);
-        $this->beroot($nonterminal);
-      }
-    else
-      $this->beroot($nonterminal);
+    $this->current->add($nonterminal);
+    $this->current = $nonterminal;
   }
 }
 
