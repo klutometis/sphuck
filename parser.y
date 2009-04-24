@@ -1,28 +1,39 @@
 %name Sphuck
 %token_prefix SPHUCK_
 %include {
-  public $root;
-  public $current;
+  public $root = NULL;
+  public $current = NULL;
 
-  function __construct() {
-    $this->values = new Stack();
-    $this->expression = $this->values;
+  /* function __construct() { */
+  /*   $this->root = new Node(); */
+  /*   $this->current = $this->root; */
+  /* } */
+
+  function beroot($root) {
+    $this->current = $this->root = $root;
   }
 
-  // maybe sentinels would be quicker; basically, we're simulating a
-  // parse tree; have a bona fide tree structure?
-  function push($value) {
-    if ($this->values->is_empty()) {
-      $this->values->push($value);
-      return;
-    } else
-      $top = $this->values->peek();
-    if ($top instanceof Stack)
-      $top->push($value);
+  function leaf($value) {
+    $value = new Node($value);
+    if ($this->root && $this->current)
+      $this->current->add($value);
     else
-      $this->values->push($value);
+      $this->beroot($value);
   }
 
+  function nonterminal($nonterminal) {
+    $nonterminal = new Node($nonterminal);
+    if ($this->root && $this->current)
+      if ($this->current->parent) {
+        $this->current->parent->add($nonterminal);
+        $this->current = $nonterminal;
+      } else {
+        $nonterminal->add($this->current);
+        $this->beroot($nonterminal);
+      }
+    else
+      $this->beroot($nonterminal);
+  }
 }
 
 decimal ::= uinteger suffix. {
@@ -30,9 +41,10 @@ decimal ::= uinteger suffix. {
 }
 
 decimal ::= digit digits DOT digits octothorpes suffix. {
+  $this->nonterminal('decimal');
   // abstract into a reset_expression() or so
-  $this->expression = $this->values;
-  $this->values->push(A);
+  /* $this->expression = $this->values; */
+  /* $this->values->push(A); */
 }
 
 decimal ::= DOT uinteger suffix. {
@@ -49,23 +61,24 @@ digits ::= . {
   // abstract into a promote_expression() or so; simulating a link to
   // the parent; but may actually need the parent and not just the
   // root.
-  $this->expression = new Stack();
-  $this->values->push($this->expression);
+  $this->nonterminal('digits');
 }
 
 digits ::= digits digit. {
-  // print 'digits+';
+  print 'digits+';
 }
 
 octothorpes ::= . {
   print 'octothorpes{0}';
-  $this->expression = new Stack();
-  $this->values->push($this->expression);
+  /* $this->expression = new Stack(); */
+  /* $this->values->push($this->expression); */
+  $this->nonterminal('octothorpes');
 }
 
 octothorpes ::= octothorpes OCTOTHORPE(A). {
   print 'OCTOTHORPE';
-  $this->expression->push(A);
+  /* $this->expression->push(A); */
+  $this->leaf(A);
 }  
 
 suffix ::= .
@@ -74,7 +87,7 @@ suffix ::= exponent sign digit digits.
 
 digit ::= ZERO(A). {
   print 'ZERO';
-  $this->expression->push(A);
+  $this->leaf(A);
 }
 
 digit ::= ONE.

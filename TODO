@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO might need an identifier/class for each of the non-terminals
 * TODO generate the fucking parse tree; not this worthless embedded
   stack shit.
 * TODO sig figs may be worthless; but what about an uncertainty
