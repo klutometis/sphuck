@@ -43,10 +43,28 @@ function stack_merge() {
                                           func_get_args())));
 }
 
-function stack_to_string($stack) {
-  return array_reduce(array_reverse($stack->data),
+function stack_to_string() {
+  $stacks = func_get_args();
+  $merged_stack = call_user_func_array('stack_merge', $stacks);
+  return array_reduce($merged_stack->data,
                       function ($x, $y) {
                         return $x . $y;
                       },
                       "");
+}
+
+function stack_to_integer() {
+  return intval(strtr(call_user_func_array('stack_to_string',
+                                           func_get_args()),
+                      '#',
+                      '0'));
+}
+
+
+function stack_to_decimal($integral, $fraction) {
+  return floatval(sprintf('%d.%d',
+                          call_user_func_array('stack_to_integer',
+                                               $integral),
+                          call_user_func_array('stack_to_integer',
+                                               $fraction)));
 }

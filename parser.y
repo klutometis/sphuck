@@ -19,17 +19,6 @@
     $this->datum->push($nonterminal);
     $this->current = $nonterminal;
   }
-
-  function decimal($integral, $fraction) {
-    return floatval(sprintf('%d.%d', $integral, $fraction));
-  }
-
-  function integer() {
-    return intval(strtr(stack_to_string(call_user_func_array('stack_merge',
-                                                             func_get_args())),
-                        '#',
-                        '0'));
-  }
 }
 
 decimal ::= uinteger suffix. {
@@ -40,10 +29,11 @@ decimal ::= digit digits DOT digits octothorpes suffix. {
   $fraction = $this->datum->pop();
   $integral = $this->datum->pop();
   $digit = $this->datum->pop();
-  $exact = $octothorpes->is_empty();
-  print $this->decimal($this->integer($octothorpes, $fraction),
-                       $this->integer($integral, new Stack(array($digit))));
-  printf('%s, %s, %s, %s', $octothorpes, $fraction, $integral, $digit);
+  // DOT -> inexact
+  $exact = #f;
+  $decimal = stack_to_decimal(array(new Stack(array($digit)), $integral),
+                              array($fraction, $octothorpes));
+  $this->datum->push(new Real($exact, $decimal));
 }
 
 decimal ::= DOT uinteger suffix. {

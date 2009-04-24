@@ -15,7 +15,14 @@ class Complex extends Number {
 }
 
 class Real extends Complex {
-  function __construct($exact, $real);
+  function __construct($exact, $real) {
+    $this->exact = $exact;
+    $this->real = $real;
+  }
+  
+  function __toString() {
+    return strval($this->real);
+  }
 }
 
 class Rational extends Real {
@@ -32,7 +39,7 @@ class Integer extends Rational {
 }
 
 // shouldn't we do these with computation? i.e. (integer 1+0i) => #t
-function is_integer($object) {
+function is_schinteger($object) {
   return $object instanceof Integer;
 }
 
@@ -40,7 +47,7 @@ function is_rational($object) {
   return $object instanceof Rational;
 }
 
-function is_real($object) {
+function is_schreal($object) {
   return $object instanceof Real;
 }
 
