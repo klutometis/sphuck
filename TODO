@@ -1,4 +1,7 @@
 # -*- mode: org;-*-
+* TODO becaus we're not using complex regexps in the lexer,
+  we might have to use states to distinguish between #e10 the
+  exponent, and #e the exact sign.
 * TODO move utilities such as map into their own file (not pair)
 * TODO non-terminals to have a label?
 * TODO we can signify somewhere in the parser that a datum has
