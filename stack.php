@@ -8,6 +8,8 @@ class Stack {
   }
 
   function pop() {
+    if ($this->is_empty())
+      error('fuck you');
     return array_pop($this->data);
   }
 
@@ -20,6 +22,11 @@ class Stack {
   }
 
   function __toString() {
-    return implode("\n", array_map('strval', $this->data));
+    // return implode("\n", array_map('strval', $this->data));
+    return sprintf("(%s)", array_reduce($this->data,
+                                        function ($x, $y) {
+                                          return $x . $y;
+                                        },
+                                        ""));
   }
   }

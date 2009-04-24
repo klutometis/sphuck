@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO we can signify somewhere in the parser that a datum has
+  been read; then the lexer can stop taking from the input stream.
 * TODO might need an identifier/class for each of the non-terminals
 * TODO generate the fucking parse tree; not this worthless embedded
   stack shit.

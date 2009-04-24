@@ -1,21 +1,21 @@
 %name Sphuck
 %token_prefix SPHUCK_
 %include {
-  public $root;
+  public $value;
   public $current;
 
   function __construct() {
-    $this->root = new Node('root');
-    $this->current = $this->root;
+    $this->value = new Stack();
+    $this->current = $this->value;
   }
 
   function leaf($value) {
-    $this->current->add(new Node($value));
+    $this->current->push($value);
   }
 
   function nonterminal($nonterminal) {
-    $nonterminal = new Node($nonterminal);
-    $this->current->add($nonterminal);
+    $nonterminal = new Stack();
+    $this->value->push($nonterminal);
     $this->current = $nonterminal;
   }
 }
@@ -25,10 +25,15 @@ decimal ::= uinteger suffix. {
 }
 
 decimal ::= digit digits DOT digits octothorpes suffix. {
-  $this->nonterminal('decimal');
+  /* $this->nonterminal('decimal'); */
   // abstract into a reset_expression() or so
   /* $this->expression = $this->values; */
   /* $this->values->push(A); */
+  $octothorpes = $this->value->pop();
+  $digits0 = $this->value->pop();
+  $digits1 = $this->value->pop();
+  $digit = $this->value->pop();
+  printf('%s, %s, %s, %s', $octothorpes, $digits0, $digits1, $digit);
 }
 
 decimal ::= DOT uinteger suffix. {
