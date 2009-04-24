@@ -1,26 +1,51 @@
 <?php
 
-// worry about exact/inexact later? need parsing support.
+// php doesn't do typed parameters, so we'll have to juggle them,
+// anyway.
 class Number {
+  public $exact;
+}
+
+class Complex extends Number {
   public $real;
   public $imaginary;
 
-  function __construct($real, $imaginary=0) {
-    $this->real = $real;
-    $this->imaginary = $imaginary;
+  function __construct($exact, $real, $imaginary) {
   }
+}
 
-  function __toString() {
-    return sprintf('%s%s%si',
-                   $this->real,
-                   $this->imaginary < 0 ? '' : '+',
-                   $this->imaginary);
-  }
-  }
+class Real extends Complex {
+  function __construct($exact, $real);
+}
 
-// reserved for memoization?
-function number($real, $imaginary=0) {
-  return new Number($real, $imaginary);
+class Rational extends Real {
+  public $numerator;
+  public $denominator;
+
+  function __construct($exact, $numerator, $denominator) {
+  }
+}
+
+class Integer extends Rational {
+  function __construct($exact, $numerator) {
+  }
+}
+
+// shouldn't we do these with computation? i.e. (integer 1+0i) => #t
+function is_integer($object) {
+  return $object instanceof Integer;
+}
+
+function is_rational($object) {
+  return $object instanceof Rational;
+}
+
+function is_real($object) {
+  return $object instanceof Real;
+}
+
+function is_complex($object) {
+  return $object instanceof Complex;
 }
 
 function is_number($object) {

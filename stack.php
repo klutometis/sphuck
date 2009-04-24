@@ -1,7 +1,11 @@
 <?php
 
 class Stack {
-  public $data = array();
+  public $data;
+
+  function __construct($data=array()) {
+    $this->data = $data;
+  }
 
   function push($datum) {
     $this->data[] = $datum;
@@ -9,7 +13,7 @@ class Stack {
 
   function pop() {
     if ($this->is_empty())
-      error('fuck you');
+      error('Popping an empty stack');
     return array_pop($this->data);
   }
 
@@ -18,7 +22,7 @@ class Stack {
   }
 
   function is_empty() {
-    return count($this->data) == 0;
+    return !$this->data;
   }
 
   function __toString() {
@@ -30,3 +34,19 @@ class Stack {
                                         ""));
   }
   }
+
+function stack_merge() {
+  return new Stack(call_user_func_array('array_merge',
+                                        array_map(function ($stack) {
+                                            return $stack->data;
+                                          },
+                                          func_get_args())));
+}
+
+function stack_to_string($stack) {
+  return array_reduce(array_reverse($stack->data),
+                      function ($x, $y) {
+                        return $x . $y;
+                      },
+                      "");
+}

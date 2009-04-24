@@ -1,39 +1,49 @@
 %name Sphuck
 %token_prefix SPHUCK_
 %include {
-  public $value;
+  public $datum;
   public $current;
 
   function __construct() {
-    $this->value = new Stack();
-    $this->current = $this->value;
+    $this->datum = new Stack();
+    $this->current = $this->datum;
   }
 
-  function leaf($value) {
-    $this->current->push($value);
+  function leaf($datum) {
+    $this->current->push($datum);
   }
 
+  /* nonterminals to have a label? */
   function nonterminal($nonterminal) {
     $nonterminal = new Stack();
-    $this->value->push($nonterminal);
+    $this->datum->push($nonterminal);
     $this->current = $nonterminal;
+  }
+
+  function decimal($integral, $fraction) {
+    return floatval(sprintf('%d.%d', $integral, $fraction));
+  }
+
+  function integer() {
+    return intval(strtr(stack_to_string(call_user_func_array('stack_merge',
+                                                             func_get_args())),
+                        '#',
+                        '0'));
   }
 }
 
 decimal ::= uinteger suffix. {
-  print '**************';
 }
 
 decimal ::= digit digits DOT digits octothorpes suffix. {
-  /* $this->nonterminal('decimal'); */
-  // abstract into a reset_expression() or so
-  /* $this->expression = $this->values; */
-  /* $this->values->push(A); */
-  $octothorpes = $this->value->pop();
-  $digits0 = $this->value->pop();
-  $digits1 = $this->value->pop();
-  $digit = $this->value->pop();
-  printf('%s, %s, %s, %s', $octothorpes, $digits0, $digits1, $digit);
+  $octothorpes = $this->datum->pop();
+  $fraction = $this->datum->pop();
+  $integral = $this->datum->pop();
+  $digit = $this->datum->pop();
+  $exact = $octothorpes->is_empty();
+  print $this->decimal($this->integer($octothorpes, $fraction),
+                       $this->integer($integral, new Stack(array($digit))));
+  printf('%s, %s, %s, %s', $octothorpes, $fraction, $integral, $digit);
 }
 
 decimal ::= DOT uinteger suffix. {
@@ -46,27 +56,17 @@ uinteger ::= digit digits octothorpes. {
 }
 
 digits ::= . {
-  print 'digits{0}';
-  // abstract into a promote_expression() or so; simulating a link to
-  // the parent; but may actually need the parent and not just the
-  // root.
   $this->nonterminal('digits');
 }
 
 digits ::= digits digit. {
-  print 'digits+';
 }
 
 octothorpes ::= . {
-  print 'octothorpes{0}';
-  /* $this->expression = new Stack(); */
-  /* $this->values->push($this->expression); */
   $this->nonterminal('octothorpes');
 }
 
 octothorpes ::= octothorpes OCTOTHORPE(A). {
-  print 'OCTOTHORPE';
-  /* $this->expression->push(A); */
   $this->leaf(A);
 }  
 
@@ -75,40 +75,71 @@ suffix ::= .
 suffix ::= exponent sign digit digits.
 
 digit ::= ZERO(A). {
-  print 'ZERO';
   $this->leaf(A);
 }
 
-digit ::= ONE.
+digit ::= ONE(A). {
+  $this->leaf(A);
+}
 
-digit ::= TWO.
+digit ::= TWO(A). {
+  $this->leaf(A);
+}
 
-digit ::= THREE.
+digit ::= THREE(A). {
+  $this->leaf(A);
+}
 
-digit ::= FOUR.
+digit ::= FOUR(A). {
+  $this->leaf(A);
+}
 
-digit ::= FIVE.
+digit ::= FIVE(A). {
+  $this->leaf(A);
+}
 
-digit ::= SIX.
+digit ::= SIX(A). {
+  $this->leaf(A);
+}
 
-digit ::= SEVEN.
+digit ::= SEVEN(A). {
+  $this->leaf(A);
+}
 
-digit ::= EIGHT.
+digit ::= EIGHT(A). {
+  $this->leaf(A);
+}
 
-digit ::= NINE.
+digit ::= NINE(A). {
+  $this->leaf(A);
+}
 
-exponent ::= E.
+exponent ::= E(A). {
+  $this->leaf(A);
+}
 
-exponent ::= S.
+exponent ::= S(A). {
+  $this->leaf(A);
+}
 
-exponent ::= F.
+exponent ::= F(A). {
+  $this->leaf(A);
+}
 
-exponent ::= D.
+exponent ::= D(A). {
+  $this->leaf(A);
+}
 
-exponent ::= L.
+exponent ::= L(A). {
+  $this->leaf(A);
+}
 
-sign ::= PLUS.
+sign ::= PLUS(A). {
+  $this->leaf(A);
+}
 
-sign ::= MINUS.
+sign ::= MINUS(A). {
+  $this->leaf(A);
+}
 
 sign ::= .
