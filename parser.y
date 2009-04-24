@@ -49,7 +49,7 @@ uinteger ::= digit digits octothorpes. {
 }
 
 digits ::= . {
-  // $this->nonterminal('digits');
+  $this->nonterminal('digits');
 }
 
 digits ::= digits digit. {
@@ -77,87 +77,70 @@ suffix ::= exponent sign digit digits. {
 }
 
 digit ::= ZERO(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= ONE(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= TWO(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= THREE(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= FOUR(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= FIVE(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= SIX(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= SEVEN(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= EIGHT(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 digit ::= NINE(A). {
-  $this->nonterminal('digit');
   $this->leaf(A);
 }
 
 exponent ::= E(A). {
-  $this->nonterminal('exponent');
   $this->leaf(A);
 }
 
 exponent ::= S(A). {
-  $this->nonterminal('exponent');
   $this->leaf(A);
 }
 
 exponent ::= F(A). {
-  $this->nonterminal('exponent');
   $this->leaf(A);
 }
 
 exponent ::= D(A). {
-  $this->nonterminal('exponent');
   $this->leaf(A);
 }
 
 exponent ::= L(A). {
-  $this->nonterminal('exponent');
   $this->leaf(A);
 }
 
 sign ::= PLUS(A). {
-  $this->nonterminal('sign');
   $this->leaf(A);
 }
 
 sign ::= MINUS(A). {
-  $this->nonterminal('sign');
   $this->leaf(A);
 }
 
