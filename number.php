@@ -4,6 +4,9 @@
 // anyway.
 class Number {
   public $exact;
+  function __toString() {
+    return "234";
+  }
 }
 
 class Complex extends Number {
@@ -30,11 +33,14 @@ class Rational extends Real {
   public $denominator;
 
   function __construct($exact, $numerator, $denominator) {
+    $this->numerator = $numerator;
+    $this->denominator = $denominator;
   }
 }
 
 class Integer extends Rational {
   function __construct($exact, $numerator) {
+    $this->numerator = $numerator;
   }
 }
 
@@ -57,4 +63,14 @@ function is_complex($object) {
 
 function is_number($object) {
   return $object instanceof Number;
+}
+
+// until we support the whole number stack
+function mul_real_integer_hack($real, $integer) {
+  return new Real(true, $real->real * $integer->numerator);
+}
+
+// until we support the whole number stack
+function pow_integer_hack($base, $exponent) {
+  return new Integer(true, pow($base->numerator, $exponent->numerator));
 }

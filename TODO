@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO should the stack_to_* function return actual scheme
+  values
 * TODO becaus we're not using complex regexps in the lexer,
   we might have to use states to distinguish between #e10 the
   exponent, and #e the exact sign.

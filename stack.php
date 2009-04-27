@@ -56,6 +56,7 @@ function stack_to_string() {
                       "");
 }
 
+// should these things return actual scheme values?
 function stack_to_integer() {
   return intval(strtr(call_user_func_array('stack_to_string',
                                            func_get_args()),
@@ -70,4 +71,11 @@ function stack_to_decimal($integral, $fraction) {
                                                $integral),
                           call_user_func_array('stack_to_integer',
                                                $fraction)));
+}
+
+function stack_to_exponent($precision, $sign, $exponent) {
+  return intval(sprintf('%s%d',
+                        ($sign instanceof Stack ? stack_to_string($sign) : $sign),
+                        call_user_func_array('stack_to_string',
+                                             $exponent)));
 }
