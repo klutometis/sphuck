@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO why not do the scheme conversion at the last minute,
+  so as to be able to manipulate value, sign, etc. efficiently?
 * TODO jumped the gun on the exactness question (wait for
   prefix)
 * TODO should the stack_to_* function return actual scheme
