@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO jumped the gun on the exactness question (wait for
+  prefix)
 * TODO should the stack_to_* function return actual scheme
   values
 * TODO becaus we're not using complex regexps in the lexer,
