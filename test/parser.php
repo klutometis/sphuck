@@ -16,7 +16,7 @@ class ParserTestCase extends UnitTestCase {
       $parser->Sphuck($token->type, $token->value);
     }
     $parser->Sphuck(0);
-    $this->assertEqual($parser->datum->pop()->real->real,
+    $this->assertEqual($parser->datum->pop(),
                        12345000000000);
   }
 }

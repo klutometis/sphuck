@@ -36,9 +36,11 @@ decimal ::= digit digits DOT digits octothorpes suffix. {
   /* TODO: do this conversion last minute */
   $decimal = stack_to_decimal(array(new Stack(array($digit)), $integral),
                               array($fraction, $octothorpes));
-  $this->datum->push(new Real($exact, mul_real_integer_hack(new Real(true, $decimal),
-                                                            pow_integer_hack(new Integer(true, 10),
-                                                                             $suffix))));
+  /* don't have exactitude yet */
+  /* $this->datum->push(new Real($exact, mul_real_integer_hack(new Real(true, $decimal), */
+  /*                                                           pow_integer_hack(new Integer(true, 10), */
+  /*                                                                            $suffix)))); */
+  $this->datum->push($decimal * pow(10, $suffix));
 }
 
 decimal ::= DOT uinteger suffix. {
@@ -75,8 +77,7 @@ octothorpes ::= octothorpes OCTOTHORPE(A). {
 
 suffix ::= . {
   print 'suffix ::= .' . "\n";
-  /* TODO: do this conversion last minute */
-  $this->datum->push(new Integer(true, 0));
+  $this->datum->push(0);
 }
 
 suffix ::= exponent sign digit digits. {
@@ -85,12 +86,10 @@ suffix ::= exponent sign digit digits. {
   $digit = $this->datum->pop();
   $sign = $this->datum->pop();
   $precision = $this->datum->pop();
-  /* TODO: do this conversion last minute */
-  $this->datum->push(new Integer(true,
-                                 stack_to_exponent($precision,
-                                                   $sign,
-                                                   array(new Stack(array($digit)),
-                                                         $exponent))));
+  $this->datum->push(stack_to_exponent($precision,
+                                       $sign,
+                                       array(new Stack(array($digit)),
+                                             $exponent)));
 }
 
 digit ::= ZERO(A). {
