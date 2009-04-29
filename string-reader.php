@@ -14,9 +14,6 @@ class StringReader {
     $this->index += $count;
     return $substr;
   }
-  function stream_tell() {
-    return $this->index;
-  }
   function stream_eof() {
     return $this->index >= $this->length;
   }
