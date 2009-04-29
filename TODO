@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO parser tests: all the samples from r5rs?
 * TODO why not do the scheme conversion at the last minute,
   so as to be able to manipulate value, sign, etc. efficiently?
 * TODO jumped the gun on the exactness question (wait for
