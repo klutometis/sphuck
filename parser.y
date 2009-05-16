@@ -20,12 +20,62 @@
     $this->datum->peek()->push($token);
   }
 }
+/* %right E S F D L. */
+/* %left ASPERAND. */
+/* %left PLUS MINUS. */
+/* %right I. */
+
+
+number ::= prefix complex. {
+}
+
+complex ::= real. {
+}
+
+complex ::= real ASPERAND real. {
+}
+
+complex ::= real PLUS ureal I. {
+}
+
+complex ::= real MINUS ureal I. {
+}
+
+complex ::= real PLUS I. {
+}
+
+complex ::= real MINUS I. {
+}
+
+// complex ::= PLUS ureal I. {
+// }
+
+// complex ::= MINUS ureal I. {
+// }
+
+complex ::= PLUS I. {
+}
+
+complex ::= MINUS I. {
+}
+
+real ::= sign ureal. {
+}
+
+ureal ::= uinteger. {
+}
+
+ureal ::= uinteger SLASH uinteger. {
+}
+
+ureal ::= decimal. {
+}
 
 decimal ::= uinteger suffix. {
   print 'decimal ::= uinteger suffix.' . "\n";
 }
 
-decimal ::= digit digits DOT digits octothorpes suffix. {
+decimal ::= digits digit DOT digits octothorpes suffix. {
   print 'decimal ::= digit digits DOT digits octothorpes suffix.' . "\n";
   $suffix = $this->datum->pop();
   $octothorpes = $this->datum->pop();
@@ -47,13 +97,19 @@ decimal ::= DOT uinteger suffix. {
   print 'decimal ::= DOT uinteger suffix.' . "\n";
 }
 
-decimal ::= digit digits octothorpes OCTOTHORPE DOT octothorpes suffix. {
+decimal ::= digits digit octothorpes OCTOTHORPE DOT octothorpes suffix. {
   print 'decimal ::= digit digits octothorpes OCTOTHORPE DOT octothorpes suffix.' . "\n";
 }
 
-uinteger ::= digit digits octothorpes. {
+uinteger ::= digits digit octothorpes. {
   print 'uinteger ::= digit digits octothorpes.' . "\n";
 }
+
+prefix ::= radix exactness. {
+}
+
+/* prefix ::= exactness radix. { */
+/* } */
 
 digits ::= . {
   print 'digits ::= .' . "\n";
@@ -80,7 +136,7 @@ suffix ::= . {
   $this->datum->push(0);
 }
 
-suffix ::= exponent sign digit digits. {
+suffix ::= exponent sign digits digit. {
   print 'suffix ::= exponent sign digit digits.' . "\n";
   $exponent = $this->datum->pop();
   $digit = $this->datum->pop();
@@ -180,4 +236,16 @@ sign ::= MINUS(A). {
 sign ::= . {
   print 'sign ::= .' . "\n";
   $this->nonterminal('sign');
+}
+
+exactness ::= . {
+}
+
+exactness ::= INEXACT. {
+}
+
+radix ::= . {
+}
+
+radix ::= DECIMAL. {
 }

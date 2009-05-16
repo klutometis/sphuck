@@ -1,4 +1,10 @@
 # -*- mode: org;-*-
+* TODO identify problematic things (like decimal) in the lexer;
+  have a subparser to handle it.
+* TODO could have a separate number parser with special cases
+  for E, S, F, D, L, etc.; wonder if that can be simulated with
+  states?
+* TODO every non-terminal a test?
 * TODO parser tests: all the samples from r5rs?
 * TODO why not do the scheme conversion at the last minute,
   so as to be able to manipulate value, sign, etc. efficiently?

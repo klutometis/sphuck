@@ -63,4 +63,8 @@ require('jlex.php');
 "+" { return $this->createToken(SphuckParser::SPHUCK_PLUS); }
 "-" { return $this->createToken(SphuckParser::SPHUCK_MINUS); }
 "." { return $this->createToken(SphuckParser::SPHUCK_DOT); }
+"@" { return $this->createToken(SphuckParser::SPHUCK_ASPERAND); }
+"/" { return $this->createToken(SphuckParser::SPHUCK_SLASH); }
+"#i" { return $this->createToken(SphuckParser::SPHUCK_INEXACT); }
+"#d" { return $this->createToken(SphuckParser::SPHUCK_DECIMAL); }
 [\n] {}
