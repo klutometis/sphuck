@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO integrate decimal last? seems to be a weird case
 * TODO identify problematic things (like decimal) in the lexer;
   have a subparser to handle it.
 * TODO could have a separate number parser with special cases
