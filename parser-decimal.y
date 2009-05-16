@@ -33,13 +33,8 @@ decimal ::= digit digits DOT digits octothorpes suffix. {
   $integral = $this->datum->pop();
   $digit = $this->datum->pop();
   $exact = #f;
-  /* TODO: do this conversion last minute */
   $decimal = stack_to_decimal(array(new Stack(array($digit)), $integral),
                               array($fraction, $octothorpes));
-  /* don't have exactitude yet */
-  /* $this->datum->push(new Real($exact, mul_real_integer_hack(new Real(true, $decimal), */
-  /*                                                           pow_integer_hack(new Integer(true, 10), */
-  /*                                                                            $suffix)))); */
   $this->datum->push($decimal * pow(10, $suffix));
 }
 
