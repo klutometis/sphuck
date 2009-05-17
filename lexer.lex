@@ -4,7 +4,7 @@ require('jlex.php');
 %%
 
 %{
-  public static $SYNTACTIC_KEYWORDS =
+  public static $KEYWORDS =
       array('else',
             '=>',
             'define',
@@ -120,6 +120,6 @@ DIGIT_16 = [0-9a-f]
 {STRING} { return $this->createToken('string'); }
 {INTERTOKEN_SPACE} { return $this->createToken('intertoken space'); }
 {IDENTIFIER} { return (in_array(strtolower($this->yytext()),
-                                SphuckLexer::$SYNTACTIC_KEYWORDS))
+                                SphuckLexer::$KEYWORDS))
                       ? $this->createToken('identifier')
                       : $this->createToken('variable'); }
