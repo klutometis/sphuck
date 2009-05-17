@@ -4,6 +4,29 @@ require('jlex.php');
 %%
 
 %{
+  public static $SYNTACTIC_KEYWORDS =
+      array('else',
+            '=>',
+            'define',
+            'unquote',
+            'unquote-splicing',
+            'quote',
+            'lambda',
+            'if',
+            'set!',
+            'begin',
+            'cond',
+            'and',
+            'or',
+            'case',
+            'let',
+            'let*',
+            'letrec',
+            'do',
+            'delay',
+            'quasiquote',
+            );
+
   function token_array() {
     $tokens = NULL;
     while ($token = $this->next_token()) {
@@ -32,7 +55,7 @@ IDENTIFIER = ({INITIAL}{SUBSEQUENT}*|{PECULIAR_IDENTIFIER})
 INITIAL = ({LETTER}|{SPECIAL_INITIAL})
 LETTER = [a-z]
 
-SPECIAL_INITAL = [!$%&*/:<=>?^_~]
+SPECIAL_INITIAL = [!$%&*/:<=>?^_~]
 SUBSEQUENT = ({INITIAL}|{DIGIT}|{SPECIAL_SUBSEQUENT})
 DIGIT = [0-9]
 SPECIAL_SUBSEQUENT = [+\-.@]
@@ -96,3 +119,7 @@ DIGIT_16 = [0-9a-f]
 {NUM_16} { return $this->createToken('hex'); }
 {STRING} { return $this->createToken('string'); }
 {INTERTOKEN_SPACE} { return $this->createToken('intertoken space'); }
+{IDENTIFIER} { return (in_array(strtolower($this->yytext()),
+                                SphuckLexer::$SYNTACTIC_KEYWORDS))
+                      ? $this->createToken('identifier')
+                      : $this->createToken('variable'); }
