@@ -7,7 +7,9 @@
   more or less verbatim!
 ** TODO does the parser admit of states? or do i have to have
    an ad-hoc parser that corresponds to each lexer state?
-* TODO integrate decimal last? seems to be a weird case
+* TODO [#A] integrate decimal last? seems to be a weird case
+** TODO in particular, handle other numbers first; might be able
+   to combine them into one number parser
 * TODO identify problematic things (like decimal) in the lexer;
   have a subparser to handle it.
 * TODO could have a separate number parser with special cases
