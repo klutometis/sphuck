@@ -21,6 +21,25 @@ require('jlex.php');
 %class SphuckLexer
 %function next_token
 
+TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|\(|\)|#\(|'|`|,|,@|\.))
+DELIMITER = ({WHITESPACE}|\(|\)|"|;)
+WHITESPACE = [ \n]
+COMMENT = ;.*
+ATMOSPHERE = ({WHITESPACE}|{COMMENT})
+INTERTOKEN_SPACE = {ATMOSPHERE}*
+SPECIAL_INITAL = [!$%&*/:<=>?^_~]
+SUBSEQUENT = ({INITIAL}|{DIGIT}|{SPECIAL_SUBSEQUENT})
+DIGIT = [0-9]
+SPECIAL_SUBSEQUENT = [+\-.@]
+PECULIAR_IDENTIFIER = (\+|-|\.\.\.)
+SYNTACTIC_KEYWORD = ({EXPRESSION_KEYWORD}|else|=>|define|unquote|unquote-splicing)
+EXPRESSION_KEYWORD = (quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote)
+BOOLEAN = (#t|#f)
+CHARACTER = \#\\(.|{CHARACTER_NAME})
+CHARACTER_NAME = (space|newline)
+STRING = \"{STRING_ELEMENT}*\"
+STRING_ELEMENT = ([^\"\\]|\\\"|\\\\) // need some lookahead here, don't we?
+NUMBER = {NUM_2}|{NUM_8}|{NUM_10}|{NUM_16}
 NUM_2 = {PREFIX_2}{COMPLEX_2}
 NUM_8 = {PREFIX_8}{COMPLEX_8}
 NUM_10 = {PREFIX_10}{COMPLEX_10}
@@ -64,4 +83,5 @@ DIGIT_16 = [0-9a-f]
 {NUM_8} { return $this->createToken('octal'); }
 {NUM_10} { return $this->createToken('decimal'); }
 {NUM_16} { return $this->createToken('hex'); }
-[\n] {}
+{STRING} { return $this->createToken('string'); }
+{INTERTOKEN_SPACE} { return $this->createToken('intertoken space'); }

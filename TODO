@@ -1,5 +1,8 @@
 
 # -*- mode: org;-*-
+* TODO it may well be profitable to delay the creating of schemelike
+  structures as long as possible (may not be able to delay them beyond
+  the parser, though: exactness, etc.)
 * TODO holy shit! lexers can follow the lexical formalisms
   more or less verbatim!
 ** TODO does the parser admit of states? or do i have to have
