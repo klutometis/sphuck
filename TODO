@@ -1,4 +1,9 @@
+
 # -*- mode: org;-*-
+* TODO holy shit! lexers can follow the lexical formalisms
+  more or less verbatim!
+** TODO does the parser admit of states? or do i have to have
+   an ad-hoc parser that corresponds to each lexer state?
 * TODO integrate decimal last? seems to be a weird case
 * TODO identify problematic things (like decimal) in the lexer;
   have a subparser to handle it.

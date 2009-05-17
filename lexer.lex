@@ -21,50 +21,47 @@ require('jlex.php');
 %class SphuckLexer
 %function next_token
 
+NUM_2 = {PREFIX_2}{COMPLEX_2}
+NUM_8 = {PREFIX_8}{COMPLEX_8}
+NUM_10 = {PREFIX_10}{COMPLEX_10}
+NUM_16 = {PREFIX_16}{COMPLEX_16}
+COMPLEX_2 = ({REAL_2}|{REAL_2}\@{REAL_2}|{REAL_2}\+{UREAL_2}i|{REAL_2}-{UREAL_2}i|{REAL_2}\+i|{REAL_2}-i|\+{UREAL_2}i|-{UREAL_2}i|\+i|-i)
+COMPLEX_8 = ({REAL_8}|{REAL_8}\@{REAL_8}|{REAL_8}\+{UREAL_8}i|{REAL_8}-{UREAL_8}i|{REAL_8}\+i|{REAL_8}-i|\+{UREAL_8}i|-{UREAL_8}i|\+i|-i)
+COMPLEX_10 = ({REAL_10}|{REAL_10}\@{REAL_10}|{REAL_10}\+{UREAL_10}i|{REAL_10}-{UREAL_10}i|{REAL_10}\+i|{REAL_10}-i|\+{UREAL_10}i|-{UREAL_10}i|\+i|-i)
+COMPLEX_16 = ({REAL_16}|{REAL_16}\@{REAL_16}|{REAL_16}\+{UREAL_16}i|{REAL_16}-{UREAL_16}i|{REAL_16}\+i|{REAL_16}-i|\+{UREAL_16}i|-{UREAL_16}i|\+i|-i)
+REAL_2 = {SIGN}{UREAL_2}
+REAL_8 = {SIGN}{UREAL_8}
+REAL_10 = {SIGN}{UREAL_10}
+REAL_16 = {SIGN}{UREAL_16}
+UREAL_2 = ({UINTEGER_2}|{UINTEGER_2}/{UINTEGER_2})
+UREAL_8 = ({UINTEGER_8}|{UINTEGER_8}/{UINTEGER_8})
+UREAL_10 = ({UINTEGER_10}|{UINTEGER_10}/{UINTEGER_10}|{DECIMAL_10})
+DECIMAL_10 = ({UINTEGER_10}{SUFFIX}|\.{DIGIT_10}+#*{SUFFIX}|{DIGIT_10}+\.{DIGIT_10}*#*{SUFFIX}|{DIGIT_10}+#+\.#*{SUFFIX})
+UREAL_16 = ({UINTEGER_16}|{UINTEGER_16}/{UINTEGER_16})
+UINTEGER_2 = {DIGIT_2}+#*
+UINTEGER_8 = {DIGIT_8}+#*
+UINTEGER_10 = {DIGIT_10}+#*
+UINTEGER_16 = {DIGIT_16}+#*
+PREFIX_2 = ({EXACTNESS}{RADIX_2}|{RADIX_2}{EXACTNESS})
+PREFIX_8 = ({EXACTNESS}{RADIX_8}|{RADIX_8}{EXACTNESS})
+PREFIX_10 = ({EXACTNESS}{RADIX_10}|{RADIX_10}{EXACTNESS})
+PREFIX_16 = ({EXACTNESS}{RADIX_16}|{RADIX_16}{EXACTNESS})
+SUFFIX = ({EXPONENT_MARKER}{SIGN}{DIGIT_10}+)?
+EXPONENT_MARKER = [esfdl]
+SIGN = (\+|-)?
+EXACTNESS = (#i|#e)?
+RADIX_2 = #b
+RADIX_8 = #o
+RADIX_10 = (#d)?
+RADIX_16 = #x
+DIGIT_2 = [01]
+DIGIT_8 = [0-7]
+DIGIT_10 = [0-9]
+DIGIT_16 = [0-9a-f]
 %%
 
-"0" { return $this->createToken(SphuckParser::SPHUCK_ZERO); }
-"1" { return $this->createToken(SphuckParser::SPHUCK_ONE); }
-"2" { return $this->createToken(SphuckParser::SPHUCK_TWO); }
-"3" { return $this->createToken(SphuckParser::SPHUCK_THREE); }
-"4" { return $this->createToken(SphuckParser::SPHUCK_FOUR); }
-"5" { return $this->createToken(SphuckParser::SPHUCK_FIVE); }
-"6" { return $this->createToken(SphuckParser::SPHUCK_SIX); }
-"7" { return $this->createToken(SphuckParser::SPHUCK_SEVEN); }
-"8" { return $this->createToken(SphuckParser::SPHUCK_EIGHT); }
-"9" { return $this->createToken(SphuckParser::SPHUCK_NINE); }
-"a" { return $this->createToken(SphuckParser::SPHUCK_A); }
-"b" { return $this->createToken(SphuckParser::SPHUCK_B); }
-"c" { return $this->createToken(SphuckParser::SPHUCK_C); }
-"d" { return $this->createToken(SphuckParser::SPHUCK_D); }
-"e" { return $this->createToken(SphuckParser::SPHUCK_E); }
-"f" { return $this->createToken(SphuckParser::SPHUCK_F); }
-"g" { return $this->createToken(SphuckParser::SPHUCK_G); }
-"h" { return $this->createToken(SphuckParser::SPHUCK_H); }
-"i" { return $this->createToken(SphuckParser::SPHUCK_I); }
-"j" { return $this->createToken(SphuckParser::SPHUCK_J); }
-"k" { return $this->createToken(SphuckParser::SPHUCK_K); }
-"l" { return $this->createToken(SphuckParser::SPHUCK_L); }
-"m" { return $this->createToken(SphuckParser::SPHUCK_M); }
-"n" { return $this->createToken(SphuckParser::SPHUCK_N); }
-"o" { return $this->createToken(SphuckParser::SPHUCK_O); }
-"p" { return $this->createToken(SphuckParser::SPHUCK_P); }
-"q" { return $this->createToken(SphuckParser::SPHUCK_Q); }
-"r" { return $this->createToken(SphuckParser::SPHUCK_R); }
-"s" { return $this->createToken(SphuckParser::SPHUCK_S); }
-"t" { return $this->createToken(SphuckParser::SPHUCK_T); }
-"u" { return $this->createToken(SphuckParser::SPHUCK_U); }
-"v" { return $this->createToken(SphuckParser::SPHUCK_V); }
-"w" { return $this->createToken(SphuckParser::SPHUCK_W); }
-"x" { return $this->createToken(SphuckParser::SPHUCK_X); }
-"y" { return $this->createToken(SphuckParser::SPHUCK_Y); }
-"z" { return $this->createToken(SphuckParser::SPHUCK_Z); }
-"#" { return $this->createToken(SphuckParser::SPHUCK_OCTOTHORPE); }
-"+" { return $this->createToken(SphuckParser::SPHUCK_PLUS); }
-"-" { return $this->createToken(SphuckParser::SPHUCK_MINUS); }
-"." { return $this->createToken(SphuckParser::SPHUCK_DOT); }
-"@" { return $this->createToken(SphuckParser::SPHUCK_ASPERAND); }
-"/" { return $this->createToken(SphuckParser::SPHUCK_SLASH); }
-"#i" { return $this->createToken(SphuckParser::SPHUCK_INEXACT); }
-"#d" { return $this->createToken(SphuckParser::SPHUCK_DECIMAL); }
+{NUM_2} { return $this->createToken('binary'); }
+{NUM_8} { return $this->createToken('octal'); }
+{NUM_10} { return $this->createToken('decimal'); }
+{NUM_16} { return $this->createToken('hex'); }
 [\n] {}
