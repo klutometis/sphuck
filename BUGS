@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO because of a shift-reduce error involving {sign unreal i} and {real i},
+  2i is recognized as +2i
 * TODO does the machine of chapter 5 give sufficient control for
   implementing things like continuations/macros, whereas the evaluator
   of chapter 4 does not?

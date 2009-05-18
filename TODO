@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO kleene star can't be done in lexer, it seems; endless loop on
+  blank string.
 * TODO there is some ambiguity between UREAL_10 qua UINTEGER_10 and
   DECIMAL_10 qua UINTEGER_10 + nullary SUFFIX
 * TODO it may well be profitable to delay the creating of schemelike
