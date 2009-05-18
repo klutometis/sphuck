@@ -1,27 +1,18 @@
 SRC := $(wildcard *.php)
-OBJ := lexer-decimal.lex.php lexer.lex.php parser-decimal.php parser.php
+LEX := $(patsubst %.lex,%.lex.php,$(wildcard *.lex))
+PARSE := $(patsubst %.y,%.php,$(wildcard *.y))
 
 .PHONY: all test clean decimal
 
-all: $(OBJ)
+all: $(LEX) $(PARSE)
 
-decimal: lexer-decimal.lex.php parser-decimal.php
-
-lexer-decimal.lex.php: parser-decimal.php lexer-decimal.lex
+%.lex.php : %.lex
 	cd lib/JLexPHP-151 && \
-	java -cp JLexPHP.jar JLexPHP.Main ../../lexer-decimal.lex
+	java -cp JLexPHP.jar JLexPHP.Main ../../$<
 
-lexer.lex.php: parser.php lexer.lex
-	cd lib/JLexPHP-151 && \
-	java -cp JLexPHP.jar JLexPHP.Main ../../lexer.lex
-
-parser-decimal.php: parser-decimal.y lib/lemon-php-151a/lempar.php
+%.php : %.y
 	cd lib/lemon-php-151a && \
-	./lemon -lPHP ../../parser-decimal.y
-
-parser.php: parser.y lib/lemon-php-151a/lempar.php
-	cd lib/lemon-php-151a && \
-	./lemon -lPHP ../../parser.y
+	./lemon -lPHP ../../$<
 
 test: all
 	php test/all.php
