@@ -1,4 +1,56 @@
 # -*- mode: org;-*-
+* TODO shouldn't integer(), rational(), imaginary(), etc. take over the
+  burden of composite exactness?
+* TODO here we are, dealing with types and promotion again; sticky; and
+  weren't there unpromotables?
+* TODO it turns out the exactness of the real and imaginary parts
+  are orthogonal; the composite exactness in conjunctive.
+* TODO the imaginary part has an imaginary part, oddly, of NaN;
+  only way to solve the recursion might be to formalize
+  imaginary_numerator, imaginary_denominator.
+
+  have to have an imaginary_exactness, though; why not number as a
+  composite of rationals + production
+
+  fuck it: it will be a special case; what, on the other hand, if we
+  want to do arithmetic on the imaginary part? it's a defective
+  number.
+
+  the trouble is, really, that the imaginary part itself has an
+  imaginary part (though possibly nullary)
+
+  we could define real as the case in which complex part is 0 or NaN,
+  but then we have to special-case all of the operations.
+
+  could we define zero as some sort of infinite production?
+
+  yes: define a fucking imag_part function which special cases
+  imaginary NaN as zero.
+
+  the operations take care of the imaginary -> real; still ad hoc
+  though; would have to be painfully generalized for quaternions. fuck
+  it.
+* TODO if i want to stray from a unified number system for optimization,
+  though, going to have to juggle types myself; or resort to native
+  objectivism.
+* TODO a tolerance/precision is required when invoking an irrational, such
+  that it becomes a rational when actualized.
+
+  pi as (* 4 (atan 1)) until actualized.
+* DONE r5rs 6.2.5: "the denominator of 0 is defined to be 1"
+  CLOSED: [2009-05-19 Tue 00:05]
+  - CLOSING NOTE [2009-05-19 Tue 00:05] \\
+    zero()
+* TODO r5rs 6.2.5: "the denominator is always positive"
+* TODO you'll still have a radix non-terminal even if it's blank
+* TODO the gradual parsing of number information: exactness before uinteger
+  before sign, is why i'd like to have a unified number type that
+  responds to type queries computationally.
+
+  It would therefore have numerator, denominator, imaginary part;
+  which may or may not be nullary. Imaginary part itself a Number.
+* TODO honest irrational numbers with production functions and
+  no bound on precision
 * TODO kleene star can't be done in lexer, it seems; endless loop on
   blank string.
 * TODO there is some ambiguity between UREAL_10 qua UINTEGER_10 and

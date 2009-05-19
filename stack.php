@@ -30,11 +30,12 @@ class Stack {
     // return implode("\n", array_map('strval', $this->data));
     return sprintf("(%s%s)",
                    ($this->label ? "{$this->label}:" : ''),
-                   array_reduce($this->data,
-                                function ($x, $y) {
-                                  return $x . $y;
-                                },
-                                ""));
+                   substr(array_reduce($this->data,
+                                       function ($x, $y) {
+                                         return $x . ',' . $y;
+                                       },
+                                       ""),
+                          1));
   }
   }
 
