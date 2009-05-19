@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO override exactness when octothorpes are present
 * TODO shouldn't integer(), rational(), imaginary(), etc. take over the
   burden of composite exactness?
 * TODO here we are, dealing with types and promotion again; sticky; and

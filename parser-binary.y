@@ -42,16 +42,24 @@ num_2 ::= prefix_2 complex_2. {
   print "num_2 ::= prefix_2 complex_2.\n";
   $number = $this->datum->pop();
   $exact = $this->datum->pop();
+  // this should allow us to override composite exactness when
+  // octothorpes are present; but #e1###? with #e, there is an
+  // implicit conversion.
   $number->exact = $exact;
   $this->datum->push($number);
 }
 
 complex_2 ::= real_2. {
   print "complex_2 ::= real_2.\n";
+  // no op; real already has a nullary imaginary part
 }
 
 complex_2 ::= real_2 ASPERAND real_2. {
   print "complex_2 ::= real_2 ASPERAND real_2.\n";
+  $argument = $this->datum->pop();
+  $modulus = $this->datum->pop();
+  $this->datum->push(complex($modulus * cos($argument),
+                             $modulus * sin($argument)));
 }
 
 complex_2 ::= real_2 PLUS ureal_2 IMAGINARY. {
@@ -63,26 +71,44 @@ complex_2 ::= real_2 PLUS ureal_2 IMAGINARY. {
 
 complex_2 ::= real_2 MINUS ureal_2 IMAGINARY. {
   print "complex_2 ::= real_2 MINUS ureal_2 IMAGINARY.\n";
+  $imaginary = $this->datum->pop();
+  $real = $this->datum->pop();
+  $this->datum->push(complex($real,
+                             mul($imaginary,
+                                 integer(-1))));
 }
 
 complex_2 ::= real_2 PLUS IMAGINARY. {
   print "complex_2 ::= real_2 PLUS IMAGINARY.\n";
+  $real = $this->datum->pop();
+  $this->datum->push(complex($real,
+                             integer(1)));
 }
 
 complex_2 ::= real_2 MINUS IMAGINARY. {
   print "complex_2 ::= real_2 MINUS IMAGINARY.\n";
+  $real = $this->datum->pop();
+  $this->datum->push(complex($real,
+                             integer(-1)));
 }
 
 complex_2 ::= real_2 IMAGINARY. {
   print "complex_2 ::= real_2 IMAGINARY.\n";
+  $imaginary = $this->datum->pop();
+  $this->datum->push(complex(zero(),
+                             $imaginary));
 }
 
 complex_2 ::= PLUS IMAGINARY. {
   print "complex_2 ::= PLUS IMAGINARY.\n";
+  $this->datum->push(complex(zero(),
+                             integer(1)));
 }
 
 complex_2 ::= MINUS IMAGINARY. {
   print "complex_2 ::= MINUS IMAGINARY.\n";
+  $this->datum->push(complex(zero(),
+                             integer(-1)));
 }
 
 real_2 ::= sign ureal_2. {
