@@ -58,8 +58,8 @@ complex_2 ::= real_2 ASPERAND real_2. {
   print "complex_2 ::= real_2 ASPERAND real_2.\n";
   $argument = $this->datum->pop();
   $modulus = $this->datum->pop();
-  $this->datum->push(complex($modulus * cos($argument),
-                             $modulus * sin($argument)));
+  $this->datum->push(complex(mul($modulus, cosine($argument)),
+                             mul($modulus, sine($argument))));
 }
 
 complex_2 ::= real_2 PLUS ureal_2 IMAGINARY. {

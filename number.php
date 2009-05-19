@@ -153,6 +153,20 @@ function div($dividend, $divisor) {
                                  rat_mul($d, $d))));
 }
 
+function number_to_real($number) {
+  return $number->numerator / $number->denominator;
+}
+
+function cosine($number) {
+  // ignoring imaginary part for now
+  return cos(number_to_real($number));
+}
+
+function sine($number) {
+  // ignoring imaginary part for now
+  return sin(number_to_real($number));
+}
+
 function real_to_string($number) {
   return is_number($number)
     ? sprintf('%s/%s',
