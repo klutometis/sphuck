@@ -50,10 +50,14 @@ function real_part($number) {
                   $number->exact);
 }
 
-function integer($integer, $exact=true) {
+function real($real, $exact=true) {
   return new Number($exact,
-                    $integer,
+                    $real,
                     1);
+}
+
+function integer($integer, $exact=true) {
+  return real($integer, $exact);
 }
 
 function rational($numerator, $denominator, $exact=true) {
@@ -158,13 +162,13 @@ function number_to_real($number) {
 }
 
 function cosine($number) {
-  // ignoring imaginary part for now
-  return cos(number_to_real($number));
+  // ignoring imaginary part
+  return real(cos(number_to_real($number)));
 }
 
 function sine($number) {
-  // ignoring imaginary part for now
-  return sin(number_to_real($number));
+  // ignoring imaginary part
+  return real(sin(number_to_real($number)));
 }
 
 function real_to_string($number) {
