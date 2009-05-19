@@ -26,14 +26,12 @@ class Number {
                    $this->exact ? '#e' : '#i',
                    real_to_string($this),
                    signum($this),
-                   real_to_string($this->imaginary));
+                   real_to_string(imag_part($this)));
   }
 }
 
 function zero() {
-  return integer(true,
-                 0,
-                 1);
+  return integer(0, 1);
 }
 
 // simulates an infinite zero production when the imaginary is really
