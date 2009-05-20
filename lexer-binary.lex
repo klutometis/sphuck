@@ -3,17 +3,6 @@ require('jlex.php');
 
 %%
 
-%{
-  function token_array() {
-    $tokens = NULL;
-    while ($token = $this->next_token()) {
-      $tokens[] = array($token->type =>
-                        $token->value);
-    }
-    return $tokens;
-  }
-%}
-
 %unicode
 %ignorecase
 %line
