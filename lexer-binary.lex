@@ -12,17 +12,17 @@ require('jlex.php');
 
 IMAGINARY = i
 ASPERAND = @
-DIGITS_2 = [01]+#*
-RADIX_2 = (#b(#e|#i)?|(#e|#i)?#b)
+DIGITS = [01]+#*
+RADIX = (#b(#e|#i)?|(#e|#i)?#b)
 PLUS = \+
 MINUS = -
 DIVIDED_BY = /
 %%
 
-{IMAGINARY} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_IMAGINARY); }
-{ASPERAND} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_ASPERAND); }
-{DIGITS_2} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_DIGITS_2); }
-{RADIX_2} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_RADIX_2); }
-{PLUS} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_PLUS); }
-{MINUS} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_MINUS); }
-{DIVIDED_BY} { return $this->createToken(SphuckBinaryParser::SPHUCK_BINARY_DIVIDED_BY); }
+{IMAGINARY} { return $this->createToken(SphuckNumberParser::SPHUCK_IMAGINARY); }
+{ASPERAND} { return $this->createToken(SphuckNumberParser::SPHUCK_ASPERAND); }
+{DIGITS} { return $this->createToken(SphuckNumberParser::SPHUCK_DIGITS); }
+{RADIX} { return $this->createToken(SphuckNumberParser::SPHUCK_RADIX); }
+{PLUS} { return $this->createToken(SphuckNumberParser::SPHUCK_PLUS); }
+{MINUS} { return $this->createToken(SphuckNumberParser::SPHUCK_MINUS); }
+{DIVIDED_BY} { return $this->createToken(SphuckNumberParser::SPHUCK_DIVIDED_BY); }

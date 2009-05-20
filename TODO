@@ -2,6 +2,8 @@
 * TODO reuse the same parser with binary, octal, decimal and hex lexers;
   specialize the parser by lexer and radix (for string -> number
   conversion).
+
+  probably don't need parser utils in that case.
 * TODO override exactness when octothorpes are present
 * TODO shouldn't integer(), rational(), imaginary(), etc. take over the
   burden of composite exactness?

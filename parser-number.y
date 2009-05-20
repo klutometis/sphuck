@@ -1,14 +1,16 @@
-%name SphuckBinary
-%token_prefix SPHUCK_BINARY_
+%name SphuckNumber
+%token_prefix SPHUCK_
 %include {
   public $datum;
+  public $radix;
 
-  function __construct() {
+  function __construct($radix) {
     $this->datum = new Stack();
+    $this->radix = $radix;
   }
 }
 
-num_2 ::= prefix_2 complex_2. {
+num ::= prefix complex. {
   $number = $this->datum->pop();
   $exact = $this->datum->pop();
   // this should allow us to override composite exactness when
@@ -18,24 +20,24 @@ num_2 ::= prefix_2 complex_2. {
   $this->datum->push($number);
 }
 
-complex_2 ::= real_2. {
+complex ::= real. {
   // no op; real already has a nullary imaginary part
 }
 
-complex_2 ::= real_2 ASPERAND real_2. {
+complex ::= real ASPERAND real. {
   $argument = $this->datum->pop();
   $modulus = $this->datum->pop();
   $this->datum->push(complex(mul($modulus, cosine($argument)),
                              mul($modulus, sine($argument))));
 }
 
-complex_2 ::= real_2 PLUS ureal_2 IMAGINARY. {
+complex ::= real PLUS ureal IMAGINARY. {
   $imaginary = $this->datum->pop();
   $real = $this->datum->pop();
   $this->datum->push(complex($real, $imaginary));
 }
 
-complex_2 ::= real_2 MINUS ureal_2 IMAGINARY. {
+complex ::= real MINUS ureal IMAGINARY. {
   $imaginary = $this->datum->pop();
   $real = $this->datum->pop();
   $this->datum->push(complex($real,
@@ -43,56 +45,56 @@ complex_2 ::= real_2 MINUS ureal_2 IMAGINARY. {
                                  integer(-1))));
 }
 
-complex_2 ::= real_2 PLUS IMAGINARY. {
+complex ::= real PLUS IMAGINARY. {
   $real = $this->datum->pop();
   $this->datum->push(complex($real,
                              integer(1)));
 }
 
-complex_2 ::= real_2 MINUS IMAGINARY. {
+complex ::= real MINUS IMAGINARY. {
   $real = $this->datum->pop();
   $this->datum->push(complex($real,
                              integer(-1)));
 }
 
-complex_2 ::= real_2 IMAGINARY. {
+complex ::= real IMAGINARY. {
   $imaginary = $this->datum->pop();
   $this->datum->push(complex(zero(),
                              $imaginary));
 }
 
-complex_2 ::= PLUS IMAGINARY. {
+complex ::= PLUS IMAGINARY. {
   $this->datum->push(complex(zero(),
                              integer(1)));
 }
 
-complex_2 ::= MINUS IMAGINARY. {
+complex ::= MINUS IMAGINARY. {
   $this->datum->push(complex(zero(),
                              integer(-1)));
 }
 
-real_2 ::= sign ureal_2. {
+real ::= sign ureal. {
   $unsigned_real = $this->datum->pop();
   $sign = $this->datum->pop();
   $this->datum->push(mul($sign, $unsigned_real));
 }
 
-ureal_2 ::= uinteger_2. {
+ureal ::= uinteger. {
   $integer = $this->datum->pop();
   $this->datum->push(integer($integer));
 }
 
-ureal_2 ::= uinteger_2 DIVIDED_BY uinteger_2. {
+ureal ::= uinteger DIVIDED_BY uinteger. {
   $numerator = $this->datum->pop();
   $denominator = $this->datum->pop();
   $this->datum->push(rational($numerator, $denominator));
 }
 
-uinteger_2 ::= DIGITS_2(A). {
+uinteger ::= DIGITS(A). {
   $this->datum->push(digits_to_number(A, 2));
 }
 
-prefix_2 ::= RADIX_2(A). {
+prefix ::= RADIX(A). {
   $this->datum->push(is_exact(A));
 }
 
