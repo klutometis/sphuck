@@ -1,0 +1,3 @@
+* all numbers are complex; which side-steps issues of promotion and
+  demotion along the number stack; but at a horrible cost to
+  performance

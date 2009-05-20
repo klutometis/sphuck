@@ -1,4 +1,5 @@
 <?php
+require('jlex.php');
 
 %%
 
@@ -6,13 +7,13 @@
 %ignorecase
 %line
 %char
-%class SphuckDecimalLexer
+%class SphuckOctalLexer
 %function next_token
 
 IMAGINARY = i
 ASPERAND = @
-DIGITS = [0-9]+#*
-RADIX = ((#d)?(#e|#i)?|(#e|#i)?(#d)?)
+DIGITS = [0-7]+#*
+RADIX = (#o(#e|#i)?|(#e|#i)?#o)
 PLUS = \+
 MINUS = -
 DIVIDED_BY = /

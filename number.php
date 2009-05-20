@@ -26,7 +26,7 @@ class Number {
                    $this->exact ? '#e' : '#i',
                    real_to_string($this),
                    signum($this),
-                   real_to_string(imag_part($this)));
+                   ureal_to_string(imag_part($this)));
   }
 }
 
@@ -161,20 +161,60 @@ function number_to_real($number) {
   return $number->numerator / $number->denominator;
 }
 
-function cosine($number) {
-  // ignoring imaginary part
+function rat_cos($number) {
   return real(cos(number_to_real($number)));
 }
 
-function sine($number) {
-  // ignoring imaginary part
+function rat_sin($number) {
   return real(sin(number_to_real($number)));
+}
+
+function rat_cosh($number) {
+  return real(cosh(number_to_real($number)));
+}
+
+function rat_sinh($number) {
+  return real(sinh(number_to_real($number)));
+}
+
+function negative($number) {
+  return rat_mul(integer(-1),
+                 $number);
+}
+
+function cosine($number) {
+  $a = $number;
+  $b = imag_part($number);
+  // ignoring imaginary part
+  return complex(rat_mul(rat_cos($a),
+                         rat_cosh($b)),
+                 negative(rat_mul(rat_sin($a),
+                                  rat_sinh($b))));
+}
+
+function sine($number) {
+  $a = $number;
+  $b = imag_part($number);
+  // ignoring imaginary part
+  return complex(rat_mul(rat_sin($a),
+                         rat_cosh($b)),
+                 negative(rat_mul(rat_cos($a),
+                                  rat_sinh($b))));
 }
 
 function real_to_string($number) {
   return is_number($number)
     ? sprintf('%s/%s',
               $number->numerator,
+              $number->denominator)
+    : 'NaN';
+}
+
+// assumes the denominator is always positive
+function ureal_to_string($number) {
+  return is_number($number)
+    ? sprintf('%s/%s',
+              abs($number->numerator),
               $number->denominator)
     : 'NaN';
 }
@@ -193,9 +233,9 @@ function is_positive($number) {
 // reason
 function signum($number) {
   return is_number($number)
-    ? (is_positive($number)
-       ? '+'
-       : '-')
+    ? (is_negative($number)
+       ? '-'
+       : '+')
     : ' ';
 }
 

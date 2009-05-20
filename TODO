@@ -1,4 +1,7 @@
 # -*- mode: org;-*-
+* TODO r5rs 6.2.4: "it is inexct if it contains a decimal point,
+  an exponent, or a "#" character in the place of a digit, otherwise
+  it is exact.
 * TODO reuse the same parser with binary, octal, decimal and hex lexers;
   specialize the parser by lexer and radix (for string -> number
   conversion).

@@ -6,13 +6,13 @@
 %ignorecase
 %line
 %char
-%class SphuckDecimalLexer
+%class SphuckHexLexer
 %function next_token
 
 IMAGINARY = i
 ASPERAND = @
-DIGITS = [0-9]+#*
-RADIX = ((#d)?(#e|#i)?|(#e|#i)?(#d)?)
+DIGITS = [0-9a-f]+#*
+RADIX = (#x(#e|#i)?|(#e|#i)?#x)
 PLUS = \+
 MINUS = -
 DIVIDED_BY = /

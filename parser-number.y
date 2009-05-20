@@ -91,7 +91,7 @@ ureal ::= uinteger DIVIDED_BY uinteger. {
 }
 
 uinteger ::= DIGITS(A). {
-  $this->datum->push(digits_to_number(A, 2));
+  $this->datum->push(digits_to_number(A, $this->radix));
 }
 
 prefix ::= RADIX(A). {
