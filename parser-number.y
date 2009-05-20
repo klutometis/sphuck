@@ -4,7 +4,7 @@
   public $datum;
   public $radix;
 
-  function __construct($radix) {
+  function __construct($radix=10) {
     $this->datum = new Stack();
     $this->radix = $radix;
   }
@@ -92,6 +92,10 @@ ureal ::= uinteger DIVIDED_BY uinteger. {
 
 uinteger ::= DIGITS(A). {
   $this->datum->push(digits_to_number(A, $this->radix));
+}
+
+prefix ::= . {
+  $this->datum->push(true);
 }
 
 prefix ::= RADIX(A). {

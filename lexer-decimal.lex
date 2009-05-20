@@ -12,7 +12,7 @@
 IMAGINARY = i
 ASPERAND = @
 DIGITS = [0-9]+#*
-RADIX = ((#d)?(#e|#i)?|(#e|#i)?(#d)?)
+RADIX = (#d(#e|#i)?|(#e|#i)?#d)
 PLUS = \+
 MINUS = -
 DIVIDED_BY = /
