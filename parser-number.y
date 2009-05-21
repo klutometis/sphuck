@@ -90,6 +90,10 @@ ureal ::= uinteger DIVIDED_BY uinteger. {
   $this->datum->push(rational($numerator, $denominator));
 }
 
+ureal ::= FRACTIONAL(A). {
+  $this->datum->push(parse_fractional(A));
+}
+
 uinteger ::= DIGITS(A). {
   $this->datum->push(digits_to_number(A, $this->radix));
 }

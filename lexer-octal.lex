@@ -16,6 +16,7 @@ RADIX = (#o(#e|#i)?|(#e|#i)?#o)
 PLUS = \+
 MINUS = -
 DIVIDED_BY = /
+
 %%
 
 {IMAGINARY} { return $this->createToken(SphuckNumberParser::SPHUCK_IMAGINARY); }

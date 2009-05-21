@@ -1,5 +1,11 @@
 # -*- mode: org;-*-
-* TODO r5rs 6.2.4: "it is inexct if it contains a decimal point,
+* TODO set up an abstract parser with a built-in $datum? might have to modify
+  lempar.php
+* TODO we're sidestepping promotion and demotion along a number stack
+  by keeping everything complex: at hideous cost of speed, of course.
+* TODO might have to use scheme numbers as early as decimal so
+  as to be able to dictate exactness.
+* TODO r5rs 6.2.4: "it is inexact if it contains a decimal point,
   an exponent, or a "#" character in the place of a digit, otherwise
   it is exact.
 * TODO reuse the same parser with binary, octal, decimal and hex lexers;
