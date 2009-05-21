@@ -1,4 +1,5 @@
 # -*- mode: org;-*-
+* TODO lexer-* -> lexer/; parser-* -> parser/
 * TODO could have persistent parsers/lexers, and avoid instantiating one
   for every parse transaction.
 * TODO r5rs 3.3: "The integer 28 also has representations "#e28.000"...."
