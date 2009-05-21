@@ -1,5 +1,4 @@
 <?php
-require('jlex.php');
 
 %%
 
@@ -113,12 +112,12 @@ DIGIT_10 = [0-9]
 DIGIT_16 = [0-9a-f]
 %%
 
-{NUM_2} { return $this->createToken('binary'); }
-{NUM_8} { return $this->createToken('octal'); }
-{NUM_10} { return $this->createToken('decimal'); }
-{NUM_16} { return $this->createToken('hex'); }
+{NUM_2} { return (SphuckParser::SPHUCK_NUM_2); }
+{NUM_8} { return $this->createToken(SphuckParser::SPHUCK_NUM_8); }
+{NUM_10} { return $this->createToken(SphuckParser::SPHUCK_NUM_10); }
+{NUM_16} { return $this->createToken(SphuckParser::SPHUCK_NUM_16); }
 {STRING} { return $this->createToken('string'); }
-{INTERTOKEN_SPACE} { return $this->createToken('intertoken space'); }
+{INTERTOKEN_SPACE} {}
 {IDENTIFIER} { return (in_array(strtolower($this->yytext()),
                                 SphuckLexer::$KEYWORDS))
                       ? $this->createToken('identifier')

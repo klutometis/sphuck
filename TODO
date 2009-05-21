@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO could have persistent parsers/lexers, and avoid instantiating one
+  for every parse transaction.
 * TODO r5rs 3.3: "The integer 28 also has representations "#e28.000"...."
   there is, therefor, an implicit conversion to int? all the more
   reason to compute the number-type predicates.
