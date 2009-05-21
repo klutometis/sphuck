@@ -8,7 +8,7 @@
   }
 }
 
-decimal ::= DIGITS_MAYBE_OCTOTHORPES(A) suffix. {
+decimal ::= DIGITS(A) suffix. {
   $exponent = $this->datum->pop();
   $decimal = digits_to_number(A);
   $exact = has_octothorpes(A);
@@ -16,9 +16,25 @@ decimal ::= DIGITS_MAYBE_OCTOTHORPES(A) suffix. {
                          $exponent));
 }
 
-decimal ::= DOT DIGITS_MAYBE_OCTOTHORPES(A) suffix. {
+decimal ::= DIGITS(A) OCTOTHORPES(B) suffix. {
+  $exponent = $this->datum->pop();
+  $decimal = digits_to_number(sprintf('%s%s', A, B));
+  $exact = has_octothorpes(A);
+  $this->datum->push(mul(real($decimal, $exact),
+                         $exponent));
+}
+
+decimal ::= DOT DIGITS(A) suffix. {
   $exponent = $this->datum->pop();
   $decimal = digits_to_number(sprintf('.%s', A));
+  $exact = false;
+  $this->datum->push(mul(real($decimal, $exact),
+                         $exponent));
+}
+
+decimal ::= DOT DIGITS(A) OCTOTHORPES(B) suffix. {
+  $exponent = $this->datum->pop();
+  $decimal = digits_to_number(sprintf('.%s%s', A, B));
   $exact = false;
   $this->datum->push(mul(real($decimal, $exact),
                          $exponent));
@@ -73,12 +89,12 @@ suffix ::= EXPONENT DIGITS(A). {
                           false));
 }
 
-suffix ::= EXPONENT PLUS DIGITS. {
+suffix ::= EXPONENT PLUS DIGITS(A). {
   $this->datum->push(real(digits_to_exponent(A),
                           false));
 }
 
-suffix ::= EXPONENT MINUS DIGITS. {
+suffix ::= EXPONENT MINUS DIGITS(A). {
   $this->datum->push(real(digits_to_exponent(sprintf('-%s', A)),
                           false));
 }

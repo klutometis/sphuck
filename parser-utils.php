@@ -21,7 +21,7 @@ function digits_to_number($digits, $radix=10) {
   return intval(normalize_digits($digits), $radix);
 }
 
-function digits_to_exponent($digits, $base) {
+function digits_to_exponent($digits, $base=1) {
   return floatval(sprintf('%de%s',
                           $base,
                           normalize_digits($digits)));
