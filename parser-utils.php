@@ -44,3 +44,31 @@ function parse_fractional($fractional) {
                'SphuckFractional',
                'SphuckFractionalLexer');
 }
+
+function parse_binary($fractional) {
+  return parse($fractional,
+               new SphuckNumberParser(2),
+               'SphuckNumber',
+               'SphuckBinaryLexer');
+}
+
+function parse_octal($fractional) {
+  return parse($fractional,
+               new SphuckNumberParser(8),
+               'SphuckNumber',
+               'SphuckOctalLexer');
+}
+
+function parse_decimal($fractional) {
+  return parse($fractional,
+               new SphuckNumberParser(10),
+               'SphuckNumber',
+               'SphuckDecimalLexer');
+}
+
+function parse_hex($fractional) {
+  return parse($fractional,
+               new SphuckNumberParser(16),
+               'SphuckNumber',
+               'SphuckHexLexer');
+}

@@ -1,4 +1,7 @@
 # -*- mode: org;-*-
+* TODO r5rs 3.3: "The integer 28 also has representations "#e28.000"...."
+  there is, therefor, an implicit conversion to int? all the more
+  reason to compute the number-type predicates.
 * TODO set up an abstract parser with a built-in $datum? might have to modify
   lempar.php
 * TODO we're sidestepping promotion and demotion along a number stack
