@@ -44,6 +44,14 @@
 %function next_token
 
 TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|\(|\)|#\(|'|`|,|,@|\.))
+OPEN = \(
+CLOSE = \)
+OPEN_VECTOR = #\(
+QUOTE = '
+QQUOTE = `
+UNQUOTE = ,
+UNQUOTE_SPLICING = ,@
+DOT = \.
 DELIMITER = ({WHITESPACE}|\(|\)|"|;)
 WHITESPACE = [ \n]
 COMMENT = ;.*
@@ -112,9 +120,19 @@ DIGIT_10 = [0-9]
 DIGIT_16 = [0-9a-f]
 %%
 
+{IDENTIFIER} { return $this->createToken(SphuckParser::SPHUCK_IDENTIFIER); }
+{BOOLEAN} { return $this->createToken(SphuckParser::SPHUCK_BOOLEAN); }
 {NUM_2} { return (SphuckParser::SPHUCK_NUM_2); }
 {NUM_8} { return $this->createToken(SphuckParser::SPHUCK_NUM_8); }
 {NUM_10} { return $this->createToken(SphuckParser::SPHUCK_NUM_10); }
 {NUM_16} { return $this->createToken(SphuckParser::SPHUCK_NUM_16); }
+{CHARACTER} { return $this->createToken(SphuckParser::SPHUCK_CHARACTER); }
 {STRING} { return $this->createToken(SphuckParser::SPHUCK_STRING); }
-{IDENTIFIER} { return $this->createToken(SphuckParser::SPHUCK_IDENTIFIER); }
+{OPEN} { return $this->createToken(SphuckParser::SPHUCK_OPEN); }
+{CLOSE} { return $this->createToken(SphuckParser::SPHUCK_); }
+{OPEN_VECTOR} { return $this->createToken(SphuckParser::SPHUCK_); }
+{QUOTE} { return $this->createToken(SphuckParser::SPHUCK_QUOTE); }
+{QQUOTE} { return $this->createToken(SphuckParser::SPHUCK_QQUOTE); }
+{UNQUOTE} { return $this->createToken(SphuckParser::SPHUCK_UNQUOTE); }
+{UNQUOTE_SPLICING} { return $this->createToken(SphuckParser::SPHUCK_UNQUOTE_SPLICING); }
+{DOT} { return $this->createToken(SphuckParser::SPHUCK_DOT); }

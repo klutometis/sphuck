@@ -1,5 +1,14 @@
 <?php
 
+// take this shit into the parser class?
+function is_boolean_true($boolean) {
+  return stripos($boolean, '#t') !== false;
+}
+
+function is_boolean_false($boolean) {
+  return !is_boolean_true($boolean);
+}
+
 function has_octothorpes($number) {
   return stripos($number, '#') !== false;
 }

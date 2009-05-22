@@ -11,12 +11,16 @@
 token ::= number. {
 }
 
-token ::= STRING(A). {
-  $this->datum->push(string(substr(A, 1, strlen(A) - 1 - 1)));
-}
-
 token ::= IDENTIFIER(A). {
   $this->datum->push(symbol(A));
+}
+
+token ::= BOOLEAN(A). {
+  $this->datum->push(boolean(is_boolean_true(A)));
+}
+
+token ::= STRING(A). {
+  $this->datum->push(string(substr(A, 1, strlen(A) - 1 - 1)));
 }
 
 number ::= NUM_2(A). {
