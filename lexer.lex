@@ -116,9 +116,5 @@ DIGIT_16 = [0-9a-f]
 {NUM_8} { return $this->createToken(SphuckParser::SPHUCK_NUM_8); }
 {NUM_10} { return $this->createToken(SphuckParser::SPHUCK_NUM_10); }
 {NUM_16} { return $this->createToken(SphuckParser::SPHUCK_NUM_16); }
-{STRING} { return $this->createToken('string'); }
-{INTERTOKEN_SPACE} {}
-{IDENTIFIER} { return (in_array(strtolower($this->yytext()),
-                                SphuckLexer::$KEYWORDS))
-                      ? $this->createToken('identifier')
-                      : $this->createToken('variable'); }
+{STRING} { return $this->createToken(SphuckParser::SPHUCK_STRING); }
+{IDENTIFIER} { return $this->createToken(SphuckParser::SPHUCK_IDENTIFIER); }
