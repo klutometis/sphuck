@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO bootstrap psyntax with procedural ors, etc. (the minimum); post-psyntax,
+  redefine them as syntax abstractions?
 * TODO lexer-* -> lexer/; parser-* -> parser/
 * TODO could have persistent parsers/lexers, and avoid instantiating one
   for every parse transaction.
