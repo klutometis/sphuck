@@ -8,6 +8,9 @@
   }
 }
 
+expression ::= datum. {
+}
+
 datum ::= simple_datum. {
 }
 
@@ -62,13 +65,31 @@ compound_datum ::= vector. {
 list ::= OPEN list_elements CLOSE. {
 }
 
+list ::= OPEN list_elements datum DOT datum CLOSE. {
+}
+
+list ::= abbreviation. {
+}
+
 list_elements ::= . {
 }
 
-list_elements ::= list_elements simple_datum. {
+list_elements ::= list_elements datum. {
 }
 
-list_elements ::= list_elements compound_datum. {
+abbreviation ::= abbrev_prefix datum. {
+}
+
+abbrev_prefix ::= QUOTE. {
+}
+
+abbrev_prefix ::= QQUOTE. {
+}
+
+abbrev_prefix ::= UNQUOTE. {
+}
+
+abbrev_prefix ::= UNQUOTE_SPLICING. {
 }
 
 vector ::= VECTOR_OPEN vector_elements CLOSE. {
@@ -77,8 +98,5 @@ vector ::= VECTOR_OPEN vector_elements CLOSE. {
 vector_elements ::= . {
 }
 
-vector_elements ::= vector_elements simple_datum. {
-}
-
-vector_elements ::= vector_elements compound_datum. {
+vector_elements ::= vector_elements datum. {
 }
