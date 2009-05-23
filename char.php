@@ -7,3 +7,7 @@ class Char {
     $this->value = $value;
   }
   }
+
+function char($char='') {
+  return new String($char);
+}

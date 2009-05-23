@@ -43,7 +43,7 @@
 %class SphuckLexer
 %function next_token
 
-TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|\(|\)|#\(|'|`|,|,@|\.))
+TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|{OPEN}|{CLOSE}|{OPEN_VECTOR}|{QUOTE}|{QQUOTE}|{UNQUOTE}|{UNQUOTE_SPLICING}|{DOT})
 OPEN = \(
 CLOSE = \)
 OPEN_VECTOR = #\(

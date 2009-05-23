@@ -8,19 +8,29 @@
   }
 }
 
-token ::= number. {
+datum ::= simple_datum. {
 }
 
-token ::= IDENTIFIER(A). {
-  $this->datum->push(symbol(A));
+datum ::= compound_datum. {
 }
 
-token ::= BOOLEAN(A). {
+simple_datum ::= BOOLEAN(A). {
   $this->datum->push(boolean(is_boolean_true(A)));
 }
 
-token ::= STRING(A). {
+simple_datum ::= number. {
+}
+
+simple_datum ::= CHARACTER(A). {
+  // not quite right; refine this; store numeric?
+  $this->datum->push(char(A));
+}
+
+simple_datum ::= STRING(A). {
   $this->datum->push(string(substr(A, 1, strlen(A) - 1 - 1)));
+}
+
+simple_datum ::= symbol. {
 }
 
 number ::= NUM_2(A). {
@@ -37,4 +47,38 @@ number ::= NUM_10(A). {
 
 number ::= NUM_16(A). {
   $this->datum->push(parse_hex(A));
+}
+
+symbol ::= IDENTIFIER(A). {
+  $this->datum->push(symbol(A));
+}
+
+compound_datum ::= list. {
+}
+
+compound_datum ::= vector. {
+}
+
+list ::= OPEN list_elements CLOSE. {
+}
+
+list_elements ::= . {
+}
+
+list_elements ::= list_elements simple_datum. {
+}
+
+list_elements ::= list_elements compound_datum. {
+}
+
+vector ::= VECTOR_OPEN vector_elements CLOSE. {
+}
+
+vector_elements ::= . {
+}
+
+vector_elements ::= vector_elements simple_datum. {
+}
+
+vector_elements ::= vector_elements compound_datum. {
 }
