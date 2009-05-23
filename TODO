@@ -1,4 +1,7 @@
 # -*- mode: org;-*-
+* TODO [#A] datum parsing (READ) can be orthogonal to expression parsing; in
+  other words, we can do program parsing in the parser, too, without
+  dropping down into proto-scheme.
 * TODO bootstrap psyntax with procedural ors, etc. (the minimum); post-psyntax,
   redefine them as syntax abstractions?
 * TODO lexer-* -> lexer/; parser-* -> parser/
