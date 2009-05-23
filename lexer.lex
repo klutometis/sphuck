@@ -130,7 +130,7 @@ DIGIT_16 = [0-9a-f]
 {STRING} { return $this->createToken(SphuckParser::SPHUCK_STRING); }
 {OPEN} { return $this->createToken(SphuckParser::SPHUCK_OPEN); }
 {CLOSE} { return $this->createToken(SphuckParser::SPHUCK_CLOSE); }
-{OPEN_VECTOR} { return $this->createToken(SphuckParser::SPHUCK_); }
+{OPEN_VECTOR} { return $this->createToken(SphuckParser::SPHUCK_OPEN_VECTOR); }
 {QUOTE} { return $this->createToken(SphuckParser::SPHUCK_QUOTE); }
 {QQUOTE} { return $this->createToken(SphuckParser::SPHUCK_QQUOTE); }
 {UNQUOTE} { return $this->createToken(SphuckParser::SPHUCK_UNQUOTE); }

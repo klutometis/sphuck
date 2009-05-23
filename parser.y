@@ -122,14 +122,22 @@ abbrev_prefix ::= UNQUOTE_SPLICING. {
   print "abbrev_prefix ::= UNQUOTE_SPLICING.\n";
 }
 
-vector ::= VECTOR_OPEN vector_elements CLOSE. {
-  print "vector ::= VECTOR_OPEN vector_elements CLOSE.\n";
+vector ::= OPEN_VECTOR vector_elements CLOSE. {
+  print "vector ::= OPEN_VECTOR vector_elements CLOSE.\n";
+  $data = $this->datum->pop();
+  $this->datum->push(vector($data));
 }
 
 vector_elements ::= . {
   print "vector_elements ::= .\n";
+  $this->datum->push(array());
 }
 
 vector_elements ::= vector_elements datum. {
   print "vector_elements ::= vector_elements datum.\n";
+  $datum = $this->datum->pop();
+  // have to pop, otherwise calls-by-value
+  $vector = $this->datum->pop();
+  array_push($vector, $datum);
+  $this->datum->push($vector);
 }

@@ -20,4 +20,5 @@ require_once('port.php');
 require_once('string.php');
 require_once('symbol.php');
 require_once('pair.php');
+require_once('vector.php');
 require_once('evaluator.php');
