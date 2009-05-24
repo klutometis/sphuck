@@ -8,7 +8,8 @@
   }
 }
 
-expression ::= datum. {
+lectindum ::= datum. {
+  // lectindum < lectio: "[thing] to be read"
   print "expression ::= datum.\n";
 }
 
@@ -83,6 +84,10 @@ list ::= OPEN list_elements CLOSE. {
 
 list ::= OPEN list_elements datum DOT datum CLOSE. {
   print "list ::= OPEN list_elements datum DOT datum CLOSE.\n";
+  $cdr = $this->datum->pop();
+  $car = $this->datum->pop();
+  $rest = $this->datum->pop();
+  $this->datum->push(append($rest, cons($car, $cdr)));
 }
 
 list ::= abbreviation. {

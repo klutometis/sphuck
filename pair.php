@@ -143,3 +143,42 @@ function cdadr($pair) {
 function is_pair($object) {
   return $object instanceof Pair;
 }
+
+function last_pair($list) {
+  $rest = cdr($list);
+  if (is_pair($rest))
+    return last_pair($rest);
+  else
+    return $list;
+}
+
+function is_list($object) {
+  return is_pair($object) &&
+    is_null(cdr(last_pair($object)));
+}
+
+function append() {
+  $lists = func_get_args();
+  if (is_null($lists))
+    return $lists;
+  $append = function($a, $b) {
+    // var_dump($a);
+    if (is_null($a))
+      return $b;
+    elseif (is_null($b))
+      return $a;
+    if (is_list($a)) {
+      $iter = function($list) use(&$iter, $b) {
+        $car = car($list);
+        $cdr = cdr($list);
+        return cons($car, (is_null($cdr)
+                           ? $b
+                           : $iter($cdr)));
+      };
+      return $iter($a);
+    } else
+      error('Not a proper list -- APPEND',
+            $a);
+  };
+  return array_reduce($lists, $append);
+}

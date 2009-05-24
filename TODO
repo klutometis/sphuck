@@ -1,4 +1,11 @@
 # -*- mode: org;-*-
+* TODO bootstrapping: writes itself in scheme; compiles itself; uses
+  itself: some phase exists with a hand-written compiler that is
+  usurped; some form thereafter of asymptotic progress?
+* TODO dealing with the limitations of PHP by introducing expensive
+  abstractions (Pair, etc.).
+* TODO might be able to optimize lists later by using native structures:
+  arrays or some C garbage
 * TODO [#A] datum parsing (READ) can be orthogonal to expression parsing; in
   other words, we can do program parsing in the parser, too, without
   dropping down into proto-scheme.
