@@ -43,16 +43,17 @@
 %class SphuckLexer
 %function next_token
 
-TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|{OPEN}|{CLOSE}|{OPEN_VECTOR}|{QUOTE}|{QQUOTE}|{UNQUOTE}|{UNQUOTE_SPLICING}|{DOT})
+TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|{OPEN}|{CLOSE}|{OPEN_VECTOR}|{QUOTE}|{QQUOTE}|{UNQUOTE}|{UNQUOTE_SPLICING}|{QUOTE_SYNTAX}|{DOT})
 OPEN = \(
 CLOSE = \)
 OPEN_VECTOR = #\(
-QUOTE = '
+QUOTE = \'
 QQUOTE = `
 UNQUOTE = ,
 UNQUOTE_SPLICING = ,@
+QUOTE_SYNTAX = #\'
 DOT = \.
-DELIMITER = ({WHITESPACE}|\(|\)|"|;)
+DELIMITER = ({WHITESPACE}|\(|\)|\"|;)
 WHITESPACE = [ \n]
 COMMENT = ;.*
 ATMOSPHERE = ({WHITESPACE}|{COMMENT})
@@ -135,5 +136,6 @@ DIGIT_16 = [0-9a-f]
 {QQUOTE} { return $this->createToken(SphuckParser::SPHUCK_QQUOTE); }
 {UNQUOTE} { return $this->createToken(SphuckParser::SPHUCK_UNQUOTE); }
 {UNQUOTE_SPLICING} { return $this->createToken(SphuckParser::SPHUCK_UNQUOTE_SPLICING); }
+{QUOTE_SYNTAX} { return $this->createToken(SphuckParser::SPHUCK_QUOTE_SYNTAX); }
 {DOT} { return $this->createToken(SphuckParser::SPHUCK_DOT); }
 {INTERTOKEN_SPACE} {}

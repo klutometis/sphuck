@@ -109,22 +109,34 @@ list_elements ::= list_elements datum. {
 
 abbreviation ::= abbrev_prefix datum. {
   print "abbreviation ::= abbrev_prefix datum.\n";
+  $datum = $this->datum->pop();
+  $prefix = $this->datum->pop();
+  $this->datum->push(lst($prefix, $datum));
 }
 
 abbrev_prefix ::= QUOTE. {
   print "abbrev_prefix ::= QUOTE.\n";
+  $this->datum->push(symbol('quote'));
 }
 
 abbrev_prefix ::= QQUOTE. {
   print "abbrev_prefix ::= QQUOTE.\n";
+  $this->datum->push(symbol('quasiquote'));
 }
 
 abbrev_prefix ::= UNQUOTE. {
   print "abbrev_prefix ::= UNQUOTE.\n";
+  $this->datum->push(symbol('unquote'));
 }
 
 abbrev_prefix ::= UNQUOTE_SPLICING. {
   print "abbrev_prefix ::= UNQUOTE_SPLICING.\n";
+  $this->datum->push(symbol('unquote-splicing'));
+}
+
+abbrev_prefix ::= QUOTE_SYNTAX. {
+  print "abbrev_prefix ::= QUOTE_SYNTAX.\n";
+  $this->datum->push(symbol('syntax'));
 }
 
 vector ::= OPEN_VECTOR vector_elements CLOSE. {
