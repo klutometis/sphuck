@@ -19,6 +19,8 @@ $true = new Boolean(true);
 $false = new Boolean(false);
 
 function boolean($value) {
+  global $true, $false;
+
   if ($value)
     return $true;
   else

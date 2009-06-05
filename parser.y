@@ -5,12 +5,16 @@
 
   function __construct() {
     $this->datum = new Stack();
+    $this->datum_depth = 0;
   }
 }
+%parse_accept {
+  // optional callback mechanism for putting token back in stream
+}
 
-lectindum ::= datum. {
-  // lectindum < lectio: "[thing] to be read"
-  print "expression ::= datum.\n";
+legendum ::= datum. {
+  // legendum < lego, -i: "[thing] to be read"
+  print "legendum ::= datum.\n";
 }
 
 datum ::= simple_datum. {

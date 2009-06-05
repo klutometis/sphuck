@@ -1,4 +1,12 @@
 # -*- mode: org;-*-
+* TODO put a token back in the stream on %parse_accept via callback
+* TODO holy shit: it's up to the lexer to declare Sphuck(0) and terminate
+  the datum.
+* TODO StringReader -> StringStream for when we need to perform reading
+  and writing; e.g. with-output-to-string.
+* TODO might need to have some kind of file abstraction for ports of the form
+  port://<type>/<handle>; port://string/<key>; part://file/<file>,
+  etc., so that i can automatically dish out EOF objects
 * TODO bootstrapping: writes itself in scheme; compiles itself; uses
   itself: some phase exists with a hand-written compiler that is
   usurped; some form thereafter of asymptotic progress?
