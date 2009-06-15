@@ -24,6 +24,23 @@ class StringReader {
   function stream_eof() {
     return $this->index >= $this->length;
   }
+  function stream_seek($offset, $whence=SEEK_SET) {
+    switch($whence) {
+    case SEEK_SET:
+      $this->index = $offset;
+      break;
+    case SEEK_CUR:
+      $this->index += $offset;
+      break;
+    case SEEK_END:
+      $this->index = $this->length + $offset;
+      break;
+    }
+    return true;
+  }
+  function stream_tell() {
+    return $this->index;
+  }
   }
 
 stream_wrapper_register('str', 'StringReader');

@@ -2,14 +2,19 @@
 %token_prefix SPHUCK_
 %include {
   public $datum;
+  public $lexer;
 
-  function __construct() {
+  function __construct($lexer) {
     $this->datum = new Stack();
     $this->datum_depth = 0;
+    $this->lexer = $lexer;
   }
 }
 %parse_accept {
   // optional callback mechanism for putting token back in stream
+  global $token;
+  if ($token)
+    $this->lexer->fseek(-strlen($token->value), SEEK_CUR);
 }
 
 legendum ::= datum. {

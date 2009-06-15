@@ -34,6 +34,10 @@
     }
     return $tokens;
   }
+
+  function fseek($offset, $whence=SEEK_SET) {
+    fseek($this->yy_reader, $offset, $whence);
+  }
 %}
 
 %unicode
