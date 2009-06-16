@@ -2,19 +2,18 @@
 %token_prefix SPHUCK_
 %include {
   public $datum;
-  public $lexer;
+  public $callback;
 
-  function __construct($lexer) {
+  function __construct($callback) {
     $this->datum = new Stack();
-    $this->lookahead = NULL;
-    $this->lexer = $lexer;
+    $this->callback = $callback;
   }
 }
 %parse_accept {
   // optional callback mechanism for putting token back in stream
   print "%parse_accept\n";
-  global $token;
-  var_dump($token);
+  /* global $token; */
+  /* var_dump($token); */
   /* printf('-strlen($token->value): %s; $token->value: %s' . "\n", */
   /*        -strlen($token->value), */
   /*        $token->value); */
@@ -25,7 +24,9 @@
   /*   $this->lexer->fseek($token->char, SEEK_SET); */
   /* if ($token) */
   /*   $this->Sphuck($token->type, $token->value); */
-  $this->lexer->restore_state();
+  /* $this->lexer->restore_state(); */
+  call_user_func($this->callback);
+  /* $this->Sphuck(0); */
 }
 
 legendum ::= datum. {

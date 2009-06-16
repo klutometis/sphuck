@@ -814,6 +814,7 @@ class CEmit
 						m_spec.m_init_read));
 	    }
 
+          m_outstream.println("$this->tokens = new Stack();");
 	  m_outstream.println("\t}");
 	  m_outstream.println();
 

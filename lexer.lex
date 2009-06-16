@@ -26,34 +26,10 @@
             'quasiquote',
             );
 
-  public $states;
+  public $tokens;
 
-  /* possible a push? */
-  function save_state() {
-    /* HACK: get around that we can't override constructor */
-    if (is_null($this->states))
-      $this->states = new Stack();
-    $this->states->push(new LexerState($this));
-  }
-
-  /* can only be done once, unless we have a stack */
-  function restore_state() {
-    $state = $this->states->pop();
-    $this->YY_EOF = $state->YY_EOF;
-    $this->yy_count_chars = $state->yy_count_chars;
-    $this->yy_count_lines = $state->yy_count_lines;
-    $this->yy_reader = $state->yy_reader;
-    $this->yy_buffer_read = $state->yy_buffer_read;
-    $this->yy_buffer_index = $state->yy_buffer_index;
-    $this->yy_buffer_start = $state->yy_buffer_start;
-    $this->yy_buffer_end = $state->yy_buffer_end;
-    $this->yychar = $state->yychar;
-    $this->yycol = $state->yycol;
-    $this->yyline = $state->yyline;
-    $this->yy_at_bol = $state->yy_at_bol;
-    $this->yy_lexical_state = $state->yy_lexical_state;
-    $this->yy_last_was_cr = $state->yy_last_was_cr;
-    $this->yyfilename = $state->yyfilename;
+  function push_token($token) {
+    $this->tokens->push($token);
   }
 
   function token_array() {
@@ -68,6 +44,13 @@
   function fseek($offset, $whence=SEEK_SET) {
     fseek($this->yy_reader, $offset, $whence);
   }
+
+  function next_token() {
+    if ($this->tokens->is_empty())
+      return $this->yylex();
+    else
+      return $this->tokens->pop();
+  }
 %}
 
 %unicode
@@ -75,7 +58,6 @@
 %line
 %char
 %class SphuckLexer
-%function next_token
 
 TOKEN = ({IDENTIFIER}|{BOOLEAN}|{NUMBER}|{CHARACTER}|{STRING}|{OPEN}|{CLOSE}|{OPEN_VECTOR}|{QUOTE}|{QQUOTE}|{UNQUOTE}|{UNQUOTE_SPLICING}|{QUOTE_SYNTAX}|{DOT})
 OPEN = \(
