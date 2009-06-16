@@ -1,4 +1,6 @@
 # -*- mode: org;-*-
+* TODO a read that stops after one expression
+** TODO may be able to modify parse() to stop after encountering a <datum>
 * TODO put a token back in the stream on %parse_accept via callback
 ** TODO we have the fucking token; if we reset the stream, the token
    has to be lexed all over again. best reset within parser.
@@ -206,7 +208,8 @@
    numbers.
 * TODO (parser) taking care of most of the complexity via regexps in the lexer
   is probably quicker, even though it's less readable.
-* TODO worry about number precision via GMP? http://us3.php.net/gmp
+* CANCELED worry about number precision via GMP? http://us3.php.net/gmp
+  CLOSED: [2009-06-15 Mon 23:11]
 ** php's GMP doesn't do floats
 * TODO unified function that parses and evaluates; fuck the class: sphuck()
 ** TODO one for files, too: load() or fsphuck() or something
@@ -232,12 +235,11 @@
    contained types.
 * TODO scheval handles as special cases things that could be macroized:
   quote, unquote, if, cond, etc.
-* TODO a read that stops after one expression
-** TODO may be able to modify parse() to stop after encountering a <datum>
 * TODO name-munging and resort to primitive procedures without needing
   to register them in $primitive_procedures?
 * TODO some mechanism for translating scheme values to php
-* TODO parser persistance with read()?
+* DONE parser persistance with read()?
+  CLOSED: [2009-06-15 Mon 23:10]
 * TODO general scheme file for things like type predicates, map,
   equality, etc.?
 * DONE [#A] symbol() function that memoizes symbols?
@@ -249,7 +251,10 @@
      not yet char, vector, pair; but lst
    String -> string(), Number -> number(), Char -> char(), Vector ->
    vector(), ...? What about Pair -> pair(): immutable pairs?
-* TODO implement the solved exercises as opposed to feral book.
+* CANCELED implement the solved exercises as opposed to feral book.
+  CLOSED: [2009-06-15 Mon 23:09]
+  - CLOSING NOTE [2009-06-15 Mon 23:10] \\
+    go directly from r5rs
 * DONE TRUE and FALSE singletons?
   CLOSED: [2009-04-12 Sun 13:42]
   - CLOSING NOTE [2009-04-12 Sun 13:42] \\
@@ -287,7 +292,13 @@
 * TODO type stack with numbers (imaginary component; how to distinguish
   between exact (rational: num/denom) and inexact (float): subclasses
   of number? does each (exact, inexact) have imaginary components?)
-* TODO use r5rs 7.1 to inform the lexer/parser; we're lacking booleans,
+* DONE use r5rs 7.1 to inform the lexer/parser; we're lacking booleans,
+  CLOSED: [2009-06-15 Mon 23:09]
+  - CLOSING NOTE [2009-06-15 Mon 23:09] \\
+    done; having problems with READ, though
   vectors, etc.
-* TODO README
+* DONE README
+  CLOSED: [2009-06-15 Mon 23:09]
+  - CLOSING NOTE [2009-06-15 Mon 23:09] \\
+    done, in some capacity
 * TODO sphuck namespace for lexer/parser
