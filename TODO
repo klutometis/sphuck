@@ -1,5 +1,17 @@
 # -*- mode: org;-*-
 * TODO put a token back in the stream on %parse_accept via callback
+** TODO we have the fucking token; if we reset the stream, the token
+   has to be lexed all over again. best reset within parser.
+** What Axioplase has to say:
+   00:55 < Axioplase> eek
+   00:55 < Axioplase> Have a dequeue
+   00:55 < Axioplase> Or something like that
+   00:56 < Axioplase> (peek stream) ;; returns top of (embedded) stack, or lex a token
+   00:57 < Axioplase> (unpeek token stream) ;; put token on top of stack, do not touch the stream
+   00:57 < Axioplase> There you go.
+   01:03 < Axioplase> Though an LR parser should not backtrack at all and thus, your problem should disappear :)
+   01:04 < Axioplase> lowlycoder: wow. Err, read the page of the "official" GNU APL interpreter.
+   01:02 < Axioplase> (unlike what some could infer for my second line, it's not a dequeue by the way)
 * TODO holy shit: it's up to the lexer to declare Sphuck(0) and terminate
   the datum.
 * TODO StringReader -> StringStream for when we need to perform reading

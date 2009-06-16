@@ -26,6 +26,36 @@
             'quasiquote',
             );
 
+  public $states;
+
+  /* possible a push? */
+  function save_state() {
+    /* HACK: get around that we can't override constructor */
+    if (is_null($this->states))
+      $this->states = new Stack();
+    $this->states->push(new LexerState($this));
+  }
+
+  /* can only be done once, unless we have a stack */
+  function restore_state() {
+    $state = $this->states->pop();
+    $this->YY_EOF = $state->YY_EOF;
+    $this->yy_count_chars = $state->yy_count_chars;
+    $this->yy_count_lines = $state->yy_count_lines;
+    $this->yy_reader = $state->yy_reader;
+    $this->yy_buffer_read = $state->yy_buffer_read;
+    $this->yy_buffer_index = $state->yy_buffer_index;
+    $this->yy_buffer_start = $state->yy_buffer_start;
+    $this->yy_buffer_end = $state->yy_buffer_end;
+    $this->yychar = $state->yychar;
+    $this->yycol = $state->yycol;
+    $this->yyline = $state->yyline;
+    $this->yy_at_bol = $state->yy_at_bol;
+    $this->yy_lexical_state = $state->yy_lexical_state;
+    $this->yy_last_was_cr = $state->yy_last_was_cr;
+    $this->yyfilename = $state->yyfilename;
+  }
+
   function token_array() {
     $tokens = NULL;
     while ($token = $this->next_token()) {

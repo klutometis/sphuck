@@ -7,7 +7,7 @@ PARSE := $(patsubst %.y,%.php,$(wildcard *.y))
 all: $(LEX) $(PARSE)
 
 %.lex.php : %.lex
-	cd lib/JLexPHP-151 && \
+	cd lib/JLexPHP-151a && \
 	java -cp JLexPHP.jar JLexPHP.Main ../../$<
 
 %.php : %.y
@@ -17,5 +17,5 @@ all: $(LEX) $(PARSE)
 test: all
 	php test/all.php
 
-clean:
-	rm -vf $(OBJ)
+# clean:
+# 	rm -vf $(OBJ)

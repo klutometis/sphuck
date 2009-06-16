@@ -6,7 +6,7 @@ require_once('lexer-utils.php');
 require_once('parser.php');
 require_once('parser-number.php');
 require_once('parser-fractional.php');
-require_once('jlex.php');
+require_once('lib/JLexPHP-151a/jlex.php');
 require_once('lexer.lex.php');
 require_once('lexer-binary.lex.php');
 require_once('lexer-octal.lex.php');

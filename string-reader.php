@@ -18,7 +18,7 @@ class StringReader {
   }
   function stream_read($count) {
     $substr = substr($this->string, $this->index, $count);
-    $this->index += $count;
+    $this->index = min($this->index + $count, $this->length);
     return $substr;
   }
   function stream_eof() {

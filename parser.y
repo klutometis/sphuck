@@ -6,15 +6,26 @@
 
   function __construct($lexer) {
     $this->datum = new Stack();
-    $this->datum_depth = 0;
+    $this->lookahead = NULL;
     $this->lexer = $lexer;
   }
 }
 %parse_accept {
   // optional callback mechanism for putting token back in stream
+  print "%parse_accept\n";
   global $token;
-  if ($token)
-    $this->lexer->fseek(-strlen($token->value), SEEK_CUR);
+  var_dump($token);
+  /* printf('-strlen($token->value): %s; $token->value: %s' . "\n", */
+  /*        -strlen($token->value), */
+  /*        $token->value); */
+  /* if ($token) */
+  /*   $this->lexer->fseek(-strlen($token->value), SEEK_CUR); */
+  /* $this->Sphuck(0); */
+  /* if ($token) */
+  /*   $this->lexer->fseek($token->char, SEEK_SET); */
+  /* if ($token) */
+  /*   $this->Sphuck($token->type, $token->value); */
+  $this->lexer->restore_state();
 }
 
 legendum ::= datum. {
