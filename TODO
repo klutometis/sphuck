@@ -14,7 +14,10 @@
    01:03 < Axioplase> Though an LR parser should not backtrack at all and thus, your problem should disappear :)
    01:04 < Axioplase> lowlycoder: wow. Err, read the page of the "official" GNU APL interpreter.
    01:02 < Axioplase> (unlike what some could infer for my second line, it's not a dequeue by the way)
-* TODO holy shit: it's up to the lexer to declare Sphuck(0) and terminate
+* CANCELED holy shit: it's up to the lexer to declare Sphuck(0) and terminate
+  CLOSED: [2009-06-15 Mon 23:20]
+  - CLOSING NOTE [2009-06-15 Mon 23:20] \\
+    %parse_accept
   the datum.
 * TODO StringReader -> StringStream for when we need to perform reading
   and writing; e.g. with-output-to-string.
@@ -24,7 +27,10 @@
 * TODO bootstrapping: writes itself in scheme; compiles itself; uses
   itself: some phase exists with a hand-written compiler that is
   usurped; some form thereafter of asymptotic progress?
-* TODO dealing with the limitations of PHP by introducing expensive
+* DONE dealing with the limitations of PHP by introducing expensive
+  CLOSED: [2009-06-15 Mon 23:19]
+  - CLOSING NOTE [2009-06-15 Mon 23:19] \\
+    it's true
   abstractions (Pair, etc.).
 * TODO might be able to optimize lists later by using native structures:
   arrays or some C garbage
@@ -35,7 +41,10 @@
 * TODO bootstrap psyntax with procedural ors, etc. (the minimum); post-psyntax,
   redefine them as syntax abstractions?
 * TODO lexer-* -> lexer/; parser-* -> parser/
-* TODO could have persistent parsers/lexers, and avoid instantiating one
+* CANCELED could have persistent parsers/lexers, and avoid instantiating one
+  CLOSED: [2009-06-15 Mon 23:19]
+  - CLOSING NOTE [2009-06-15 Mon 23:19] \\
+    streams
   for every parse transaction.
 * TODO r5rs 3.3: "The integer 28 also has representations "#e28.000"...."
   there is, therefor, an implicit conversion to int? all the more
@@ -49,7 +58,10 @@
 * TODO r5rs 6.2.4: "it is inexact if it contains a decimal point,
   an exponent, or a "#" character in the place of a digit, otherwise
   it is exact.
-* TODO reuse the same parser with binary, octal, decimal and hex lexers;
+* CANCELED reuse the same parser with binary, octal, decimal and hex lexers;
+  CLOSED: [2009-06-15 Mon 23:18]
+  - CLOSING NOTE [2009-06-15 Mon 23:18] \\
+    nope
   specialize the parser by lexer and radix (for string -> number
   conversion).
 
@@ -59,7 +71,10 @@
   burden of composite exactness?
 * TODO here we are, dealing with types and promotion again; sticky; and
   weren't there unpromotables?
-* TODO it turns out the exactness of the real and imaginary parts
+* DONE it turns out the exactness of the real and imaginary parts
+  CLOSED: [2009-06-15 Mon 23:18]
+  - CLOSING NOTE [2009-06-15 Mon 23:18] \\
+    yup
   are orthogonal; the composite exactness in conjunctive.
 * TODO the imaginary part has an imaginary part, oddly, of NaN;
   only way to solve the recursion might be to formalize
@@ -98,7 +113,10 @@
   - CLOSING NOTE [2009-05-19 Tue 00:05] \\
     zero()
 * TODO r5rs 6.2.5: "the denominator is always positive"
-* TODO you'll still have a radix non-terminal even if it's blank
+* DONE you'll still have a radix non-terminal even if it's blank
+  CLOSED: [2009-06-15 Mon 23:18]
+  - CLOSING NOTE [2009-06-15 Mon 23:18] \\
+    yup
 * TODO the gradual parsing of number information: exactness before uinteger
   before sign, is why i'd like to have a unified number type that
   responds to type queries computationally.
@@ -107,63 +125,139 @@
   which may or may not be nullary. Imaginary part itself a Number.
 * TODO honest irrational numbers with production functions and
   no bound on precision
-* TODO kleene star can't be done in lexer, it seems; endless loop on
+* DONE kleene star can't be done in lexer, it seems; endless loop on
+  CLOSED: [2009-06-15 Mon 23:17]
+  - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+    yup
   blank string.
-* TODO there is some ambiguity between UREAL_10 qua UINTEGER_10 and
+* DONE there is some ambiguity between UREAL_10 qua UINTEGER_10 and
+  CLOSED: [2009-06-15 Mon 23:17]
+  - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+    yup
   DECIMAL_10 qua UINTEGER_10 + nullary SUFFIX
-* TODO it may well be profitable to delay the creating of schemelike
+* DONE it may well be profitable to delay the creating of schemelike
+  CLOSED: [2009-06-15 Mon 23:17]
+  - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+    sure
   structures as long as possible (may not be able to delay them beyond
   the parser, though: exactness, etc.)
-* TODO holy shit! lexers can follow the lexical formalisms
+* DONE holy shit! lexers can follow the lexical formalisms
+  CLOSED: [2009-06-15 Mon 23:17]
+  - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+    indeed
   more or less verbatim!
 ** TODO does the parser admit of states? or do i have to have
    an ad-hoc parser that corresponds to each lexer state?
-* TODO [#A] integrate decimal last? seems to be a weird case
-** TODO in particular, handle other numbers first; might be able
+* DONE [#A] integrate decimal last? seems to be a weird case
+  CLOSED: [2009-06-15 Mon 23:17]
+  - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+    yup
+** CANCELED in particular, handle other numbers first; might be able
+   CLOSED: [2009-06-15 Mon 23:17]
+   - CLOSING NOTE [2009-06-15 Mon 23:17] \\
+     nope
    to combine them into one number parser
-* TODO identify problematic things (like decimal) in the lexer;
+* DONE identify problematic things (like decimal) in the lexer;
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    yup
   have a subparser to handle it.
-* TODO could have a separate number parser with special cases
+* DONE could have a separate number parser with special cases
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    had to fucking do that, actually
   for E, S, F, D, L, etc.; wonder if that can be simulated with
   states?
 * TODO every non-terminal a test?
 * TODO parser tests: all the samples from r5rs?
-* TODO why not do the scheme conversion at the last minute,
+* DONE why not do the scheme conversion at the last minute,
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    ok
   so as to be able to manipulate value, sign, etc. efficiently?
-* TODO jumped the gun on the exactness question (wait for
+* DONE jumped the gun on the exactness question (wait for
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    yes
   prefix)
-* TODO should the stack_to_* function return actual scheme
+* CANCELED should the stack_to_* function return actual scheme
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    nope
   values
-* TODO becaus we're not using complex regexps in the lexer,
+* CANCELED becaus we're not using complex regexps in the lexer,
+  CLOSED: [2009-06-15 Mon 23:16]
+  - CLOSING NOTE [2009-06-15 Mon 23:16] \\
+    nope
   we might have to use states to distinguish between #e10 the
   exponent, and #e the exact sign.
-* TODO move utilities such as map into their own file (not pair)
-* TODO non-terminals to have a label?
-* TODO we can signify somewhere in the parser that a datum has
+* CANCELED move utilities such as map into their own file (not pair)
+  CLOSED: [2009-06-15 Mon 23:16]
+* CANCELED non-terminals to have a label?
+  CLOSED: [2009-06-15 Mon 23:15]
+  - CLOSING NOTE [2009-06-15 Mon 23:15] \\
+    nah
+* DONE we can signify somewhere in the parser that a datum has
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:15] \\
+    might do a callback instead; although: %parse_accept
   been read; then the lexer can stop taking from the input stream.
-* TODO might need an identifier/class for each of the non-terminals
-* TODO generate the fucking parse tree; not this worthless embedded
+* CANCELED might need an identifier/class for each of the non-terminals
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:14] \\
+    nah
+* DONE generate the fucking parse tree; not this worthless embedded
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:14] \\
+    ok
   stack shit.
-* TODO sig figs may be worthless; but what about an uncertainty
+* CANCELED sig figs may be worthless; but what about an uncertainty
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:14] \\
+    nah
   parameter?
-* TODO do math with gmp ints and exponents? but why not then just
+* CANCELED do math with gmp ints and exponents? but why not then just
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:14] \\
+    might need to implement gmp float
   implement the damn float libs?
-* TODO either create containers for digits/octothorpes or sentinels
+* DONE either create containers for digits/octothorpes or sentinels
+  CLOSED: [2009-06-15 Mon 23:14]
+  - CLOSING NOTE [2009-06-15 Mon 23:14] \\
+    nah; 0
   to mark having seen a digits{0}.
-* TODO can possibly call a yy_*() function after parsing a <datum>?
-* TODO how do we want to represent numbers: 1 <= x < 2 plus exponent?
-* TODO there seem to be rigorous boundaries to groups delineated
+* DONE can possibly call a yy_*() function after parsing a <datum>?
+  CLOSED: [2009-06-15 Mon 23:13]
+  - CLOSING NOTE [2009-06-15 Mon 23:13] \\
+    %parse_accept
+* DONE how do we want to represent numbers: 1 <= x < 2 plus exponent?
+  CLOSED: [2009-06-15 Mon 23:13]
+  - CLOSING NOTE [2009-06-15 Mon 23:13] \\
+    no
+* DONE there seem to be rigorous boundaries to groups delineated
+  CLOSED: [2009-06-15 Mon 23:13]
+  - CLOSING NOTE [2009-06-15 Mon 23:13] \\
+    don't
   by digits{0}, octothorpes{0}, etc. Hmm; digit never seems to get
   matched with recursive rules around. (Because digit is decomposed
   into terminals.)
-* TODO is there a systematic way to delegate lexer/parser
+* DONE is there a systematic way to delegate lexer/parser
+  CLOSED: [2009-06-15 Mon 23:13]
+  - CLOSING NOTE [2009-06-15 Mon 23:13] \\
+    no
   responsibilities?
 
   i could at least enlist regular expressions to take care of + and *,
   couldn't I? otherwise, the gathering is laborious.
-* TODO do we need the level of indirection of JLexToken, or how else
+* DONE do we need the level of indirection of JLexToken, or how else
+  CLOSED: [2009-06-15 Mon 23:13]
+  - CLOSING NOTE [2009-06-15 Mon 23:13] \\
+    yes
   gather type + value?
-* TODO things tokenized have to been resynthesized in the parser;
+* DONE things tokenized have to been resynthesized in the parser;
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    not that bad with a complex lexer, actually
   non-terminal, specifically, should gather preceding terminals?
   Otherwise, decimal, for instance, would have aware of exponents,
   signs, etc.
@@ -172,25 +266,40 @@
   the parser which have to be unsynthesized post-hoc: still have to
   assemble the digit/octothorpe soup in the stack, for instance, and
   segregate.
-* TODO some things like . <digit 10>+ #* <suffix> trivial with regular
+* DONE some things like . <digit 10>+ #* <suffix> trivial with regular
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    v. infra
   expressions; not so much with formal grammars; make exceptions for
   complex expressions in the lexer, decompose in the parser?
-* TODO parser only really cares about identifier, boolean, number,
+* DONE parser only really cares about identifier, boolean, number,
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    v. infra
   character, string from lexical analysis (some delimiters here and
   there). Really, only cares about tokens. Can do all the token work
   in the lexer; percolate up tokens to the parser?
-* TODO looks like we could also leave the parser bare, and do all the object
+* DONE looks like we could also leave the parser bare, and do all the object
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    v. infra
   generation in the lexer; that way, we can propagate abstracta to the
   parser.
 
   as long as i have macros, can do some abstraction in the lexer; use
   parser for verification?
-* TODO actually: since we're merely generating php, we can do the lexing
+* DONE actually: since we're merely generating php, we can do the lexing
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    v. infra
   and parsing in any fucking language we want: haskell, scheme, etc.;
   add a php driver.
 
   oh, fuck; it's nice to have good tools. thanks, wez furlong.
-* TODO my main problem has to do with the contextual parsing of overlapping
+* DONE my main problem has to do with the contextual parsing of overlapping
+  CLOSED: [2009-06-15 Mon 23:12]
+  - CLOSING NOTE [2009-06-15 Mon 23:12] \\
+    complex lexer, multiple parsers
   atoms; i is a letter in one context, but signifies imaginary in
   another; set up states?
 
@@ -206,12 +315,16 @@
 ** TODO getting indeterminacy; can do arbitrarily complex regexps
    for the first pass, and employ secondary parsers to deal with, say,
    numbers.
-* TODO (parser) taking care of most of the complexity via regexps in the lexer
+* DONE (parser) taking care of most of the complexity via regexps in the lexer
+  CLOSED: [2009-06-15 Mon 23:11]
+  - CLOSING NOTE [2009-06-15 Mon 23:11] \\
+    number parsers, etc.
   is probably quicker, even though it's less readable.
 * CANCELED worry about number precision via GMP? http://us3.php.net/gmp
   CLOSED: [2009-06-15 Mon 23:11]
 ** php's GMP doesn't do floats
-* TODO unified function that parses and evaluates; fuck the class: sphuck()
+* CANCELED unified function that parses and evaluates; fuck the class: sphuck()
+  CLOSED: [2009-06-15 Mon 23:11]
 ** TODO one for files, too: load() or fsphuck() or something
 * DONE recursive closures
   CLOSED: [2009-04-13 Mon 01:18]
