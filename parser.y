@@ -28,7 +28,6 @@
   call_user_func($this->callback);
   /* $this->Sphuck(0); */
 }
-
 legendum ::= datum. {
   // legendum < lego, -i: "[thing] to be read"
   print "legendum ::= datum.\n";

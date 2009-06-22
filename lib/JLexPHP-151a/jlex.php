@@ -198,4 +198,3 @@ class JLexBase {
     $tok->char = $this->yychar;
   }
 }
-

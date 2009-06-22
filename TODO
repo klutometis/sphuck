@@ -1,8 +1,25 @@
 # -*- mode: org;-*-
-* TODO a read that stops after one expression
-** TODO may be able to modify parse() to stop after encountering a <datum>
-* TODO put a token back in the stream on %parse_accept via callback
-** TODO we have the fucking token; if we reset the stream, the token
+* TODO every invocation of READ will instantiate a new reader,
+  and reset the stream to the end of the last successfully read token;
+  persistent readers, on the other hand, will have a READ method
+  that can be invoked until EOF with a popped lookahead-token.
+* TODO how are we going to fucking implement READ on a stream, though,
+  without some kind of stream-rewinding? the lexer-token-stack trick
+  allows the lexer to exhaust the stream.
+** TODO for each READ, reset the stream to the end of the last successful token;
+ kkkkkkk;aaaaa3   either reset the state of the current lexer, or invoke a new one.
+* DONE a read that stops after one expression
+  CLOSED: [2009-06-16 Tue 15:09]
+** DONE may be able to modify parse() to stop after encountering a <datum>
+   CLOSED: [2009-06-16 Tue 15:09]
+* DONE put a token back in the stream on %parse_accept via callback
+  CLOSED: [2009-06-16 Tue 15:08]
+  - CLOSING NOTE [2009-06-16 Tue 15:09] \\
+    callback pushes the lookahead token back on the stack
+** DONE we have the fucking token; if we reset the stream, the token
+   CLOSED: [2009-06-16 Tue 15:08]
+   - CLOSING NOTE [2009-06-16 Tue 15:08] \\
+     modified next_token to use the stack trick; v. infra
    has to be lexed all over again. best reset within parser.
 ** What Axioplase has to say:
    00:55 < Axioplase> eek
